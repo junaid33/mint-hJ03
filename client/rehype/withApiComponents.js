@@ -1,7 +1,8 @@
+import { toHtml } from 'hast-util-to-html';
 import { filter } from 'unist-util-filter';
 import visit from 'unist-util-visit';
+
 import { addExport } from '../remark/utils.js';
-import { toHtml } from 'hast-util-to-html';
 
 const langFilename = (className) => {
   switch (className) {

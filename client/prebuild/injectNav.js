@@ -11,13 +11,15 @@ const __dirname = dirname(__filename);
 
 // End matter is front matter, but at the end
 const getIndexOfEndMatter = (fileContents) => {
-  const frontMatters = fileContents.match(/---\n(title:.+\n|description:.+\n|sidebarTitle:.+\n|api:.+\n|openapi:.+\n)+---$/m);
+  const frontMatters = fileContents.match(
+    /---\n(title:.+\n|description:.+\n|sidebarTitle:.+\n|api:.+\n|openapi:.+\n)+---$/m
+  );
   if (frontMatters) {
     return fileContents.indexOf(frontMatters[0]);
   }
 
   return -1;
-}
+};
 
 export const potentiallyRemoveEndMatter = (fileContents) => {
   const endMatterIndex = getIndexOfEndMatter(fileContents);
@@ -27,7 +29,7 @@ export const potentiallyRemoveEndMatter = (fileContents) => {
   }
 
   return fileContents.substring(0, endMatterIndex);
-}
+};
 
 const getMetadata = (fileContents) => {
   const { data } = matter(fileContents);
@@ -36,15 +38,15 @@ const getMetadata = (fileContents) => {
     return data;
   }
 
-  const startIndex =  getIndexOfEndMatter(fileContents);
+  const startIndex = getIndexOfEndMatter(fileContents);
   if (startIndex === -1) {
-    return {}
+    return {};
   }
 
   const fileContentFromFrontMatter = fileContents.substring(startIndex);
   const { data: nonTopFrontMatter } = matter(fileContentFromFrontMatter);
   return nonTopFrontMatter;
-}
+};
 
 export const createPage = (path, content, openApiObj) => {
   const slug = path.replace(/\.mdx?$/, '');

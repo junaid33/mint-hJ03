@@ -40,7 +40,7 @@ const withFrames = () => {
         if (!componentName) {
           componentName = addImport(preTree, '@mintlify/components', 'Frame');
         }
-        node.name = componentName
+        node.name = componentName;
       }
       if (node.type === 'jsx') {
         node = tomdxJsxFlowElement(node.value);
