@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import posthog from 'posthog-js';
+
 import {
   AbstractAnalyticsImplementation,
   ConfigInterface,

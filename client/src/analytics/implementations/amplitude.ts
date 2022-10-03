@@ -1,4 +1,5 @@
 import { init as amplitudeInit, track } from '@amplitude/analytics-browser';
+
 import {
   AbstractAnalyticsImplementation,
   ConfigInterface,
