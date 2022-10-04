@@ -214,9 +214,10 @@ function Nav({ nav, children, mobile = false }: any) {
         {!mobile && (
           <div
             className={clsx(
-              'h-8',
-              !config.backgroundImage &&
-                'bg-gradient-to-b from-background-light dark:from-background-dark'
+              'h-8 bg-gradient-to-b',
+              config.backgroundImage
+                ? 'from-white dark:from-black'
+                : 'from-background-light dark:from-background-dark'
             )}
           />
         )}
