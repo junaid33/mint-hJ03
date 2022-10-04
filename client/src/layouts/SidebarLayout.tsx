@@ -212,7 +212,13 @@ function Nav({ nav, children, mobile = false }: any) {
     <nav ref={scrollRef} id="nav" className="lg:text-sm lg:leading-6 relative">
       <div className="sticky top-0 -ml-0.5 pointer-events-none">
         {!mobile && (
-          <div className="h-8 bg-gradient-to-b from-background-light dark:from-background-dark" />
+          <div
+            className={clsx(
+              'h-8',
+              !config.backgroundImage &&
+                'bg-gradient-to-b from-background-light dark:from-background-dark'
+            )}
+          />
         )}
       </div>
       <ul>
