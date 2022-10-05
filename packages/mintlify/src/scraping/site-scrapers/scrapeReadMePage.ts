@@ -22,7 +22,9 @@ export async function scrapeReadMePage(
   if (content.length === 0) {
     content = $(".rm-Article > .markdown-body");
   }
-  const contentHtml = content.html();
+
+  // API Pages don't have a markdown body in the same position so there's no HTML
+  let contentHtml = content.html() || "";
 
   const origToWritePath = await downloadAllImages(
     $,
