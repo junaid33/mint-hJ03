@@ -3,9 +3,9 @@
   "basePath": "/docs",
   "logo": {
     "light": "/docs/logo/light.svg",
-    "dark": "/docs/logo/dark.svg"
+    "dark": "/docs/logo/dark.svg",
+    "href": "https://mintlify.com"
   },
-  "logoHref": "https://mintlify.com",
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#16A34A",
