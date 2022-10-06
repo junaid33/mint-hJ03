@@ -260,9 +260,9 @@ export function Api({
                 <path
                   className="stroke-slate-700 dark:stroke-slate-100"
                   d="M9 7l3 3-3 3"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
               </svg>
             </div>

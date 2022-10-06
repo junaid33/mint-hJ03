@@ -110,27 +110,31 @@ export function ApiSupplemental({
     // Hacky approach to wait 1ms until document loads
     setTimeout(() => {
       document.querySelectorAll('.copy-to-clipboard').forEach((item) => {
-        item.addEventListener('click', () => {
-          const codeElement = item.nextSibling;
-          if (!codeElement || !window.getSelection) {
-            return;
-          }
-          const selection = window.getSelection();
-          const range = document.createRange();
-          range.selectNodeContents(codeElement);
-          selection?.removeAllRanges();
-          selection?.addRange(range);
+        item.addEventListener(
+          'click',
+          () => {
+            const codeElement = item.nextSibling;
+            if (!codeElement || !window.getSelection) {
+              return;
+            }
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(codeElement);
+            selection?.removeAllRanges();
+            selection?.addRange(range);
 
-          navigator.clipboard.writeText(selection?.toString() || '');
+            navigator.clipboard.writeText(selection?.toString() || '');
 
-          const tooltip = item.getElementsByClassName('tooltip')[0];
-          tooltip.classList.remove('hidden');
-          setTimeout(() => {
-            tooltip.classList.add('hidden');
-          }, 2000);
-        });
+            const tooltip = item.getElementsByClassName('tooltip')[0];
+            tooltip.classList.remove('hidden');
+            setTimeout(() => {
+              tooltip.classList.add('hidden');
+            }, 2000);
+          },
+          true
+        );
       });
-    }, 1);
+    }, 50);
   }, []);
 
   const ResponseExampleChild = ({ code }: { code: any }) => (
