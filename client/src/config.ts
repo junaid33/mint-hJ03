@@ -64,6 +64,7 @@ export type Config = {
     auth?: {
       method: string; // 'key', 'bearer', or 'basic'
       name?: string;
+      inputPrefix?: string;
     };
   };
   metadata?: any;

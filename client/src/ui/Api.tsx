@@ -65,6 +65,18 @@ export function Api({
     if (configuredApiBaseIndex != null) {
       setApiBaseIndex(parseInt(configuredApiBaseIndex, 10));
     }
+
+    // Configure api auth prefix
+    // TODO: Standardize to work without auth name and reliable for different methods
+    if (config.api?.auth?.inputPrefix && config.api.auth.name) {
+      setInputData({
+        ...inputData,
+        Authorization: {
+          ...inputData.Authorization,
+          [config.api.auth.name]: config.api.auth.inputPrefix,
+        },
+      });
+    }
   }, [api, children]);
 
   const onChangeApiBaseSelection = (base: string) => {
