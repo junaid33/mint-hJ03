@@ -1,6 +1,6 @@
 <h1 align="center">
   <img width="60" alt="posthoglogo" src="https://res.cloudinary.com/mintlify/image/upload/v1665199103/mintlify_tmtvpd.svg">
-  <p>Mintlify</p>
+  <p style="margin-bottom:0">Mint</p>
   <p align="center">
     <a href="https://github.com/mintlify/mint"><img src="https://img.shields.io/github/stars/mintlify/mint?style=social" alt="Join Discord" /></a>
     <a href="https://discord.com/invite/b499CK8P9g"><img src="https://img.shields.io/discord/911693009253466123" alt="Join Discord" /></a>
