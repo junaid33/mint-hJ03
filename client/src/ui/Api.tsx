@@ -89,7 +89,11 @@ export function Api({
     setHasConfiguredApiBase(true);
   };
 
-  const onChangeParam = (paramGroup: string, param: string, value: string | boolean | File) => {
+  const onChangeParam = (
+    paramGroup: string,
+    param: string,
+    value: string | number | boolean | File
+  ) => {
     setInputData({ ...inputData, [paramGroup]: { ...inputData[paramGroup], [param]: value } });
   };
 
@@ -155,7 +159,9 @@ export function Api({
             type="number"
             placeholder={param.placeholder}
             value={inputData[paramGroup.name] ? inputData[paramGroup.name][param.name] : ''}
-            onChange={(e) => onChangeParam(paramGroup.name, param.name, e.target.value)}
+            onChange={(e) =>
+              onChangeParam(paramGroup.name, param.name, parseInt(e.target.value, 10))
+            }
           />
         );
       case 'file':
