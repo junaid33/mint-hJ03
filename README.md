@@ -7,6 +7,6 @@
   <a href="https://twitter.com/mintlify"><img src="https://img.shields.io/twitter/follow/mintlify.svg?style=social" alt="Twitter Follow" /></a>
 </p>
 
-## Mint is an open source docs builder that's beautiful, fast, and easy to work
+## Mint is documentation builder that's beautiful, fast, and easy to work
 
-Documentation is currently under construction 🚧
+Documentation is (ironically) currently under construction 🚧
