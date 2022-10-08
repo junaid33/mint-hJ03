@@ -3,12 +3,13 @@
     <img alt="Mintlify" src="https://res.cloudinary.com/mintlify/image/upload/v1665199103/mintlify_tmtvpd.svg" width="40" />
   </a>
 </p>
-
 <h1 align="center">
-  <h1 align="center" style="margin-top:0;margin-bottom:0">Mint</h1>
-  <p align="center">Mint is an open source documentation builder that's built to be beautiful, blazing fast, and easy to maintain</p>
-  <a href="https://mintlify.com"><img src="https://res.cloudinary.com/mintlify/image/upload/v1665198043/hero_miudcf.svg" alt="Docusaurus"></a>
+  Mint
 </h1>
+<p align="center">
+  Mint is an open source documentation builder that's built to be beautiful, blazing fast, and easy to maintain
+  <a href="https://mintlify.com"><img src="https://res.cloudinary.com/mintlify/image/upload/v1665198043/hero_miudcf.svg" alt="Docusaurus"></a>
+</p>
 
 <p align="center" style="margin-top:1rem">
   <a href="https://github.com/mintlify/mint"><img src="https://img.shields.io/github/stars/mintlify/mint?style=social" alt="Join Discord" /></a>
