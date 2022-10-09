@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect, useContext, useState, Context } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { Rect, useRect } from 'react-use-rect';
 
 import { useTop } from '@/hooks/useTop';
