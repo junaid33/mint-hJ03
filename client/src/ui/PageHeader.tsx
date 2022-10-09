@@ -2,7 +2,7 @@ import { UserFeedback } from '@/layouts/UserFeedback';
 import { Api, ApiComponent } from '@/ui/Api';
 
 type PageHeaderProps = {
-  title: string;
+  title?: string;
   description?: string;
   api?: string;
   openapi?: string;

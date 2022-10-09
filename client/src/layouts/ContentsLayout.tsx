@@ -168,9 +168,10 @@ function useTableOfContents(tableOfContents: Section[]) {
   return { currentSection, registerHeading, unregisterHeading };
 }
 
-type Meta = {
-  title: string;
+export type Meta = {
+  title?: string;
   description?: string;
+  sidebarTitle?: string;
   auth?: string;
   api?: string;
   openapi?: string;
