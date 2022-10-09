@@ -19,9 +19,8 @@ export function PageHeader({
   api,
   auth,
   children,
-  apiComponents
+  apiComponents,
 }: PageHeaderProps) {
-
   if (!title && !description) return null;
 
   return (
