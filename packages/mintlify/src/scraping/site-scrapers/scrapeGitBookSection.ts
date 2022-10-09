@@ -1,8 +1,9 @@
 import cheerio from "cheerio";
+import { NavigationEntry } from "../../navigation.js";
 import { scrapeGettingFileNameFromUrl } from "../scrapeGettingFileNameFromUrl.js";
 import { scrapeGitBookPage } from "./scrapeGitBookPage.js";
+import combineNavWithEmptyGroupTitles from "../combineNavWithEmptyGroupTitles.js";
 import getLinksRecursively from "./getLinksRecursively.js";
-import { NavigationEntry } from "../../navigation.js";
 
 export async function scrapeGitBookSection(
   html: string,
@@ -39,16 +40,19 @@ export async function scrapeGitBookSection(
       const pages = getLinksRecursively(linkSections, $);
 
       return {
-        group: sectionTitle || firstLink?.text(),
+        group: sectionTitle || alternateTitle(firstLink, pages),
         pages: firstHref ? [firstHref, ...pages] : pages,
       };
     })
     .toArray()
     .filter(Boolean);
 
+  // Merge groups with empty titles together
+  const reducedGroupsConfig = combineNavWithEmptyGroupTitles(groupsConfig);
+
   // Scrape each link in the navigation.
   const groupsConfigCleanPaths = await Promise.all(
-    groupsConfig.map(async (navEntry: NavigationEntry) => {
+    reducedGroupsConfig.map(async (navEntry: NavigationEntry) => {
       return await scrapeGettingFileNameFromUrl(
         navEntry,
         cliDir,
@@ -61,4 +65,13 @@ export async function scrapeGitBookSection(
   );
 
   return groupsConfigCleanPaths;
+}
+
+function alternateTitle(firstLink, pages) {
+  // Only assign titles to nested navigation menus outside a section.
+  // Others should not have a title so we can merge them into one section.
+  if (pages.length > 0) {
+    return firstLink?.text();
+  }
+  return "";
 }
