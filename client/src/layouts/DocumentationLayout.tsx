@@ -12,7 +12,6 @@ export function DocumentationLayout({
   navIsOpen,
   setNavIsOpen,
   meta,
-  slug,
   children,
 }: {
   isMdx: boolean;

@@ -5,5 +5,5 @@ export default class FakeAnalyticsMediator implements AnalyticsMediatorInterface
     return async function () {};
   }
 
-  onRouteChange() {}
+  onRouteChange(_: string, __: any) {}
 }
