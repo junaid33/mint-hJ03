@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useContext } from 'react';
 
 import { SidebarContext } from '@/layouts/SidebarLayout';
-import { PageContext, GroupPage, isGroup, flattenGroupPages } from '@/nav';
+import { PageContext, GroupPage, isGroup, flattenGroupPages } from '@/metadata';
 
 const getFirstNonGroupPage = (groupPage?: GroupPage): PageContext | null => {
   if (groupPage == null) {
