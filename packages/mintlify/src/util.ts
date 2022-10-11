@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from "fs";
+import Ora from "ora";
 import path from "path";
-import { Page } from "./templates.js";
+import { Page } from "./init-command/templates.js";
+import stopIfInvalidLink from "./validation/stopIfInvalidLink.js";
 
 export function getOrigin(url: string) {
   // eg. https://google.com -> https://google.com
@@ -63,4 +65,30 @@ export const createPage = (
       }
     }
   }
+};
+
+export function getHrefFromArgs(argv: any) {
+  const href = argv.url;
+  stopIfInvalidLink(href);
+  return href;
+}
+
+export const buildLogger = (startText: string = "") => {
+  const logger = Ora().start(startText);
+  return logger;
+};
+
+export const getFileExtension = (filename: string) => {
+  return (
+    filename.substring(filename.lastIndexOf(".") + 1, filename.length) ||
+    filename
+  );
+};
+
+export const fileBelongsInPagesFolder = (filename: string) => {
+  const extension = getFileExtension(filename);
+  return (
+    extension &&
+    (extension === "mdx" || extension === "md" || extension === "tsx")
+  );
 };
