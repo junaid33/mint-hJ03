@@ -50,9 +50,9 @@
 
 ### **Features**
 
-❤️ **Developer-First:** Powered by MDX and lives alongside the codebase
+❤️ **Developer-First:** Powered by MDX and lives alongside the code
 
-💪 **Flexible:** Opionated when you're lazy, but infinitely flexible when you need it to be
+💪 **Flexible:** Opinionated when you're lazy, but infinitely flexible when you need it to be
 
 📊 **Analytical:** Logging is built in to help you understand how users interact with your docs
 
@@ -60,4 +60,4 @@
 
 #### 🌈 Make it yours
 
-Customizable the content, navigation, branding, and more for your documentation — [get started](https://mintlify.com/start).
+Customize the content, navigation, branding, and more for your documentation — [get started](https://mintlify.com/start).
