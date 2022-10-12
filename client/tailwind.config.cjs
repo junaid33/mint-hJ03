@@ -58,7 +58,7 @@ module.exports = {
         'primary-ultralight': config?.colors?.ultraLight ?? '#ddd6fe',
         'primary-ultradark': config?.colors?.ultraDark ?? '#5b21b6',
         'background-light': config?.colors?.background?.light ?? '#ffffff',
-        'background-dark': config?.colors?.background?.dark ?? '#0f1728',
+        'background-dark': config?.colors?.background?.dark ?? '#0C1322',
         ...ctaColors,
       },
       typography: (theme) => ({
