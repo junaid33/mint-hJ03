@@ -1,7 +1,7 @@
 {
   "name": "mintlify",
-  "version": "1.0.7",
-  "description": "Mintlify CLI",
+  "version": "1.1.0",
+  "description": "The Mintlify CLI",
   "engines": {
     "node": ">=14.16"
   },

@@ -1,31 +1,53 @@
-# Mintlify CLI
+<div align="center">
+  <a href="https://mintlify.com">
+    <img
+      src="https://res.cloudinary.com/mintlify/image/upload/v1665385627/logo-rounded_zuk7q1.svg"
+      alt="Mintlify Logo"
+      height="64"
+    />
+  </a>
+  <br />
+  <p>
+    <h3>
+      <b>
+        Mintlify CLI
+      </b>
+    </h3>
+  </p>
+  <p>
+    The Mintlify CLI is the easiest way to build Mintlify apps from the command line.
+  </p>
+  <p>
 
-The Mintlify CLI is used to automate migrations.
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen?logo=github)](/) [![Website](https://img.shields.io/website?url=https%3A%2F%2Fmintlify.com&logo=mintlify)](https://mintlify.com) [![Tests](https://github.com/mintlify/mint/actions/workflows/manual.yml/badge.svg)](https://github.com/mintlify/mint/actions) [![Tweet](https://img.shields.io/twitter/url?url=https%3A%2F%2Fmintlify.com%2F)](https://twitter.com/intent/tweet?url=&text=Check%20out%20%40mintlify) [![Chat on Discord](https://img.shields.io/badge/chat-Discord-7289DA?logo=discord)](https://discord.gg/MPNgtSZkgK) [![Discuss on GitHub](https://img.shields.io/badge/discussions-GitHub-333333?logo=github)](https://github.com/mintlify/mint/discussions)
 
-## Installation
+  </p>
+  <p>
+    <sub>
+      Built with ❤︎ by
+      <a href="https://mintlify.com">
+        Mintlify
+      </a>
+    </sub>
+  </p>
+</div>
 
-`npm i -g mintlify`
+### 🚀 Installation
 
-If you installed a local version, you may need to uninstall it with
+Download the Mintlify CLI using the following command
 
-`npm uninstall -g mintlify` before installing the published version.
+```
+npm i mintlify -g
+```
 
-## Local development & testing
+### 👩‍💻 Development
 
-To test changes locally run:
+Run the following command at the root of your Mintlify application to preview changes locally.
 
-`npm run local`
+```
+mintlify dev
+```
 
-## Commands
+### 🏃 Get Started
 
-### Migrations
-
-We support automated migrations from ReadMe, GitBook, and Docusaurus.
-
-`mintlify scrape-page <url>` - Scrapes the page at the URL provided and creates a corresponding MDX file
-
-`mintlify scrape-section <url>` - Scrapes the section at the URL provided and creates the MDX files within that section
-
-#### Options
-
-`--overwrite` - By default if an existing file with the same path name is detected, the file will not be overwritten by the scraper. Use this option to force an overwrite.
+[Create an account](https://mintlify.com/start) to start using Mintlify for your documentation.

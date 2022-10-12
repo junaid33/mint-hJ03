@@ -20,9 +20,7 @@ yarn
 ### Build
 
 - `INTERNAL_SITE_BEARER_TOKEN=example yarn prebuild` - fetches the files for the site associated with that bearer token from GitHub. You need the pre-hashed bearer token for that to work. Mintlify employees can request the token that grants access to a test site. In the future, we will work on a way of generating temporary bearer tokens from an employee login.
-- `yarn local` - the local version of `yarn prebuild` (fetches the content from the local `../docs` folder)
-- `yarn local-to-docs` - transfers the untracked files to the `../docs` file (helpful for when you're working on content and you want to see changes live)
-  - Both `yarn local` and `yarn local-to-docs` take in a filepath as a parameter for when you want to transfer files to a directory that isn't `../docs`. For example, let's say I'm working on a migration for a client, then I can run `yarn local ../../clients/vital/docs` to get the files from that folder.
+- `yarn local` - the local version of `yarn prebuild` (fetches the content from the local `../docs` folder). It can take in a filepath as a parameter for when you want to transfer files to a directory that isn't `../docs`. For example, let's say I'm working on a migration for a client, then I can run `yarn local ../../clients/vital/docs` to get the files from that folder.
 
 ### Watch
 

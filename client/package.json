@@ -4,7 +4,6 @@
   "scripts": {
     "prebuild": "node prebuild index.ts",
     "local": "node scripts/local",
-    "local-to-docs": "node scripts/local-to-docs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
