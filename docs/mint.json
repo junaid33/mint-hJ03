@@ -52,9 +52,9 @@
       "pages": [
         "components/overview",
         "components/accordion",
+        "components/callout",
         "components/card",
         "components/code",
-        "components/callout",
         "components/embed",
         "components/image",
         "components/frame",
