@@ -5,7 +5,7 @@ import fse, { pathExists } from "fs-extra";
 import { isInternetAvailable } from "is-internet-available";
 import path from "path";
 import shell from "shelljs";
-import categorizeFiles from "./categorizeFiles.js";
+import categorizeFiles from "./utils/categorizeFiles.js";
 import {
   CMD_EXEC_PATH,
   CLIENT_PATH,
@@ -13,31 +13,13 @@ import {
   DOT_MINTLIFY,
   LAST_INVOCATION_PATH_FILE_LOCATION,
 } from "../constants.js";
-import { injectFavicons } from "./injectFavicons.js";
-import listener from "./listener.js";
-import { createPage, createMetadataFileFromPages } from "./metadata.js";
-import { updateConfigFile } from "./mintConfigFile.js";
-import { buildLogger } from "../util.js";
+import { injectFavicons } from "./utils/injectFavicons.js";
+import listener from "./utils/listener.js";
+import { createPage, createMetadataFileFromPages } from "./utils/metadata.js";
+import { updateConfigFile } from "./utils/mintConfigFile.js";
+import { buildLogger, ensureYarn } from "../util.js";
 
 const { readFile } = _promises;
-
-const saveInvocationPath = async () => {
-  await fse.outputFile(LAST_INVOCATION_PATH_FILE_LOCATION, CMD_EXEC_PATH);
-};
-
-const cleanOldFiles = async () => {
-  const lastInvocationPathExists = await pathExists(
-    LAST_INVOCATION_PATH_FILE_LOCATION
-  );
-  if (!lastInvocationPathExists) return;
-  const lastInvocationPath = (
-    await readFile(LAST_INVOCATION_PATH_FILE_LOCATION)
-  ).toString();
-  if (lastInvocationPath !== CMD_EXEC_PATH) {
-    // clean if invoked in new location
-    shellExec("git clean -d -x -e node_modules -e last-invocation-path -f");
-  }
-};
 
 const copyFiles = async (logger: any) => {
   logger.start("Syncing doc files...");
@@ -101,27 +83,20 @@ const copyFiles = async (logger: any) => {
   logger.succeed("All files synced");
 };
 
-const gitExists = () => {
-  let doesGitExist = true;
-  try {
-    shell.exec("git --version", { silent: true });
-  } catch (e) {
-    doesGitExist = false;
-  }
-  return doesGitExist;
-};
-
 const shellExec = (cmd: string) => {
   return shell.exec(cmd, { silent: true });
 };
 
+const nodeModulesExists = async () => {
+  return pathExists(path.join(DOT_MINTLIFY, "mint", "client", "node_modules"));
+};
 const dev = async () => {
   shell.cd(HOME_DIR);
   const logger = buildLogger("Starting a local Mintlify instance...");
   await fse.ensureDir(path.join(DOT_MINTLIFY, "mint"));
   shell.cd(path.join(HOME_DIR, ".mintlify", "mint"));
   let runYarn = true;
-  const gitInstalled = gitExists();
+  const gitInstalled = shell.which("git");
   let firstInstallation = false;
   const gitRepoInitialized = await pathExists(
     path.join(DOT_MINTLIFY, "mint", ".git")
@@ -155,12 +130,13 @@ const dev = async () => {
     runYarn = false;
   }
   shell.cd(CLIENT_PATH);
+  runYarn = !(await nodeModulesExists());
   if (internet && runYarn) {
     if (firstInstallation) {
       logger.succeed("Local Mintlify instance initialized");
     }
     logger.start("Updating dependencies...");
-
+    ensureYarn(logger);
     shellExec("yarn");
     if (firstInstallation) {
       logger.succeed("Installation complete");
@@ -168,10 +144,15 @@ const dev = async () => {
       logger.succeed("Dependencies updated");
     }
   }
-  if (!firstInstallation) {
-    await cleanOldFiles();
+
+  if (!(await nodeModulesExists())) {
+    logger.fail(`Dependencies weren\'t installed, run
+    
+    mintlify install
+    
+    `);
+    process.exit(1);
   }
-  await saveInvocationPath();
   await copyFiles(logger);
   run();
 };
