@@ -52,6 +52,8 @@ import {
   faFileShield,
   faTags,
   faGraduationCap,
+  faSquare1,
+  faSquare2,
 } from '@fortawesome/pro-duotone-svg-icons';
 import { faEarthAmericas } from '@fortawesome/pro-solid-svg-icons';
 
@@ -93,6 +95,8 @@ library.add(
   faFileShield,
   faTags,
   faGraduationCap,
+  faSquare1,
+  faSquare2,
   // Solids
   faEarthAmericas,
   // Brands
