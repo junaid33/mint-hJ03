@@ -4,6 +4,7 @@ import { scrapeGettingFileNameFromUrl } from "../scrapeGettingFileNameFromUrl.js
 import { scrapeGitBookPage } from "./scrapeGitBookPage.js";
 import combineNavWithEmptyGroupTitles from "../combineNavWithEmptyGroupTitles.js";
 import getLinksRecursively from "./getLinksRecursively.js";
+import alternateGroupTitle from "./alternateGroupTitle.js";
 
 export async function scrapeGitBookSection(
   html: string,
@@ -40,7 +41,7 @@ export async function scrapeGitBookSection(
       const pages = getLinksRecursively(linkSections, $);
 
       return {
-        group: sectionTitle || alternateTitle(firstLink, pages),
+        group: sectionTitle || alternateGroupTitle(firstLink, pages),
         pages: firstHref ? [firstHref, ...pages] : pages,
       };
     })
@@ -65,13 +66,4 @@ export async function scrapeGitBookSection(
   );
 
   return groupsConfigCleanPaths;
-}
-
-function alternateTitle(firstLink, pages) {
-  // Only assign titles to nested navigation menus outside a section.
-  // Others should not have a title so we can merge them into one section.
-  if (pages.length > 0) {
-    return firstLink?.text();
-  }
-  return "";
 }

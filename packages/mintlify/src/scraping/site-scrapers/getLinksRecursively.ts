@@ -1,4 +1,4 @@
-// Used by GitBook and ReadMe section scrapers
+// Used by Docusaurus, GitBook, and ReadMe section scrapers
 export default function getLinksRecursively(linkSections: any, $: any) {
   if (linkSections == null || linkSections.length === 0) {
     return [];
@@ -7,8 +7,12 @@ export default function getLinksRecursively(linkSections: any, $: any) {
   return linkSections
     .map((i, s) => {
       const subsection = $(s);
-      const link = subsection.children().first();
+      let link = subsection.children().first();
 
+      if (!link.attr("href")) {
+        // Docusaurus nests the <a> inside a <div>
+        link = link.find("a[href]").first();
+      }
       const linkHref = link.attr("href");
 
       // Skip missing links. For example, GitBook uses
@@ -16,6 +20,7 @@ export default function getLinksRecursively(linkSections: any, $: any) {
       // Skip external links until Mintlify supports them
       if (
         !linkHref ||
+        linkHref === "#" ||
         linkHref.startsWith("https://") ||
         linkHref.startsWith("http://")
       ) {

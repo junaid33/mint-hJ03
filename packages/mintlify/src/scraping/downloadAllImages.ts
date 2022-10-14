@@ -28,6 +28,11 @@ export default async function downloadAllImages(
   // Wait to all images to download before continuing
   const origToNewArray = await Promise.all(
     imageSrcs.map(async (origImageSrc: string) => {
+      // We do not support downloading base64 in-line images.
+      if (origImageSrc.startsWith("data:")) {
+        return undefined;
+      }
+
       // Add origin if the image tags are using relative sources
       const imageHref = origImageSrc.startsWith("http")
         ? origImageSrc

@@ -9,14 +9,13 @@ export default async function openNestedDocusaurusMenus(page: Page) {
     prevEncountered = encounteredHref;
     encounteredHref = await page.evaluate(
       (encounteredHref) => {
-        const icons: HTMLElement[] = Array.from(
-          document.querySelectorAll(".clean-btn.menu__caret")
+        const collapsible: HTMLElement[] = Array.from(
+          document.querySelectorAll(".menu__link.menu__link--sublist")
         );
 
         const linksFound: string[] = [];
-        icons.forEach(async (icon: HTMLElement) => {
-          const href =
-            icon?.parentElement?.firstElementChild?.getAttribute("href");
+        collapsible.forEach(async (collapsibleItem: HTMLElement) => {
+          const href = collapsibleItem?.getAttribute("href");
 
           // Should never occur but we keep it as a fail-safe
           if (href?.startsWith("https://") || href?.startsWith("http://")) {
@@ -25,7 +24,7 @@ export default async function openNestedDocusaurusMenus(page: Page) {
 
           // Click any links we haven't seen before
           if (href && !encounteredHref.includes(href)) {
-            icon?.click();
+            collapsibleItem?.click();
           }
 
           if (href) {

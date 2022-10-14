@@ -206,7 +206,7 @@ const run = () => {
   shell.cd(CLIENT_PATH);
   console.log(
     `🌿 ${Chalk.green(
-      "Navigate to your local preview at https://localhost:3000"
+      "Navigate to your local preview at http://localhost:3000"
     )}`
   );
   shell.exec("npm run dev", { async: true });
