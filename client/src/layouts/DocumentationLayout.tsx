@@ -5,7 +5,6 @@ import { config } from '@/config';
 import { SidebarLayout } from '@/layouts/SidebarLayout';
 import { documentationNav } from '@/metadata';
 import { Title } from '@/ui/Title';
-import { slugToTitle } from '@/utils/slugToTitle';
 
 import { Meta } from './ContentsLayout';
 
@@ -20,7 +19,6 @@ export function DocumentationLayout({
   navIsOpen: boolean;
   setNavIsOpen: any;
   meta: Meta;
-  slug?: string;
   children: ReactNode;
 }) {
   const router = useRouter();
@@ -29,12 +27,10 @@ export function DocumentationLayout({
     return <>{children}</>;
   }
 
-  const defaultTitle = slugToTitle(router.pathname);
-
   return (
     <>
       <Title suffix={router.pathname === '/' ? '' : config.name}>
-        {meta.sidebarTitle || meta.title || defaultTitle}
+        {meta.sidebarTitle || meta.title}
       </Title>
       <SidebarLayout nav={documentationNav} navIsOpen={navIsOpen} setNavIsOpen={setNavIsOpen}>
         {children}
