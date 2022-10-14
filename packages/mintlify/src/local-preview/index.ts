@@ -2,6 +2,7 @@ import Chalk from "chalk";
 import open from "open";
 import { promises as _promises } from "fs";
 import fse, { pathExists } from "fs-extra";
+import inquirer from "inquirer";
 import { isInternetAvailable } from "is-internet-available";
 import path from "path";
 import shell from "shelljs";
@@ -18,6 +19,25 @@ import listener from "./utils/listener.js";
 import { createPage, createMetadataFileFromPages } from "./utils/metadata.js";
 import { updateConfigFile } from "./utils/mintConfigFile.js";
 import { buildLogger, ensureYarn } from "../util.js";
+import clearCommand from "./helper-commands/clearCommand.js";
+
+const saveInvocationPath = async () => {
+  await fse.outputFile(LAST_INVOCATION_PATH_FILE_LOCATION, CMD_EXEC_PATH);
+};
+
+const cleanOldFiles = async () => {
+  const lastInvocationPathExists = await pathExists(
+    LAST_INVOCATION_PATH_FILE_LOCATION
+  );
+  if (!lastInvocationPathExists) return;
+  const lastInvocationPath = (
+    await readFile(LAST_INVOCATION_PATH_FILE_LOCATION)
+  ).toString();
+  if (lastInvocationPath !== CMD_EXEC_PATH) {
+    // clean if invoked in new location
+    await clearCommand();
+  }
+};
 
 const { readFile } = _promises;
 
@@ -90,8 +110,33 @@ const shellExec = (cmd: string) => {
 const nodeModulesExists = async () => {
   return pathExists(path.join(DOT_MINTLIFY, "mint", "client", "node_modules"));
 };
+
+const promptForYarn = async () => {
+  const yarnInstalled = shell.which("yarn");
+  if (!yarnInstalled) {
+    await inquirer
+      .prompt([
+        {
+          type: "confirm",
+          name: "confirm",
+          message: "yarn must be globally installed. Install yarn?",
+          default: true,
+        },
+      ])
+      .then(({ confirm }) => {
+        if (confirm) {
+          shell.exec("npm install --global yarn");
+        } else {
+          console.log("Installation cancelled.");
+        }
+      });
+  }
+};
+
 const dev = async () => {
   shell.cd(HOME_DIR);
+  await cleanOldFiles();
+  await promptForYarn();
   const logger = buildLogger("Starting a local Mintlify instance...");
   await fse.ensureDir(path.join(DOT_MINTLIFY, "mint"));
   shell.cd(path.join(HOME_DIR, ".mintlify", "mint"));
@@ -130,8 +175,7 @@ const dev = async () => {
     runYarn = false;
   }
   shell.cd(CLIENT_PATH);
-  runYarn = !(await nodeModulesExists());
-  if (internet && runYarn) {
+  if (internet && (runYarn || !(await nodeModulesExists()))) {
     if (firstInstallation) {
       logger.succeed("Local Mintlify instance initialized");
     }
@@ -153,6 +197,7 @@ const dev = async () => {
     `);
     process.exit(1);
   }
+  await saveInvocationPath();
   await copyFiles(logger);
   run();
 };
