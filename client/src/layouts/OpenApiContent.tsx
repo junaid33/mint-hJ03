@@ -1,3 +1,4 @@
+// TODO: Refactor this file to improve readability
 import { useEffect, useState } from 'react';
 
 import { Expandable } from '@/components/Expandable';
@@ -20,6 +21,10 @@ const getType = (schema: any) => {
     return 'file';
   }
   return schema.type;
+};
+
+const getTypeName = (type: string[] | string) => {
+  return Array.isArray(type) ? type.join(' | ') : type;
 };
 
 const getEnumDescription = (enumArray?: string[]): React.ReactNode | null => {
@@ -82,7 +87,9 @@ function ExpandableFields({ schema }: any) {
           .map(([property, value]: any) => {
             const isArrayExpandable = Boolean(value.items && value.items.properties == null);
             const type =
-              isArrayExpandable && value.items.type ? `${value.items.type}[]` : value.type;
+              isArrayExpandable && value.items.type
+                ? `${value.items.type}[]`
+                : getTypeName(value.type);
             return (
               <ResponseField
                 key={property}
