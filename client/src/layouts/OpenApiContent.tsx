@@ -1,4 +1,5 @@
 // TODO: Refactor this file to improve readability
+import { Tab, Tabs } from '@mintlify/components';
 import { useEffect, useState } from 'react';
 
 import { Expandable } from '@/components/Expandable';
@@ -50,6 +51,19 @@ function ExpandableFields({ schema }: any) {
     return null;
   }
 
+  if (schema.anyOf != null) {
+    return (
+      <Tabs>
+        {schema.anyOf.map((schema: any, i: number) => (
+          <Tab title={`${i + 1}`}>
+            {/* TODO: Explore whether properties can be assumed */}
+            <ExpandableFields schema={{ properties: schema }} />
+          </Tab>
+        ))}
+      </Tabs>
+    );
+  }
+
   if (schema.items) {
     const name = schema.items.title;
     return (
@@ -85,6 +99,10 @@ function ExpandableFields({ schema }: any) {
               : 0;
           })
           .map(([property, value]: any) => {
+            if (value == null) {
+              return null;
+            }
+
             const isArrayExpandable = Boolean(value.items && value.items.properties == null);
             const type =
               isArrayExpandable && value.items.type
@@ -275,23 +293,29 @@ export function OpenApiContent({ openapi, auth }: OpenApiContentProps) {
       <Api api={api} contentType={contentType} auth={auth} apiComponents={apiComponents} />
       <div>
         {Parameters?.length > 0 && (
-          <Heading level={3} id="parameters" nextElement={null}>
-            Parameters
-          </Heading>
+          <>
+            <Heading level={3} id="parameters" nextElement={null}>
+              Parameters
+            </Heading>
+            {Parameters}
+          </>
         )}
-        {Parameters}
         {Body?.length > 0 && (
-          <Heading level={3} id="body" nextElement={null}>
-            Body
-          </Heading>
+          <>
+            <Heading level={3} id="body" nextElement={null}>
+              Body
+            </Heading>
+            <ExpandableFields schema={bodySchema} />
+          </>
         )}
-        <ExpandableFields schema={bodySchema} />
         {responseSchema && (
-          <Heading level={3} id="response" nextElement={null}>
-            Response
-          </Heading>
+          <>
+            <Heading level={3} id="response" nextElement={null}>
+              Response
+            </Heading>
+            <ExpandableFields schema={responseSchema} />
+          </>
         )}
-        <ExpandableFields schema={responseSchema} />
       </div>
     </div>
   );
