@@ -9,7 +9,11 @@ import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 
 function DynamicLink(props: any) {
   if (props.href && isAbsoluteUrl(props.href)) {
-    return <a {...props} target="_blank" rel="noopener" />;
+    return (
+      <span className="not-prose">
+        <a {...props} target="_blank" rel="noopener" />
+      </span>
+    );
   }
   return <Link {...props} />;
 }
