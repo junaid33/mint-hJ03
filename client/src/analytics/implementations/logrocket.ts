@@ -1,4 +1,7 @@
+// TODO: Figure out how to dynamically import
 import * as Sentry from '@sentry/nextjs';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 
 import {
   AbstractAnalyticsImplementation,
@@ -10,18 +13,18 @@ export default class LogrocketAnalytics extends AbstractAnalyticsImplementation 
   trackEvent: any;
 
   init(implementationConfig: ConfigInterface) {
-    if (implementationConfig.appId && process.env.NODE_ENV === 'production') {
-      import('logrocket')
-        .then((_logrocket) => {
-          if (!this.initialized) {
-            _logrocket.init(implementationConfig.appId!);
-            this.trackEvent = _logrocket.track;
-            this.initialized = true;
-          }
-        })
-        .catch((e) => {
-          Sentry.captureException(e);
-        });
+    if (implementationConfig.appId) {
+      try {
+        if (!this.initialized && implementationConfig.appId) {
+          LogRocket.init(implementationConfig.appId);
+          this.trackEvent = LogRocket.track;
+          this.initialized = true;
+
+          setupLogRocketReact(LogRocket);
+        }
+      } catch (e) {
+        Sentry.captureException(e);
+      }
     }
   }
 
