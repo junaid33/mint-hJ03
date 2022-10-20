@@ -1,7 +1,6 @@
-// TODO: Figure out how to dynamically import
+// IMPROVEMENT OPPORTUNITY: Figure out how to dynamically import
 import * as Sentry from '@sentry/nextjs';
 import LogRocket from 'logrocket';
-import setupLogRocketReact from 'logrocket-react';
 
 import {
   AbstractAnalyticsImplementation,
@@ -19,8 +18,6 @@ export default class LogrocketAnalytics extends AbstractAnalyticsImplementation 
           LogRocket.init(implementationConfig.appId);
           this.trackEvent = LogRocket.track;
           this.initialized = true;
-
-          setupLogRocketReact(LogRocket);
         }
       } catch (e) {
         Sentry.captureException(e);

@@ -6584,11 +6584,6 @@ lodash@4.17.21, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.21:
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-logrocket-react@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/logrocket-react/-/logrocket-react-5.0.1.tgz#f71a1cfa539bafe581576a7a6b92dfc6104c5a7b"
-  integrity sha512-d5RAi1giur9Yv7/lDK/c2S1hviopN5K1XMMpfpSFRDG3Rr/j5RmGuvNHdXNTJUwGuxTVrpnKUOB43ceQMJfO1Q==
-
 logrocket@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-1.0.1.tgz#0555ec619d2db54a7b345c4e8df09baea835b176"
