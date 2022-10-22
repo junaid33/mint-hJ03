@@ -22,7 +22,7 @@ export function Logo() {
     );
   }
   if (config?.logo) {
-    return <Image className={clsx(className)} src={config?.logo} alt="logo" />;
+    return <img className={clsx(className)} src={config?.logo} alt="logo" />;
   }
   if (config?.name) {
     return (
