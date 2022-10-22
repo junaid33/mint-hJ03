@@ -1,11 +1,12 @@
 import NextDocument, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 
 import { config } from '@/config';
+import { BASEPATH } from '@/utils/api';
 
 const FAVICON_VERSION = 3;
 
 function v(href: string) {
-  return `${href}?v=${FAVICON_VERSION}`;
+  return `${BASEPATH}${href}?v=${FAVICON_VERSION}`;
 }
 
 export default class Document extends NextDocument {
