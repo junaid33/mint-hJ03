@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import clsx from 'clsx';
+import Link from 'next/link';
 import React from 'react';
+
 import { config } from '../config';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isBrandFontAwesomeIcon } from '@/utils/fontAwesome';
+import Icon from './Icon';
 
 type FooterProps = {
   children?: React.ReactChild;
@@ -35,11 +35,14 @@ const Social = ({ type, url }: SocialProps) => {
     return null;
   }
 
-  const iconPrefix = isBrandFontAwesomeIcon(type) ? 'fab' : 'fas';
   return (
-    <a href={url} className="hover:text-slate-500 dark:hover:text-slate-400">
+    <a href={url}>
       <span className="sr-only">{type}</span>
-      <FontAwesomeIcon icon={[iconPrefix, icon]} className="h-6 p-1" />
+      <Icon
+        icon={icon}
+        iconType="solid"
+        className="h-5 w-5 bg-slate-400 dark:bg-slate-500 hover:bg-slate-500 dark:hover:bg-slate-400"
+      />
     </a>
   );
 };
@@ -106,7 +109,7 @@ export function Footer({ previous, next, hasBottomPadding = true }: FooterProps)
             </Link>
           </p>
         </div>
-        <div className="flex space-x-6 text-slate-400 dark:text-slate-500">
+        <div className="flex space-x-6">
           {config?.footerSocials &&
             Array.isArray(config.footerSocials) &&
             config.footerSocials.map((social) => (
