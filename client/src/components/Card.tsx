@@ -1,10 +1,9 @@
 import { Card as GenericCard } from '@mintlify/components';
+import clsx from 'clsx';
 import isAbsoluteUrl from 'is-absolute-url';
 import Link from 'next/link';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
-import { config } from '@/config';
-import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import { ComponentIcon } from '@/ui/Icon';
 
 function DynamicLink(props: any) {
@@ -33,22 +32,14 @@ export function Card({
   href?: string;
   children: React.ReactNode;
 }) {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>();
-  useIsomorphicLayoutEffect(() => {
-    if (window.document.querySelector('html.dark')) {
-      setIsDarkMode(true);
-    }
-  }, []);
-
-  const activeConfigColor = isDarkMode ? config.colors?.light : config.colors?.primary;
-
   const Icon =
     typeof icon === 'string' ? (
       <ComponentIcon
         icon={icon}
         iconType={iconType as any}
-        color={color || activeConfigColor}
-        className="h-6 w-6"
+        color={color}
+        className="h-6 w-6 bg-primary dark:bg-primary-light"
+        overrideColor
       />
     ) : (
       icon
@@ -56,9 +47,11 @@ export function Card({
 
   const Card = ({ forwardHref, onClick }: { forwardHref?: string; onClick?: any }) => (
     <GenericCard
+      className={clsx(
+        href && 'cursor-pointer hover:border-primary dark:hover:border-primary-light'
+      )}
       title={title}
       icon={Icon}
-      hoverHighlightColour={href ? color || activeConfigColor : undefined}
       href={forwardHref}
       onClick={onClick}
     >

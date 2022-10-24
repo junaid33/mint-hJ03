@@ -5,6 +5,7 @@ type IconProps = {
   iconType?: 'brands' | 'duotone' | 'light' | 'regular' | 'sharp-solid' | 'solid' | 'thin';
   className?: string;
   color?: string;
+  overrideColor?: boolean;
 };
 
 export default function Icon({ icon, iconType, className, color }: IconProps) {
@@ -23,12 +24,12 @@ export default function Icon({ icon, iconType, className, color }: IconProps) {
   );
 }
 
-export function ComponentIcon({ icon, iconType, className, color }: IconProps) {
+export function ComponentIcon({ icon, iconType, className, color, overrideColor }: IconProps) {
   return (
     <Icon
       icon={icon}
       iconType={iconType}
-      className={clsx(className, !color && 'bg-slate-800 dark:bg-slate-100')}
+      className={clsx(className, !color && !overrideColor && 'bg-slate-800 dark:bg-slate-100')}
       color={color}
     />
   );
