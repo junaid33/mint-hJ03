@@ -262,6 +262,7 @@ function Nav({ nav, children, mobile = false }: any) {
 
 function TopLevelNav({ mobile }: { mobile: boolean }) {
   let { pathname } = useRouter();
+  const { selectedVersion } = useContext(VersionContext);
   const isRootAnchorActive =
     pathname.startsWith('/') &&
     !config.anchors?.some((anchor) => pathname.startsWith(`/${anchor.url}`));
@@ -290,11 +291,18 @@ function TopLevelNav({ mobile }: { mobile: boolean }) {
       {config?.anchors &&
         config.anchors
           .filter((anchor) => {
+            // Hide hidden anchors unless we are in the docs for that anchor
             if (!anchor.isDefaultHidden) {
               return true;
             }
-
             return pathname.startsWith(`/${anchor.url}`);
+          })
+          .filter((anchor) => {
+            // Hide anchors in other versions unless they are currently active
+            if (anchor.version == null) {
+              return true;
+            }
+            return anchor.version === selectedVersion || pathname.startsWith(`/${anchor.url}`);
           })
           .map((anchor, i) => {
             const isAbsolute = isAbsoluteUrl(anchor.url);

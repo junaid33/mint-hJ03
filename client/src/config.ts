@@ -35,6 +35,7 @@ type Anchor = {
   icon?: string;
   color?: string;
   isDefaultHidden?: boolean;
+  version?: string;
 };
 
 // To deprecate array types
