@@ -15,8 +15,12 @@ import {
 } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import { config } from '@/config';
+import { VersionContext } from '@/context/VersionContext';
 import { useActionKey } from '@/hooks/useActionKey';
+import { documentationNav } from '@/metadata';
 import { BASEPATH } from '@/utils/api';
+import { pathToVersionDict } from '@/utils/pathToVersionDict';
 
 const client = algoliasearch('M6VUKXZ4U5', '60f283c4bc8c9feb5c44da3df3c21ce3');
 const index = client.initIndex('docs');
@@ -187,6 +191,8 @@ function SearchHit({ active, hit }: { active: boolean; hit: Hit }) {
 
 export function SearchProvider({ children }: any) {
   const router = useRouter();
+  const { selectedVersion } = useContext(VersionContext);
+  const pathToVersion = pathToVersionDict(documentationNav, config);
   const [searchId, setSearchId] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState<string>('');
@@ -224,11 +230,12 @@ export function SearchProvider({ children }: any) {
       setHits([]);
       return;
     }
+
     const { hits } = await index.search(query, {
       filters: `orgID:${searchId}`,
     });
 
-    setHits(hits as Hit[]);
+    setHits(filterHitsToCurrentVersion(hits as Hit[], selectedVersion, pathToVersion));
   };
 
   const onSelectOption = (hit: any) => {
@@ -383,4 +390,21 @@ export function SearchButton({ children, ...props }: any) {
       {typeof children === 'function' ? children({ actionKey }) : children}
     </button>
   );
+}
+
+function filterHitsToCurrentVersion(
+  hits: Hit[],
+  selectedVersion: string,
+  pathToVersion: any
+): Hit[] {
+  return hits.filter((hit) => {
+    const version = pathToVersion[hit.slug];
+
+    // Pages without versioning are always included
+    if (!version) {
+      return true;
+    }
+
+    return version === selectedVersion;
+  });
 }

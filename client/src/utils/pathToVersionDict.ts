@@ -2,7 +2,12 @@ import { Config } from '@/config';
 import { Group, isGroup, GroupPage } from '@/metadata';
 
 import { getVersionOfPage } from './nav';
+import { optionallyRemoveLeadingSlash } from './optionallyRemoveLeadingSlash';
 
+/**
+ * Assumes page hrefs in navWithPageContext have a leading / but config page paths do not.
+ * Outputted dictionary will NOT have a leading / in the dictionary keys.
+ */
 export function pathToVersionDict(navWithPageContext: Group[], config: Config) {
   // Used to filter search results to pages in the current version
   if (!Array.isArray(navWithPageContext)) {
@@ -36,7 +41,8 @@ function recursivePathToVersionDict(navWithPageContext: GroupPage[], config: Con
     } else if (page.href) {
       versionDict = {
         ...versionDict,
-        [page.href]: page.version ?? getVersionOfPage(config, page.href),
+        [optionallyRemoveLeadingSlash(page.href)]:
+          page.version ?? getVersionOfPage(config, page.href),
       };
     }
   });
