@@ -2,10 +2,10 @@ import { optionallyRemoveLeadingSlash } from '@/utils/optionallyRemoveLeadingSla
 
 describe('optionallyRemoveLeadingSlash', () => {
   test('only removes one leading slash', () => {
-    expect(optionallyRemoveLeadingSlash('///')).equals('//');
+    expect(optionallyRemoveLeadingSlash('///')).toEqual('//');
   });
 
   test('ignores other characters', () => {
-    expect(optionallyRemoveLeadingSlash('abc///')).equals('abc///');
+    expect(optionallyRemoveLeadingSlash('abc///')).toEqual('abc///');
   });
 });
