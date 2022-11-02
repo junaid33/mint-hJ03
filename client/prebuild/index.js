@@ -44,19 +44,14 @@ const injectStaticFiles = (staticFiles) => {
 
 const injectConfig = (config) => {
   const path = __dirname + `/../src/mint.json`;
-  const buffer = Buffer.from(config);
-  fs.outputFileSync(path, buffer, { flag: 'w' });
+  fs.outputFileSync(path, JSON.stringify(config), { flag: 'w' });
   console.log('⚙️  Config file set properly as mint.json');
-  return JSON.parse(buffer.toString());
 };
 
 const injectFavicons = async (config) => {
-  const buffer = Buffer.from(config);
-  const configJSON = JSON.parse(buffer.toString());
+  if (config?.favicon == null) return;
 
-  if (configJSON?.favicon == null) return;
-
-  const desiredPath = resolve(__dirname + `/../public/${configJSON.favicon}`);
+  const desiredPath = resolve(__dirname + `/../public/${config.favicon}`);
   const favicon = fs.readFileSync(desiredPath);
   if (favicon == null) return;
   console.log('Generating favicons...');
@@ -100,8 +95,8 @@ const getAllFilesAndConfig = async () => {
     },
   });
   const openApiObj = await injectOpenApi(openApi);
-  const configObj = await injectConfig(config);
-  injectMarkdownFilesAndNav(markdownFiles, openApiObj, configObj);
+  injectConfig(config);
+  injectMarkdownFilesAndNav(markdownFiles, openApiObj, config);
   injectStaticFiles(staticFiles);
   injectFavicons(config);
 };
