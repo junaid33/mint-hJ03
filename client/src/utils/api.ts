@@ -124,22 +124,30 @@ export const getApiContext = (
   return { url, body, params, headers };
 };
 
-export const extractMethodAndEndpoint = (api: string) => {
-  const methodRegex = /^get|post|put|delete|patch/i;
+export const extractMethodAndEndpoint = (
+  api: string
+): { method?: string; endpoint: string; filename?: string } => {
+  const methodRegex = /(get|post|put|delete|patch)\s/i;
   const foundMethod = api.trim().match(methodRegex);
 
-  const endIndexOfMethod = foundMethod ? api.indexOf(foundMethod[0]) + foundMethod[0].length : 0;
+  const startIndexOfMethod = foundMethod ? api.indexOf(foundMethod[0]) : 0;
+  const endIndexOfMethod = foundMethod ? startIndexOfMethod + foundMethod[0].length - 1 : 0;
+  const filename = api.substring(0, startIndexOfMethod).trim();
 
   return {
-    method: foundMethod ? foundMethod[0].toUpperCase() : undefined,
+    method: foundMethod ? foundMethod[0].slice(0, -1).toUpperCase() : undefined,
     endpoint: api.substring(endIndexOfMethod).trim(),
+    filename: filename ? filename : undefined,
   };
 };
 
 export const extractBaseAndPath = (endpoint: string, apiBaseIndex = 0) => {
   let fullEndpoint;
+  const openApiServers = openApi?.files.reduce((acc, file) => {
+    return acc.concat(file.openapi.servers);
+  }, []);
   const baseUrl =
-    config.api?.baseUrl ?? openApi?.servers?.map((server: { url: string }) => server.url);
+    config.api?.baseUrl ?? openApiServers?.map((server: { url: string }) => server.url);
   if (isAbsoluteUrl(endpoint)) {
     fullEndpoint = endpoint;
   } else if (baseUrl) {
