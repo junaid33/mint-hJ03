@@ -143,7 +143,7 @@ export const extractMethodAndEndpoint = (
 
 export const extractBaseAndPath = (endpoint: string, apiBaseIndex = 0) => {
   let fullEndpoint;
-  const openApiServers = openApi?.files.reduce((acc, file) => {
+  const openApiServers = openApi?.files?.reduce((acc, file) => {
     return acc.concat(file.openapi.servers);
   }, []);
   const baseUrl =
