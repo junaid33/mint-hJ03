@@ -177,7 +177,7 @@ export function OpenApiContent({ openapi, auth }: OpenApiContentProps) {
   const parameters = getAllParameters(path, operation);
 
   const Parameters = parameters.map((parameter: any, i: number) => {
-    const { name, description, required, schema, in: paramType } = parameter;
+    const { name, description, required, schema, in: paramType, example } = parameter;
     const paramName = { [paramType]: name };
     const type = schema == null ? parameter?.type : getType(schema);
     apiComponents.push({
@@ -205,8 +205,8 @@ export function OpenApiContent({ openapi, auth }: OpenApiContentProps) {
         },
         {
           type: 'mdx',
-          name: 'enum',
-          value: schema?.enum,
+          name: 'placeholder',
+          value: example || schema?.enum,
         },
       ],
     });
