@@ -1,5 +1,4 @@
 import axios from 'axios';
-import parse from 'html-react-parser';
 import React from 'react';
 import { useState, useEffect } from 'react';
 
@@ -7,7 +6,11 @@ import { RequestExample, ResponseExample } from '@/components/ApiExample';
 import { Editor } from '@/components/Editor';
 import { Component } from '@/enums/components';
 import { CopyToClipboard } from '@/icons/CopyToClipboard';
+import { APIBASE_CONFIG_STORAGE } from '@/ui/Api';
+import { getParamGroupsFromApiComponents } from '@/utils/api';
+import { generateRequestExamples } from '@/utils/generateAPIExamples';
 import { getOpenApiOperationMethodAndEndpoint } from '@/utils/getOpenApiContext';
+import { htmlToReactComponent } from '@/utils/htmlToReactComponent';
 
 const responseHasExample = (response: any) => {
   return (
@@ -26,11 +29,33 @@ type ApiComponent = {
 
 export function ApiSupplemental({
   apiComponents,
+  api,
   openapi,
+  auth,
+  authName,
 }: {
   apiComponents: ApiComponent[];
+  api?: string;
   openapi?: string;
+  auth?: string;
+  authName?: string;
 }) {
+  const [apiBaseIndex, setApiBaseIndex] = useState(0);
+
+  useEffect(() => {
+    const configuredApiBaseIndex = window.localStorage.getItem(APIBASE_CONFIG_STORAGE);
+    if (configuredApiBaseIndex != null) {
+      setApiBaseIndex(parseInt(configuredApiBaseIndex, 10));
+    }
+  }, []);
+
+  const { operation, path } =
+    openapi != null
+      ? getOpenApiOperationMethodAndEndpoint(openapi)
+      : { operation: undefined, path: undefined };
+  //const parameters = getAllOpenApiParameters(path, operation);
+  const paramGroups = getParamGroupsFromApiComponents(apiComponents, auth);
+
   // Response and Request Examples from MDX
   const [mdxRequestExample, setMdxRequestExample] = useState<JSX.Element | undefined>(undefined);
   const [mdxResponseExample, setMdxResponseExample] = useState<JSX.Element | undefined>(undefined);
@@ -42,12 +67,6 @@ export function ApiSupplemental({
     const responseComponentSkeleton = apiComponents.find((apiComponent) => {
       return apiComponent.type === Component.ResponseExample;
     });
-
-    const htmlToReactComponent = (html: string) => {
-      // Convert newlines to breaks to be properly parsed
-      // return parse(html.replaceAll('\n', '<br />'));
-      return parse(html);
-    };
 
     const request: JSX.Element | undefined = requestComponentSkeleton && (
       <RequestExample
@@ -77,7 +96,6 @@ export function ApiSupplemental({
     if (openapi == null) {
       return;
     }
-    const { operation } = getOpenApiOperationMethodAndEndpoint(openapi);
     if (operation?.responses != null) {
       const responseExamplesOpenApi = Object.values(operation?.responses)
         .map((resp: any) => {
@@ -91,7 +109,7 @@ export function ApiSupplemental({
         setOpenApiResponseExamples(responseExamplesOpenApi);
       }
     }
-  }, [openapi]);
+  }, [operation, path]);
 
   useEffect(() => {
     if (openApiResponseExamples.length > 0) {
@@ -152,7 +170,9 @@ export function ApiSupplemental({
 
   return (
     <div className="space-y-6 pb-6">
-      {mdxRequestExample}
+      {mdxRequestExample
+        ? mdxRequestExample
+        : generateRequestExamples(api || openapi, apiBaseIndex, paramGroups, auth, authName)}
       {/* TODO - Make it so that you can see both the openapi and response example in 1 view if they're both defined */}
       {highlightedExamples.length === 0 && mdxResponseExample}
       {highlightedExamples.length > 0 && (
