@@ -108,7 +108,7 @@ function SearchHit({
               </>
             ))}
             {hit._highlightResult.title?.value && (
-              <div>
+              <div className="mr-2">
                 <span
                   className={clsx(
                     'rounded-full py-px px-2 text-xs',
@@ -121,7 +121,7 @@ function SearchHit({
               </div>
             )}
             <div
-              className="mt-1 truncate"
+              className="truncate"
               dangerouslySetInnerHTML={{ __html: hit._highlightResult.heading?.value }}
             ></div>
           </div>
@@ -179,7 +179,7 @@ function SearchHit({
               </>
             ))}
             {hit._highlightResult.title?.value && (
-              <div>
+              <div className="mr-2">
                 <span
                   className={clsx(
                     'rounded-full py-px px-2 text-xs',
@@ -192,7 +192,7 @@ function SearchHit({
               </div>
             )}
             <div
-              className="mt-1 truncate"
+              className="truncate"
               dangerouslySetInnerHTML={{ __html: hit._highlightResult.subheading?.value }}
             ></div>
           </div>
