@@ -25,7 +25,13 @@ export default function ApiInput({
   const activeParamGroupName = currentActiveParamGroup.name;
 
   let InputField;
-  switch (param.type?.toLowerCase()) {
+
+  const lowerCaseParamType = param.type?.toLowerCase();
+
+  console.log(lowerCaseParamType);
+  console.log(param.properties);
+
+  switch (lowerCaseParamType) {
     case 'boolean':
       InputField = (
         <div className="relative">
@@ -103,10 +109,10 @@ export default function ApiInput({
         </button>
       );
       break;
-    case 'object':
+    case lowerCaseParamType === 'object' && param.properties ? lowerCaseParamType : null:
       InputField = (
         <button
-          className="relative flex items-center w-full h-4 justify-end "
+          className="relative flex items-center w-full h-6 justify-end "
           onClick={() => setIsExpandedProperties(!isExpandedProperties)}
         >
           <span className="fill-slate-500 dark:fill-slate-400 group-hover:fill-slate-700 dark:group-hover:fill-slate-200">
@@ -163,7 +169,7 @@ export default function ApiInput({
       break;
   }
 
-  const isObject = param.type === 'object';
+  const isObject = param.type === 'object' && param.properties;
 
   return (
     <div
