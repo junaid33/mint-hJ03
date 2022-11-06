@@ -163,20 +163,22 @@ export default function ApiInput({
       break;
   }
 
+  const isObject = param.type === 'object';
+
   return (
     <div
       className={clsx(
-        param.type === 'object' &&
-          'px-2 py-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-md'
+        isObject &&
+          'px-2 py-1 -mx-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-md'
       )}
     >
-      <div className="flex items-center space-x-2 group">
+      <div className={clsx('flex items-center space-x-2 group')}>
         <div
           className={clsx(
             'flex items-center flex-1 font-mono text-slate-600 dark:text-slate-300',
-            param.type === 'object' && 'cursor-pointer'
+            isObject && 'cursor-pointer'
           )}
-          onClick={() => param.type === 'object' && setIsExpandedProperties(!isExpandedProperties)}
+          onClick={() => isObject && setIsExpandedProperties(!isExpandedProperties)}
         >
           {param.name}
           {param.required && <span className="text-red-600 dark:text-red-400">*</span>}
@@ -184,7 +186,7 @@ export default function ApiInput({
         <div className="flex-initial w-1/3">{InputField}</div>
       </div>
       {isExpandedProperties && param.properties && (
-        <div className="mt-2 border-t pt-3 border-slate-200 dark:border-slate-700 space-y-2">
+        <div className="mt-2 border-t pt-2 pb-1 border-slate-100 dark:border-slate-700 space-y-2">
           {param.properties.map((property) => (
             <ApiInput
               param={property}

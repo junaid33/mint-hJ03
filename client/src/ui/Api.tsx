@@ -132,7 +132,7 @@ export function Api({
 
   return (
     <div className="mt-4 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 rounded-md truncate">
-      <div className="px-3 pt-3 pb-4">
+      <div className="px-3.5 pt-3.5 pb-4">
         <div className="text-sm md:text-base flex items-center space-x-2">
           {method && (
             <div
