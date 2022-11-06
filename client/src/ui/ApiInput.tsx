@@ -192,7 +192,7 @@ export default function ApiInput({
         <div className="flex-initial w-1/3">{InputField}</div>
       </div>
       {isExpandedProperties && param.properties && (
-        <div className="mt-2 border-t pt-2 pb-1 border-slate-100 dark:border-slate-700 space-y-2">
+        <div className="mt-1 border-t pt-2 pb-1 border-slate-100 dark:border-slate-700 space-y-2">
           {param.properties.map((property) => (
             <ApiInput
               param={property}
