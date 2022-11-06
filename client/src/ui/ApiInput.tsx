@@ -28,7 +28,6 @@ export default function ApiInput({
 
   // Todo: support multiple types
   const lowerCaseParamType = typeof param.type === 'string' && param.type?.toLowerCase();
-
   switch (lowerCaseParamType) {
     case 'boolean':
       InputField = (
