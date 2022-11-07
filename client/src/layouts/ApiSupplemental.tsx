@@ -96,6 +96,7 @@ export function ApiSupplemental({
     if (openapi == null) {
       return;
     }
+    const { operation } = getOpenApiOperationMethodAndEndpoint(openapi);
     if (operation?.responses != null) {
       const responseExamplesOpenApi = Object.values(operation?.responses)
         .map((resp: any) => {
@@ -109,7 +110,7 @@ export function ApiSupplemental({
         setOpenApiResponseExamples(responseExamplesOpenApi);
       }
     }
-  }, [operation, path]);
+  }, [openapi]);
 
   useEffect(() => {
     if (openApiResponseExamples.length > 0) {
@@ -168,11 +169,24 @@ export function ApiSupplemental({
     </pre>
   );
 
+  let requestExamples = mdxRequestExample;
+  if (
+    !apiComponents.some((apiComponent) => {
+      return apiComponent.type === Component.RequestExample;
+    })
+  ) {
+    requestExamples = generateRequestExamples(
+      api || openapi,
+      apiBaseIndex,
+      paramGroups,
+      auth,
+      authName
+    );
+  }
+
   return (
     <div className="space-y-6 pb-6">
-      {mdxRequestExample
-        ? mdxRequestExample
-        : generateRequestExamples(api || openapi, apiBaseIndex, paramGroups, auth, authName)}
+      {requestExamples}
       {/* TODO - Make it so that you can see both the openapi and response example in 1 view if they're both defined */}
       {highlightedExamples.length === 0 && mdxResponseExample}
       {highlightedExamples.length > 0 && (

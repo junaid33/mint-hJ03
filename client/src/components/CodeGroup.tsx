@@ -96,11 +96,7 @@ export function CodeGroup({ children, isSmallText }: CodeGroupProps) {
       <div className="flex">
         <Tab.List className="flex text-slate-400 text-xs leading-6 overflow-hidden rounded-tl-xl pt-2">
           {children.map((child: any, tabIndex: number) => (
-            <TabItem
-              key={child.props.filename + 'TabItem'}
-              myIndex={tabIndex}
-              selectedIndex={selectedIndex}
-            >
+            <TabItem key={child.props.filename} myIndex={tabIndex} selectedIndex={selectedIndex}>
               {child.props.filename}
             </TabItem>
           ))}
