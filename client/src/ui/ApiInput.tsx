@@ -21,14 +21,8 @@ export default function ApiInput({
   ) => void;
   path?: string[];
 }) {
-  const [isExpandedProperties, setIsExpandedProperties] = useState(false);
+  const [isExpandedProperties, setIsExpandedProperties] = useState(Boolean(param.required));
   const activeParamGroupName = currentActiveParamGroup.name;
-
-  useEffect(() => {
-    if (param.required) {
-      setIsExpandedProperties(true);
-    }
-  }, []);
 
   let InputField;
 
