@@ -204,6 +204,12 @@ export function ContentsLayout({
   const isApi = meta.api || meta.openapi;
   const isWideSize = meta.size === 'wide';
 
+  // Avoid hydration errors
+  const [mdxContent, setMdxContent] = useState(<></>);
+  useEffect(() => {
+    setMdxContent(<MDXProvider components={{ Heading }}>{children}</MDXProvider>);
+  }, [children]);
+
   return (
     <div
       className={clsx(
@@ -228,7 +234,7 @@ export function ContentsLayout({
       />
       <ContentsContext.Provider value={{ registerHeading, unregisterHeading } as any}>
         <div id="content-wrapper" className="relative z-20 prose prose-slate mt-8 dark:prose-dark">
-          <MDXProvider components={{ Heading }}>{children}</MDXProvider>
+          {mdxContent}
         </div>
       </ContentsContext.Provider>
 
