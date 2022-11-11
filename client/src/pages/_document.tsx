@@ -1,4 +1,5 @@
 import NextDocument, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import Script from 'next/script';
 
 import { config } from '@/config';
 import { BASEPATH } from '@/utils/api';
@@ -29,10 +30,6 @@ export default class Document extends NextDocument {
           <meta name="msapplication-TileColor" content={config.colors?.primary} />
           <meta name="msapplication-config" content={v('/favicons/browserconfig.xml')} />
           {/* TODO: Fix custom script setup and remove */}
-          <script
-            type="module"
-            src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"
-          ></script>
           <link
             rel="stylesheet"
             href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"
@@ -66,6 +63,12 @@ export default class Document extends NextDocument {
         >
           <Main />
           <NextScript />
+          {/* TODO: Fix custom script setup and remove */}
+          <Script
+            strategy="beforeInteractive"
+            type="module"
+            src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"
+          />
         </body>
       </Html>
     );
