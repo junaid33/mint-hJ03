@@ -28,6 +28,15 @@ export default class Document extends NextDocument {
           <meta name="theme-color" content="#ffffff" />
           <meta name="msapplication-TileColor" content={config.colors?.primary} />
           <meta name="msapplication-config" content={v('/favicons/browserconfig.xml')} />
+          {/* TODO: Fix custom script setup and remove */}
+          <script
+            type="module"
+            src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"
+          ></script>
+          <link
+            rel="stylesheet"
+            href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `
