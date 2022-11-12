@@ -1,4 +1,5 @@
-import axios from 'axios';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-json';
 import React from 'react';
 import { useState, useEffect } from 'react';
 
@@ -90,7 +91,6 @@ export function ApiSupplemental({
   }, [apiComponents]);
   // Open API generated response examples
   const [openApiResponseExamples, setOpenApiResponseExamples] = useState<string[]>([]);
-  const [highlightedExamples, setHighlightedExamples] = useState<string[]>([]);
 
   useEffect(() => {
     if (openapi == null) {
@@ -111,20 +111,6 @@ export function ApiSupplemental({
       }
     }
   }, [openapi]);
-
-  useEffect(() => {
-    if (openApiResponseExamples.length > 0) {
-      const highlightPromises = openApiResponseExamples.map((example) => {
-        return axios.post('/api/syntax-highlighted-json', {
-          json: example,
-        });
-      });
-      Promise.all(highlightPromises).then((responses) => {
-        const highlightedExamples = responses.map((response) => response.data.highlightedJson);
-        setHighlightedExamples(highlightedExamples);
-      });
-    }
-  }, [openApiResponseExamples]);
 
   useEffect(() => {
     // Hacky approach to wait 50ms until document loads
@@ -157,13 +143,13 @@ export function ApiSupplemental({
     }, 50);
   }, []);
 
-  const ResponseExampleChild = ({ code }: { code: any }) => (
+  const ResponseExampleChild = ({ code }: { code: string }) => (
     <pre className="language-json">
       <CopyToClipboard />
       <code
         className="language-json"
         dangerouslySetInnerHTML={{
-          __html: code,
+          __html: Prism.highlight(code, Prism.languages.json, 'json'),
         }}
       />
     </pre>
@@ -188,15 +174,17 @@ export function ApiSupplemental({
     <div className="space-y-6 pb-6">
       {requestExamples}
       {/* TODO - Make it so that you can see both the openapi and response example in 1 view if they're both defined */}
-      {highlightedExamples.length === 0 && mdxResponseExample}
-      {highlightedExamples.length > 0 && (
+      {openApiResponseExamples.length === 0 && mdxResponseExample}
+      {openApiResponseExamples.length > 0 && (
         <ResponseExample
           children={{
             props: {
               filename: 'Response Example',
-              children: highlightedExamples.map((code, i) => {
+              children: openApiResponseExamples.map((code, i) => {
                 if (code === '') return null;
-                return <ResponseExampleChild code={code} key={`example-${i}`} />;
+                return (
+                  <ResponseExampleChild code={JSON.stringify(code, null, 2)} key={`example-${i}`} />
+                );
               }),
             },
           }}
