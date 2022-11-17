@@ -11,6 +11,7 @@ import AnalyticsContext from '@/analytics/AnalyticsContext';
 import AnalyticsMediator from '@/analytics/AnalyticsMediator';
 import FakeAnalyticsMediator from '@/analytics/FakeAnalyticsMediator';
 import GA4Script from '@/analytics/GA4Script';
+import GTMScript from '@/analytics/GTMScript';
 import { config } from '@/config';
 import { VersionContextController } from '@/context/VersionContext';
 import Intercom from '@/integrations/Intercom';
