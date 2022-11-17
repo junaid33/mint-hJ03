@@ -122,6 +122,7 @@ export default function App(props: any) {
             ))}
           </Head>
           <GA4Script ga4={analytics.ga4} />
+          <GTMScript gtm={analytics.gtm} />
           <SearchProvider>
             <Header
               hasNav={Boolean(config.navigation?.length)}
