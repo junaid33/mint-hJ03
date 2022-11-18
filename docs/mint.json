@@ -44,7 +44,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["quickstart"]
+      "pages": ["quickstart", "local-testing"]
     },
     {
       "group": "Settings",
