@@ -5,7 +5,7 @@ const config = require('./src/mint.json');
 
 const ctaColors = {};
 config?.anchors?.forEach((anchor, i) => {
-  if (anchor.color) {
+  if (anchor.color && typeof anchor.color === 'string') {
     ctaColors[`anchor-${i}`] = anchor.color.toLowerCase();
   }
 });
