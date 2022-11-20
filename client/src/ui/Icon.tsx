@@ -15,7 +15,7 @@ export default function Icon({ icon, iconType, className, color }: IconProps) {
     <svg
       className={className}
       style={{
-        WebkitMaskImage: `url(https://deo472wkghxhm.cloudfront.net/${type}/${icon}.svg)`,
+        WebkitMaskImage: `url(https://mintlify.b-cdn.net/${type}/${icon}.svg)`,
         WebkitMaskRepeat: 'no-repeat',
         WebkitMaskPosition: 'center',
         backgroundColor: color,
