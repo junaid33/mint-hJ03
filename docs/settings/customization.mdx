@@ -1,11 +1,9 @@
 ---
 title: "Global Settings (mint.json)"
-description: "Mintlify gives you complete control over the look and feel of your documentation."
+description: "Mintlify gives you complete control over the look and feel of your documentation using the mint.json file"
 ---
 
-The `mint.json` file defines your documentation's navigation, colors, logos, favicon, footer socials, and more.
-
-All `mint.json` properties are optional except for `name` and `navigation`.
+<Tip>All mint.json properties are optional except for name and navigation.</Tip>
 
 ## Properties
 
@@ -106,14 +104,6 @@ Example: `mintlify`
 <ResponseField name="versions" type="string[]">
   Array of version names. Only use this if you want to show different versions
   of docs with a dropdown in the navigation bar.
-  <img
-    class="block h-8 dark:hidden"
-    src="/docs/img/version-dropdown-light.png"
-  />
-  <img
-    class="hidden h-8 dark:block"
-    src="/docs/img/version-dropdown-dark.png"
-  />
 </ResponseField>
 
 <ResponseField name="anchors" type="Anchor[]">
@@ -209,7 +199,7 @@ Example: `mintlify`
   </Expandable>
 </ResponseField>
 
-## Example Configuration
+<Accordion title="View Example Configuration">
 
 ```json mint.json
 {
@@ -283,3 +273,5 @@ Example: `mintlify`
   }
 }
 ```
+
+</Accordion>

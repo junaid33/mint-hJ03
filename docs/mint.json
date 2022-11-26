@@ -72,16 +72,16 @@
         "components/code",
         "components/callout",
         "components/embed",
-        "components/table",
-        {
-          "group": "Advanced Components",
-          "pages": [
-            "components/advanced/accordion",
-            "components/advanced/card",
-            "components/advanced/frame",
-            "components/advanced/tooltip"
-          ]
-        }
+        "components/table"
+      ]
+    },
+    {
+      "group": "Advanced Components",
+      "pages": [
+        "components/advanced/accordion",
+        "components/advanced/card",
+        "components/advanced/frame",
+        "components/advanced/tooltip"
       ]
     },
     {
