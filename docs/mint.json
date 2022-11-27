@@ -51,7 +51,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["quickstart", "local-testing"]
+      "pages": ["quickstart", "development"]
     },
     {
       "group": "Settings",
@@ -81,6 +81,7 @@
         "components/advanced/accordion",
         "components/advanced/card",
         "components/advanced/frame",
+        "components/advanced/tabs",
         "components/advanced/tooltip"
       ]
     },
