@@ -1,11 +1,9 @@
 ---
 title: "Versioning"
-description: "Optionally, you can have separate versions for your docs."
+description: "Optionally, you can have separate versions for your docs. Mintlify lets you toggle content based on your docs version."
 ---
 
-Some times you release a V2 of your product and want to have entirely new docs. We let you hide content based on your docs version.
-
-## Versioning Setup
+## Setup
 
 Add `"versions": ["v2", "v1"]` to your `mint.json` file where "v1" and "v2" are the names of your versions. You can put any number of versions in this array.
 
@@ -61,14 +59,14 @@ In the example below, pages in `Nested Group V1` only show up when `v1` docs are
         "pages": [
             {
                 "group": "Nested Group V1",
-                "pages": ["page-w-version", "page-w-version-2"],
+                "pages": ["page-with-version", "other-page-with-version"],
                 "version": "v1"
             },
             {
                 "group": "Nested Group Always Shows",
-                "pages": ["page", "page-2"],
+                "pages": ["nested-page", "other-nested-page"],
             },
-            "other-page"
+            "page"
         ]
     }
 ]
