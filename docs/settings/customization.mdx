@@ -3,8 +3,6 @@ title: "Global Settings (mint.json)"
 description: "Mintlify gives you complete control over the look and feel of your documentation using the mint.json file"
 ---
 
-<Tip>All mint.json properties are optional except for name and navigation.</Tip>
-
 ## Properties
 
 <ResponseField name="name" type="string" required>
@@ -12,6 +10,25 @@ Name of your project. Used for the global title.
 
 Example: `mintlify`
 
+</ResponseField>
+
+<ResponseField name="navigation" type="Navigation[]" required>
+  An array of groups with all the pages within that group
+  <Expandable title="Navigation">
+    <ResponseField name="group" type="string">
+    The name of the group.
+
+    Example: `Settings`
+
+    </ResponseField>
+    <ResponseField name="pages" type="string[]">
+    The relative paths to the markdown files that will serve as pages.
+
+    Example: `["customization", "page"]`
+
+    </ResponseField>
+
+  </Expandable>
 </ResponseField>
 
 <ResponseField name="logo" type="string or object">
@@ -77,25 +94,6 @@ Example: `mintlify`
     </ResponseField>
     <ResponseField name="url" type="string">
     The url once you click on the button. Example: `https://mintlify.com/contact`
-    </ResponseField>
-
-  </Expandable>
-</ResponseField>
-
-<ResponseField name="navigation" type="Navigation[]" required>
-  An array of groups with all the pages within that group
-  <Expandable title="Navigation">
-    <ResponseField name="group" type="string">
-    The name of the group.
-
-    Example: `Settings`
-
-    </ResponseField>
-    <ResponseField name="pages" type="string[]">
-    The relative paths to the markdown files that will serve as pages.
-
-    Example: `["customization", "page"]`
-
     </ResponseField>
 
   </Expandable>
