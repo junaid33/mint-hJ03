@@ -1,5 +1,5 @@
 {
-  "name": "@mintlify/mint-validator",
+  "name": "@mintlify/mint-validation",
   "version": "0.0.1",
   "description": "Validates mint.json files",
   "keywords": [
@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "publish-package": "npm run build && npm publish --access public"
   },
   "jest": {
     "verbose": true,
