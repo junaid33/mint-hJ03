@@ -29,7 +29,7 @@ export function useColors(): Colors {
     primaryUltraLight: config?.colors?.ultraLight ?? '#DCFCE7',
     primaryUltraDark: config?.colors?.ultraDark ?? '#14532D',
     backgroundLight: config?.colors?.background?.light ?? '#ffffff',
-    backgroundDark: config?.colors?.background?.dark ?? '#0C1322',
+    backgroundDark: config?.colors?.background?.dark ?? '#1E1E20',
     anchors,
   };
 }
