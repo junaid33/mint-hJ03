@@ -291,13 +291,13 @@ export function Header({
                 <VersionSelect />
               </div>
               <div className="relative flex-none bg-white lg:w-64 xl:w-80 dark:bg-slate-900 pointer-events-auto rounded-md">
-                <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-500/10 shadow-sm py-1.5 pl-2 pr-3 bg-slate-50 hover:ring-slate-900/20 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
+                <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 text-zinc-400 dark:text-white/50 rounded-md ring-1 ring-slate-500/10 shadow-sm py-1.5 pl-2 pr-3 bg-zinc-50 hover:ring-slate-900/20 dark:hover:ring-white/10 dark:bg-background-dark dark:brightness-[1.35] dark:ring-1 dark:hover:brightness-150">
                   {({ actionKey }: any) => (
                     <>
                       <Icon
                         icon="magnifying-glass"
                         iconType="solid"
-                        className="h-4 w-4 ml-1 mr-3 flex-none bg-slate-500 hover:bg-slate-600 dark:bg-slate-400 dark:hover:bg-slate-300"
+                        className="h-4 w-4 ml-1 mr-3 flex-none bg-zinc-500 hover:bg-slate-600 dark:bg-white/50 dark:hover:bg-white/70"
                       />
                       Search...
                       {actionKey && (

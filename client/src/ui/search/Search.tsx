@@ -331,7 +331,7 @@ export function SearchProvider({ subdomain, children }: { subdomain: string; chi
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="mx-auto max-w-3xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-md bg-white dark:bg-slate-900 bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all">
+                <Dialog.Panel className="mx-auto max-w-3xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-md bg-white dark:bg-background-dark bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all">
                   <Combobox onChange={(option) => onSelectOption(option)} value={query}>
                     <div className="relative flex items-center">
                       <Icon
