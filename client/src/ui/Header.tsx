@@ -321,7 +321,7 @@ export function Header({
                   </ul>
                 </nav>
                 <div className="flex items-center border-l border-slate-100 ml-6 pl-6 dark:border-slate-800">
-                  <ThemeToggle panelClassName="mt-8" />
+                  <ThemeToggle />
                 </div>
               </div>
               <SearchButton className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
