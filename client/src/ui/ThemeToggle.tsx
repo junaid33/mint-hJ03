@@ -26,7 +26,7 @@ function MoonIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" className="hidden dark:block">
       <path
-        className="fill-indigo-900"
+        className="fill-indigo-800"
         d="M7.914 0a6.874 6.874 0 00-1.26 3.972c0 3.875 3.213 7.017 7.178 7.017.943 0 1.843-.178 2.668-.5C15.423 13.688 12.34 16 8.704 16 4.174 16 .5 12.41.5 7.982.5 3.814 3.754.389 7.914 0z"
         fill-rule="evenodd"
       ></path>
@@ -125,7 +125,7 @@ export function ThemeToggle() {
       <span className="sr-only">Switch theme</span>
       <span
         aria-hidden="true"
-        className="translate-x-0 dark:translate-x-3 border border-zinc-300/60 bg-background-light dark:border-indigo-900 dark:bg-background-dark p-[3px] pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white ring-0 transition-transform duration-200 ease-in-out"
+        className="translate-x-0 dark:translate-x-3 border border-zinc-300/60 bg-background-light dark:border-indigo-900/80 dark:bg-background-dark p-[3px] pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white ring-0 transition-transform duration-200 ease-in-out"
       >
         <SunIcon />
         <MoonIcon />
