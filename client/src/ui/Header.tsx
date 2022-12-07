@@ -15,7 +15,7 @@ import getLogoHref from '@/utils/getLogoHref';
 
 import { TopbarCta } from '../types/config';
 import Icon from './Icon';
-import { ThemeSelect, ThemeToggle } from './ThemeToggle';
+import { ThemeToggle } from './ThemeToggle';
 import { VersionSelect } from './VersionSelect';
 
 export function NavPopover({
@@ -84,7 +84,12 @@ export function NavPopover({
           <ul className="space-y-6">
             <NavItems />
           </ul>
-          <ThemeSelect />
+          <div className="mt-8 flex flex-row gap-4">
+            <p className="font-normal inline">Website theme</p>
+            <div className="inline relative">
+              <ThemeToggle />
+            </div>
+          </div>
         </div>
       </Dialog>
     </div>
@@ -316,7 +321,7 @@ export function Header({
                   </ul>
                 </nav>
                 <div className="flex items-center border-l border-slate-100 ml-6 pl-6 dark:border-slate-800">
-                  <ThemeToggle panelClassName="mt-8" />
+                  <ThemeToggle />
                 </div>
               </div>
               <SearchButton className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
