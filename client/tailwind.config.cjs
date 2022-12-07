@@ -1,14 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const svgToDataUri = require('mini-svg-data-uri');
 const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
-const config = require('./src/mint.json');
-
-const ctaColors = {};
-config?.anchors?.forEach((anchor, i) => {
-  if (anchor.color && typeof anchor.color === 'string') {
-    ctaColors[`anchor-${i}`] = anchor.color.toLowerCase();
-  }
-});
 
 module.exports = {
   content: [
@@ -52,14 +44,13 @@ module.exports = {
         code: {
           highlight: 'rgb(125 211 252 / 0.1)',
         },
-        primary: config?.colors?.primary ?? '#a888ff',
-        'primary-light': config?.colors?.light ?? '#c4b5fd',
-        'primary-dark': config?.colors?.dark ?? '#7c3aed',
-        'primary-ultralight': config?.colors?.ultraLight ?? '#ddd6fe',
-        'primary-ultradark': config?.colors?.ultraDark ?? '#5b21b6',
-        'background-light': config?.colors?.background?.light ?? '#ffffff',
-        'background-dark': config?.colors?.background?.dark ?? '#0C1322',
-        ...ctaColors,
+        primary: 'var(--primary)',
+        'primary-light': 'var(--primary-light)',
+        'primary-dark': 'var(--primary-dark)',
+        'primary-ultralight': 'var(--primary-ultra-light)',
+        'primary-ultradark': 'var(--primary-ultra-dark)',
+        'background-light': 'var(--background-light)',
+        'background-dark': 'var(--background-dark)',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -321,5 +312,13 @@ module.exports = {
       );
     },
   ],
-  safelist: ['ml-8', 'ml-12', 'ml-16'],
+  safelist: [
+    'm-0', 'my-0.5', 'ml-8', 'ml-12', 'ml-16',
+    'aspect-video',
+    'w-7',
+    'h-6', 'h-7', 'h-8', 'h-32', 'h-80', 'h-96',
+    'w-10', 'w-6/12',
+    'space-x-1',
+    'flex-wrap',
+    'border-none'],
 };

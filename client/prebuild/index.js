@@ -1,11 +1,8 @@
 import axios from 'axios';
-import favicons from 'favicons';
 import fs from 'fs-extra';
 import { dirname } from 'path';
-import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 
-import faviconConfig from './faviconConfig.js';
 import { createPage, injectNav } from './injectNav.js';
 
 const API_ENDPOINT = 'https://docs.mintlify.com';
@@ -48,30 +45,6 @@ const injectConfig = (config) => {
   console.log('⚙️  Config file set properly as mint.json');
 };
 
-const injectFavicons = async (config) => {
-  if (config?.favicon == null) return;
-
-  const desiredPath = resolve(__dirname + `/../public/${config.favicon}`);
-  const favicon = fs.readFileSync(desiredPath);
-  if (favicon == null) return;
-  console.log('Generating favicons...');
-  favicons(favicon, faviconConfig(config?.name), (err, response) => {
-    if (err) {
-      console.log(err.message); // Error description e.g. "An unknown error has occurred"
-      return;
-    }
-    response.images.forEach((img) => {
-      const path = __dirname + `/../public/favicons/${img.name}`;
-      fs.outputFileSync(path, Buffer.from(img.contents), { flag: 'w' });
-    });
-    response.files.forEach((file) => {
-      const path = __dirname + `/../public/favicons/${file.name}`;
-      fs.outputFileSync(path, file.contents, { flag: 'w' });
-    });
-    console.log('Favicons generated');
-  });
-};
-
 const injectOpenApi = async (openApi) => {
   const path = __dirname + `/../src/openapi.json`;
   if (openApi) {
@@ -97,7 +70,6 @@ const getAllFilesAndConfig = async () => {
   injectConfig(config);
   injectMarkdownFilesAndNav(markdownFiles, openApi, config);
   injectStaticFiles(staticFiles);
-  injectFavicons(config);
 };
 
 (async function () {

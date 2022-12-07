@@ -1,45 +1,39 @@
-import { useRouter } from 'next/router';
-import { ReactNode, useContext, useEffect } from 'react';
+import { ReactNode, useContext } from 'react';
 
-import { config } from '@/config';
+import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContext } from '@/context/VersionContext';
-import { SidebarLayout } from '@/layouts/SidebarLayout';
-import { documentationNav } from '@/metadata';
+import { useCurrentPath } from '@/hooks/useCurrentPath';
+import { SidebarLayout } from '@/layouts/NavSidebar';
+import { Groups, PageMetaTags } from '@/types/metadata';
 import { Title } from '@/ui/Title';
-import { getCurrentAnchorVersion } from '@/utils/getCurrentAnchor';
-
-import { Meta } from './ContentsLayout';
+import { slugToTitle } from '@/utils/titleText/slugToTitle';
 
 export function DocumentationLayout({
-  isMdx,
   navIsOpen,
   setNavIsOpen,
   meta,
   children,
+  nav,
 }: {
-  isMdx: boolean;
   navIsOpen: boolean;
   setNavIsOpen: any;
-  meta: Meta;
+  meta: PageMetaTags;
   children: ReactNode;
+  nav: Groups;
 }) {
-  const router = useRouter();
+  const currentPath = useCurrentPath();
   const { setSelectedVersion } = useContext(VersionContext);
-
+  const { config } = useContext(ConfigContext);
   if (meta.version) {
     setSelectedVersion(meta.version);
   }
 
-  if (!isMdx) {
-    return <>{children}</>;
-  }
-
-  const title = meta.sidebarTitle || meta.title;
+  const title = meta.sidebarTitle || meta.title || slugToTitle(meta.href || '');
 
   return (
     <>
-      <Title suffix={router.pathname === '/' ? '' : config.name}>{title}</Title>
-      <SidebarLayout nav={documentationNav} navIsOpen={navIsOpen} setNavIsOpen={setNavIsOpen}>
+      <Title suffix={currentPath === '/' ? '' : config?.name ?? ''}>{title}</Title>
+      <SidebarLayout nav={nav} navIsOpen={navIsOpen} setNavIsOpen={setNavIsOpen} meta={meta}>
         {children}
       </SidebarLayout>
     </>

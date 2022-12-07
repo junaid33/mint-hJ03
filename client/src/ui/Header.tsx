@@ -2,15 +2,18 @@ import { Dialog } from '@headlessui/react';
 import axios from 'axios';
 import clsx from 'clsx';
 import gh from 'github-url-to-object';
+import isAbsoluteUrl from 'is-absolute-url';
 import Link from 'next/link';
 import Router from 'next/router';
+import { useContext } from 'react';
 import { useEffect, useState } from 'react';
 
+import { ConfigContext } from '@/context/ConfigContext';
 import { Logo } from '@/ui/Logo';
-import { SearchButton } from '@/ui/Search';
+import { SearchButton } from '@/ui/search/Search';
 import getLogoHref from '@/utils/getLogoHref';
 
-import { config, TopbarCta } from '../config';
+import { TopbarCta } from '../types/config';
 import Icon from './Icon';
 import { ThemeSelect, ThemeToggle } from './ThemeToggle';
 import { VersionSelect } from './VersionSelect';
@@ -60,7 +63,7 @@ export function NavPopover({
         open={isOpen}
         onClose={setIsOpen}
       >
-        <Dialog.Overlay className="fixed inset-0 bg-black/20 backdrop-blur-sm dark:bg-background-dark/80" />
+        <Dialog.Overlay className="fixed inset-0 bg-background-dark backdrop-blur-sm opacity-20 dark:opacity-80" />
         <div className="fixed top-4 right-4 w-full max-w-xs bg-white rounded-lg shadow-lg p-6 text-base font-semibold text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:highlight-white/5">
           <button
             type="button"
@@ -109,7 +112,7 @@ function GitHubCta({ button }: { button: TopbarCta }) {
 
   return (
     <li className="cursor-pointer">
-      <Link href={button.url}>
+      <a href={button.url} target="_blank" rel="noreferrer">
         <div className="group flex items-center space-x-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +157,7 @@ function GitHubCta({ button }: { button: TopbarCta }) {
             )}
           </div>
         </div>
-      </Link>
+      </a>
     </li>
   );
 }
@@ -169,28 +172,18 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
       <Link href={button.url}>
         <a
           target="_blank"
-          className={clsx(
-            config.classes?.topbarCtaButton ||
-              'relative inline-flex items-center space-x-2 px-4 py-1.5 shadow-sm text-sm font-medium rounded-full text-white bg-primary-dark hover:bg-primary-ultradark dark:highlight-white/5'
-          )}
+          className="relative inline-flex items-center space-x-2 px-4 py-1.5 shadow-sm text-sm font-medium rounded-full text-white bg-primary-dark hover:bg-primary-ultradark dark:highlight-white/5"
         >
           <span>{button.name}</span>
-          {!config.classes?.topbarCtaButton && (
-            <svg
-              width="6"
-              height="3"
-              className="h-2 overflow-visible -rotate-90"
-              aria-hidden="true"
-            >
-              <path
-                d="M0 0L3 3L6 0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          )}
+          <svg width="6" height="3" className="h-2 overflow-visible -rotate-90" aria-hidden="true">
+            <path
+              d="M0 0L3 3L6 0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
         </a>
       </Link>
     </li>
@@ -198,17 +191,36 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
 }
 
 export function NavItems() {
+  const { config } = useContext(ConfigContext);
+
   return (
     <>
-      {config?.topbarLinks?.map((topbarLink) => (
-        <li key={topbarLink.name}>
-          <Link href={topbarLink.url}>
-            <a className="font-medium hover:text-primary dark:hover:text-primary-light">
-              {topbarLink.name}
-            </a>
-          </Link>
-        </li>
-      ))}
+      {config?.topbarLinks?.map((topbarLink) => {
+        const isAbsolute = isAbsoluteUrl(topbarLink.url);
+
+        if (isAbsolute) {
+          return (
+            <li key={topbarLink.name}>
+              <a
+                href={topbarLink.url}
+                className="font-medium hover:text-primary dark:hover:text-primary-light"
+              >
+                {topbarLink.name}
+              </a>
+            </li>
+          );
+        } else {
+          return (
+            <li key={topbarLink.name}>
+              <Link href={topbarLink.url} passHref={true}>
+                <a className="font-medium hover:text-primary dark:hover:text-primary-light">
+                  {topbarLink.name}
+                </a>
+              </Link>
+            </li>
+          );
+        }
+      })}
       {config?.topbarCtaButton && <TopBarCtaButton button={config.topbarCtaButton} />}
     </>
   );
@@ -227,6 +239,7 @@ export function Header({
   title?: string;
   section?: string;
 }) {
+  const { config } = useContext(ConfigContext);
   let [isOpaque, setIsOpaque] = useState(false);
 
   useEffect(() => {
@@ -247,15 +260,15 @@ export function Header({
 
   return (
     <>
-      <div
-        className={clsx(
-          'sticky top-0 w-full backdrop-blur flex-none transition-colors z-40 duration-500 lg:border-b lg:border-slate-900/5 dark:border-slate-50/[0.06] lg:z-50',
-          isOpaque
-            ? 'bg-background-light/90 supports-backdrop-blur:bg-background-light/90 dark:bg-background-dark/75'
-            : 'bg-transparent dark:bg-transparent'
-        )}
-      >
-        <div className="max-w-8xl mx-auto">
+      <div className="sticky top-0 w-full backdrop-blur flex-none z-40 lg:border-b lg:border-slate-900/5 dark:border-slate-50/[0.06] lg:z-50">
+        <div
+          className={clsx(
+            'absolute top-0 right-0 left-0 bottom-0 bg-background-light dark:bg-background-dark',
+            isOpaque ? '' : 'bg-transparent dark:bg-transparent'
+          )}
+          style={{ opacity: '80%' }}
+        />
+        <div className="relative max-w-8xl mx-auto">
           <div
             className={clsx(
               'py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10',
@@ -264,14 +277,14 @@ export function Header({
           >
             <div className="relative flex items-center">
               <div className="flex-1 flex items-center space-x-3">
-                <Link href={getLogoHref(config)}>
+                <Link href={getLogoHref(config!)}>
                   <a
                     onContextMenu={(e) => {
                       e.preventDefault();
-                      Router.push(getLogoHref(config));
+                      Router.push(getLogoHref(config!));
                     }}
                   >
-                    <span className="sr-only">{config.name} home page</span>
+                    <span className="sr-only">{config?.name} home page</span>
                     <Logo />
                   </a>
                 </Link>
@@ -281,30 +294,11 @@ export function Header({
                 <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-500/10 shadow-sm py-1.5 pl-2 pr-3 bg-slate-50 hover:ring-slate-900/20 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
                   {({ actionKey }: any) => (
                     <>
-                      <svg
-                        width="24"
-                        height="24"
-                        fill="none"
-                        aria-hidden="true"
-                        className="mr-3 flex-none"
-                      >
-                        <path
-                          d="m19 19-3.5-3.5"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <circle
-                          cx="11"
-                          cy="11"
-                          r="6"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                      <Icon
+                        icon="magnifying-glass"
+                        iconType="solid"
+                        className="h-4 w-4 ml-1 mr-3 flex-none bg-slate-500 hover:bg-slate-600 dark:bg-slate-400 dark:hover:bg-slate-300"
+                      />
                       Search...
                       {actionKey && (
                         <span className="ml-auto flex-none text-xs font-semibold">
@@ -327,19 +321,11 @@ export function Header({
               </div>
               <SearchButton className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
                 <span className="sr-only">Search</span>
-                <svg
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="m19 19-3.5-3.5" />
-                  <circle cx="11" cy="11" r="6" />
-                </svg>
+                <Icon
+                  icon="magnifying-glass"
+                  iconType="solid"
+                  className="h-4 w-4 bg-slate-500 dark:bg-slate-400 hover:bg-slate-600 dark:hover:bg-slate-300"
+                />
               </SearchButton>
               <NavPopover className="ml-2 -my-1" display="lg:hidden" />
             </div>

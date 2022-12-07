@@ -1,5 +1,5 @@
-import { Config } from '@/config';
-import { Group, Groups, GroupPage, isGroup } from '@/metadata';
+import { Anchor, Navigation } from '@/types/config';
+import { Group, Groups, GroupPage, isGroup } from '@/types/metadata';
 
 import { getCurrentAnchorVersion } from './getCurrentAnchor';
 
@@ -42,7 +42,7 @@ export function getGroupsInVersion(nav: Groups, version: string): Groups {
     return nav;
   }
 
-  return nav.map((entry) => getInVersion(entry, version)).filter(Boolean) as Groups;
+  return nav.map((entry: Group) => getInVersion(entry, version)).filter(Boolean) as Groups;
 }
 
 // Recursive helper to see if a single group should be displayed.
@@ -57,7 +57,7 @@ function getInVersion(entry: GroupPage, version: string): GroupPage | undefined 
     return {
       ...entry,
       pages: entry.pages
-        .map((subEntry) => getInVersion(subEntry, version))
+        .map((subEntry: GroupPage) => getInVersion(subEntry, version))
         .filter(Boolean) as GroupPage[],
     };
   }
@@ -103,10 +103,14 @@ function getVersionOfPageRecursively(
   }
 }
 
-export function getVersionOfPage(config: Config, pathname: string): string | void {
-  const pageVersion = getVersionOfPageRecursively(config.navigation, pathname);
+export function getVersionOfPage(
+  navigation: Navigation[],
+  anchors: Anchor[],
+  pathname: string
+): string | void {
+  const pageVersion = getVersionOfPageRecursively(navigation, pathname);
   if (pageVersion) {
     return pageVersion;
   }
-  return getCurrentAnchorVersion(config.anchors ?? [], pathname);
+  return getCurrentAnchorVersion(anchors, pathname);
 }

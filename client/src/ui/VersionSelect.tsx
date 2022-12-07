@@ -1,20 +1,23 @@
-import { Menu } from '@headlessui/react';
-import clsx from 'clsx';
+import { PillSelect } from '@mintlify/components';
 import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
 
-import { config } from '@/config';
+import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContext } from '@/context/VersionContext';
+import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { getVersionOfPage } from '@/utils/nav';
 
 export function VersionSelect() {
-  const { versionOptions, selectedVersion, setSelectedVersion } = useContext(VersionContext);
+  const { config } = useContext(ConfigContext);
+  const versions = config?.versions?.filter(Boolean) || [];
+  const { selectedVersion, setSelectedVersion } = useContext(VersionContext);
   const router = useRouter();
+  const path = useCurrentPath();
 
   // Only run when the page loads. Otherwise, users could never change the API version
   // because the page would keep changing it back to its own version.
   useEffect(() => {
-    const version = getVersionOfPage(config, router.pathname);
+    const version = getVersionOfPage(config?.navigation ?? [], config?.anchors ?? [], path);
     if (version) {
       setSelectedVersion(version);
     }
@@ -27,54 +30,17 @@ export function VersionSelect() {
     return null;
   }
 
-  const onClickVersion = (version: string) => {
+  const onVersionChange = (version: string) => {
     setSelectedVersion(version);
     router.push('/');
   };
 
   return (
-    <Menu as="div" className="relative">
-      <Menu.Button className="text-xs leading-5 font-semibold bg-slate-400/10 rounded-full py-1 px-3 flex items-center space-x-2 hover:bg-slate-400/20 dark:highlight-white/5">
-        {selectedVersion}
-        <svg width="6" height="3" className="ml-2 overflow-visible" aria-hidden="true">
-          <path
-            d="M0 0L3 3L6 0"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </Menu.Button>
-      <Menu.Items className="absolute top-full mt-1 py-2 w-40 rounded-lg bg-white shadow ring-1 ring-background-dark/5 text-sm leading-6 font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:highlight-white/5">
-        {versionOptions.map((version: string) => (
-          <Menu.Item disabled={version === selectedVersion} key={version}>
-            {({ active }) => (
-              <a
-                className={clsx(
-                  'flex items-center justify-between px-3 py-1 cursor-pointer',
-                  active && 'bg-slate-50 text-slate-900 dark:bg-slate-600/30 dark:text-white',
-                  version === selectedVersion && 'text-primary dark:text-primary-light'
-                )}
-                onClick={() => onClickVersion(version)}
-              >
-                {version}
-                {version === selectedVersion && (
-                  <svg width="24" height="24" fill="none" aria-hidden="true">
-                    <path
-                      d="m7.75 12.75 2.25 2.5 6.25-6.5"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </a>
-            )}
-          </Menu.Item>
-        ))}
-      </Menu.Items>
-    </Menu>
+    <PillSelect
+      options={versions}
+      onChange={onVersionChange}
+      defaultOption={selectedVersion}
+      selectedOptionClass="text-primary dark:text-primary-light"
+    />
   );
 }

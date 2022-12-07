@@ -1,21 +1,10 @@
 import { Card as GenericCard } from '@mintlify/components';
 import clsx from 'clsx';
-import isAbsoluteUrl from 'is-absolute-url';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import React from 'react';
 
 import { ComponentIcon } from '@/ui/Icon';
-
-function DynamicLink(props: any) {
-  if (props.href && isAbsoluteUrl(props.href)) {
-    return (
-      <span className="not-prose">
-        <a {...props} target="_blank" rel="noopener" />
-      </span>
-    );
-  }
-  return <Link {...props} />;
-}
 
 export function Card({
   title,
@@ -30,7 +19,7 @@ export function Card({
   iconType?: string;
   color?: string;
   href?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   const Icon =
     typeof icon === 'string' ? (
@@ -45,28 +34,31 @@ export function Card({
       icon
     );
 
-  const Card = ({ forwardHref, onClick }: { forwardHref?: string; onClick?: any }) => (
+  const CardComponent = ({ href }: { href?: string }) => (
     <GenericCard
       className={clsx(
-        href && 'cursor-pointer hover:border-primary dark:hover:border-primary-light'
+        // We need to set these as important because mint adds an underline to links with a border
+        // that overrides our own border color.
+        '!border-slate-200 dark:!border-slate-800',
+        href && 'hover:!border-primary dark:hover:!border-primary-light'
       )}
       title={title}
       icon={Icon}
-      href={forwardHref}
-      onClick={onClick}
+      href={href}
     >
       {children}
     </GenericCard>
   );
 
-  // next/link is used for internal links to avoid extra network calls
-  if (href) {
+  // We don't use DynamicLink because we cannot wrap the Card in an extra <a> tag without
+  // messing with the Card's styling. The Card already sets an <a> tag when href is passed to it.
+  if ((href && href?.startsWith('/')) || href?.startsWith('#')) {
     return (
-      <DynamicLink href={href} passHref={true}>
-        <Card />
-      </DynamicLink>
+      <Link href={href} passHref>
+        <CardComponent />
+      </Link>
     );
   }
 
-  return <Card forwardHref={href} />;
+  return <CardComponent href={href} />;
 }

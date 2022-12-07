@@ -1,21 +1,5 @@
-import { withSentryConfig } from '@sentry/nextjs';
-import withLinkRoles from './rehype/withLinkRoles.js';
-import { createLoader } from 'simple-functional-loader';
-import frontMatter from 'front-matter';
-import withSmartypants from 'remark-smartypants';
-import withTableOfContents from './remark/withTableOfContents.js';
-import withCodeBlocks from './rehype/withCodeBlocks.js';
-import withNextLinks from './remark/withNextLinks.js';
-import withFrames from './remark/withFrames.js';
-import withImportsInjected from './remark/withImportsInjected.js';
 import BundleAnalyzer from '@next/bundle-analyzer';
-import remarkGfm from 'remark-gfm';
-import withStaticProps from './rehype/withStaticProps.js';
-import withApiComponents from './rehype/withApiComponents.js';
-import withRawComponents from './rehype/withRawComponents.js';
-import mintConfig from './src/mint.json' assert { type: 'json' };
-import withSyntaxHighlighting from './rehype/withSyntaxHighlighting.js';
-import withLayouts from './rehype/withLayouts.js';
+import { withSentryConfig } from '@sentry/nextjs';
 
 const withBundleAnalyzer = BundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -36,10 +20,34 @@ export default withSentryConfig(
     swcMinify: true,
     pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx', 'md'],
     images: {
+      dangerouslyAllowSVG: true,
+      contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: '**.amazonaws.com',
+        },
+      ],
       disableStaticImages: true,
     },
-    basePath: mintConfig?.basePath,
-    webpack(config, options) {
+    staticPageGenerationTimeout: 1000,
+    experimental: {
+      largePageDataBytes: 128 * 10000, // 1280KB instead of the default 128Kb
+    },
+    basePath: process.env.BASE_PATH,
+    async redirects() {
+      return process.env.BASE_PATH
+        ? [
+            {
+              source: '/',
+              destination: process.env.BASE_PATH,
+              basePath: false, // you can't write '/' as the source if you auto-prefix the base path to it
+              permanent: true,
+            },
+          ]
+        : [];
+    },
+    webpack(config) {
       config.module.rules.push({
         test: /\.(png|jpe?g|gif|webp|avif|mp4)$/i,
         issuer: /\.(jsx?|tsx?|mdx?)$/,
@@ -68,80 +76,6 @@ export default withSentryConfig(
               name: 'static/media/[name].[hash].[ext]',
             },
           },
-        ],
-      });
-
-      config.module.rules.push({
-        test: { and: [/\.mdx$/, /snippets/] },
-        use: [
-          options.defaultLoaders.babel,
-          {
-            loader: '@mdx-js/loader',
-            options: {
-              providerImportSource: '@mdx-js/react',
-              remarkPlugins: [
-                remarkGfm,
-                withImportsInjected,
-                withFrames,
-                withNextLinks,
-                withSmartypants,
-              ],
-              rehypePlugins: [
-                [
-                  withSyntaxHighlighting,
-                  {
-                    ignoreMissing: true,
-                  },
-                ],
-                withCodeBlocks,
-                withLinkRoles,
-              ],
-            },
-          },
-        ],
-      });
-
-      config.module.rules.push({
-        test: { and: [/\.mdx?$/], not: [/snippets/] },
-        use: [
-          options.defaultLoaders.babel,
-          {
-            loader: '@mdx-js/loader',
-            options: {
-              providerImportSource: '@mdx-js/react',
-              remarkPlugins: [
-                remarkGfm,
-                withImportsInjected,
-                withFrames,
-                withTableOfContents,
-                withNextLinks,
-                withSmartypants,
-              ],
-              rehypePlugins: [
-                [
-                  withSyntaxHighlighting,
-                  {
-                    ignoreMissing: true,
-                  },
-                ],
-                withCodeBlocks,
-                withLinkRoles,
-                withApiComponents,
-                withRawComponents,
-                [
-                  withStaticProps,
-                  `{
-                    isMdx: true
-                  }`,
-                ],
-                withLayouts
-              ],
-            },
-          },
-          createLoader(function (source) {
-            const { body } = frontMatter(source);
-            return body;
-          }),
         ],
       });
       return config;

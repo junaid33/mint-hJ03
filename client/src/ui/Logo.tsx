@@ -1,10 +1,12 @@
 import clsx from 'clsx';
+import { useContext } from 'react';
 
-import { config } from '@/config';
+import { ConfigContext } from '@/context/ConfigContext';
 
 export function Logo() {
-  const className = clsx('w-auto h-7 relative', config.classes?.logo);
-  if (typeof config.logo === 'object' && config.logo !== null) {
+  const { config } = useContext(ConfigContext);
+  const className = 'w-auto h-7 relative';
+  if (typeof config?.logo === 'object' && config.logo !== null) {
     return (
       <>
         <img
@@ -26,7 +28,10 @@ export function Logo() {
   if (config?.name) {
     return (
       <div
-        className={`inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight dark:text-slate-200 ${className}`}
+        className={clsx(
+          'inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight dark:text-slate-200',
+          className
+        )}
       >
         {config?.name}
       </div>
