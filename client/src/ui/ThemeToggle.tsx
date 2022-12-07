@@ -3,6 +3,7 @@ import { useEffect, useRef, useContext, useCallback } from 'react';
 import create from 'zustand';
 
 import { ConfigContext } from '@/context/ConfigContext';
+import { useColors } from '@/hooks/useColors';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 
 const useSetting = create((set: any) => ({
@@ -82,6 +83,7 @@ function useTheme() {
 
 export function ThemeToggle() {
   const { config } = useContext(ConfigContext);
+  const colors = useColors();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let [setting, setSetting] = useTheme();
 
@@ -95,6 +97,11 @@ export function ThemeToggle() {
     <LightDarkToggle
       defaultChecked={isDark ?? false}
       onChange={(enabled: boolean) => setSetting(enabled ? 'dark' : 'light')}
+      colors={{
+        brandColor: colors.primaryDark,
+        lightBackground: colors.backgroundLight,
+        darkBackground: colors.backgroundDark,
+      }}
     />
   );
 }
