@@ -144,7 +144,9 @@ const dev = async () => {
   if (internet && gitInstalled) {
     shellExec("git config core.sparseCheckout true");
     shellExec('echo "client/" >> .git/info/sparse-checkout');
-    pullOutput = shellExec("git pull mint-origin main").stdout;
+    pullOutput = shellExec(
+      "git pull mint-origin legacy-components-import"
+    ).stdout;
     shellExec("git config core.sparseCheckout false");
     shellExec("rm .git/info/sparse-checkout");
   }
