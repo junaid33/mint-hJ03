@@ -59,27 +59,26 @@ export function Heading({
       style={{ ...(hidden ? { marginBottom: 0 } : {}), ...style }}
       {...props}
     >
-      <span className={hidden ? 'sr-only' : undefined}>{children}</span>
       {!hidden && (
         <a
           href={`#${id}`}
-          className="ml-2 flex items-center opacity-0 border-0 group-hover:opacity-100"
-          aria-label="Direct link to heading"
+          className="absolute -ml-10 flex items-center opacity-0 border-0 group-hover:opacity-100"
+          aria-label="Anchor"
         >
           &#8203;
-          <div className="fill-slate-500 hover:fill-slate-700 dark:fill-slate-300 dark:hover:fill-slate-100 w-6 h-6 ring-1 ring-slate-900/5 rounded-md shadow-sm flex items-center justify-center hover:ring-slate-900/10 hover:shadow dark:bg-slate-700 dark:shadow-none dark:ring-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 484 512"
-              width="12"
-              height="12"
-              aria-hidden="true"
-            >
-              <path d="M181.3 32.4c17.4 2.9 29.2 19.4 26.3 36.8L197.8 128h95.1l11.5-69.3c2.9-17.4 19.4-29.2 36.8-26.3s29.2 19.4 26.3 36.8L357.8 128H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H347.1L325.8 320H384c17.7 0 32 14.3 32 32s-14.3 32-32 32H315.1l-11.5 69.3c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8l9.8-58.7H155.1l-11.5 69.3c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8L90.2 384H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h68.9l21.3-128H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h68.9l11.5-69.3c2.9-17.4 19.4-29.2 36.8-26.3zM187.1 192L165.8 320h95.1l21.3-128H187.1z" />
+          <div className="w-6 h-6 text-slate-400 ring-1 ring-slate-900/5 rounded-md shadow-sm flex items-center justify-center hover:ring-slate-900/10 hover:shadow hover:text-slate-700 dark:bg-slate-700 dark:text-slate-300 dark:shadow-none dark:ring-0">
+            <svg width="12" height="12" fill="none" aria-hidden="true">
+              <path
+                d="M3.75 1v10M8.25 1v10M1 3.75h10M1 8.25h10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </div>
         </a>
       )}
+      <span className={hidden ? 'sr-only' : undefined}>{children}</span>
     </Component>
   );
 }
