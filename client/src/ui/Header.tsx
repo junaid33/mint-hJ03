@@ -320,7 +320,8 @@ export function Header({
                     <NavItems />
                   </ul>
                 </nav>
-                <div className="flex items-center border-l border-slate-100 ml-6 pl-6 dark:border-background-dark dark:brightness-200">
+                <div className="flex border-l border-slate-100 ml-6 pl-6 dark:border-background-dark dark:brightness-200 h-6"></div>
+                <div className="flex items-center">
                   <ThemeToggle />
                 </div>
               </div>
