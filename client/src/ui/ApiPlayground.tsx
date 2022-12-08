@@ -26,6 +26,8 @@ export type ApiComponent = {
 
 export const APIBASE_CONFIG_STORAGE = 'apiBaseIndex';
 
+// Be careful changing the prop types. The parameter is exported. In those cases,
+// users set api and paramGroups but not the other fields.
 export function ApiPlayground({
   api,
   paramGroups,
@@ -37,7 +39,7 @@ export function ApiPlayground({
   paramGroups: ParamGroup[];
   contentType?: string;
   onInputDataChange?: (newInputData: Record<string, Record<string, any>>) => void;
-  onApiBaseIndexChange: (apiBaseIndex: number) => void;
+  onApiBaseIndexChange?: (apiBaseIndex: number) => void;
 }) {
   const { basePath } = useRouter();
   const { config, openApi } = useContext(ConfigContext);
@@ -65,7 +67,9 @@ export function ApiPlayground({
     if (configuredApiBaseIndex != null) {
       const storedApiBaseIndex = parseInt(configuredApiBaseIndex, 10);
       setApiBaseIndex(storedApiBaseIndex);
-      onApiBaseIndexChange(storedApiBaseIndex);
+      if (onApiBaseIndexChange) {
+        onApiBaseIndexChange(storedApiBaseIndex);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api]);
@@ -78,7 +82,9 @@ export function ApiPlayground({
     if (index >= 0) {
       window.localStorage.setItem(APIBASE_CONFIG_STORAGE, index.toString());
       setApiBase(base);
-      onApiBaseIndexChange(index);
+      if (onApiBaseIndexChange) {
+        onApiBaseIndexChange(index);
+      }
     }
   };
 
