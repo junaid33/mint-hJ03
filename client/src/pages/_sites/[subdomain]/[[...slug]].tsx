@@ -1,4 +1,3 @@
-import { ResizeObserver } from '@juggle/resize-observer';
 import * as Sentry from '@sentry/nextjs';
 import { stringify, parse } from 'flatted';
 import 'focus-visible';
@@ -14,10 +13,6 @@ import type { Config } from '@/types/config';
 import { FaviconsProps } from '@/types/favicons';
 import { Groups, PageMetaTags } from '@/types/metadata';
 import getMdxSource from '@/utils/mdx/getMdxSource';
-
-if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
-  window.ResizeObserver = ResizeObserver;
-}
 
 interface PageProps {
   stringifiedMdxSource: string;

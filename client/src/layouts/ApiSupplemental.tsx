@@ -5,7 +5,6 @@ import { useState, useEffect, useContext } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { CodeGroup } from '@/components/CodeGroup';
 import { ConfigContext } from '@/context/ConfigContext';
-import { APIBASE_CONFIG_STORAGE } from '@/ui/ApiPlayground';
 import { Param } from '@/utils/api';
 import { generateRequestExamples } from '@/utils/apiExampleGeneration/generateApiRequestExamples';
 import { getOpenApiOperationMethodAndEndpoint } from '@/utils/openApi/getOpenApiContext';
