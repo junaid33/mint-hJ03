@@ -30,7 +30,7 @@ export function ThemeToggle() {
       <span className="sr-only">Switch theme</span>
       <span
         aria-hidden="true"
-        className="translate-x-0 dark:translate-x-3 border border-zinc-400/40 bg-background-light dark:border-primary dark:bg-background-dark p-[3px] pointer-events-none inline-block h-5 w-5 transform rounded-full ring-0 transition-transform duration-200 ease-in-out"
+        className="translate-x-0 dark:translate-x-3 border bg-background-light dark:border-primary dark:bg-background-dark p-[3px] pointer-events-none inline-block h-5 w-5 transform rounded-full ring-0 transition-transform duration-200 ease-in-out"
       >
         <SunIcon />
         <MoonIcon />
