@@ -63,7 +63,7 @@ export function MDXContentController({
   // overrides that to show request and response examples on the side.
   // TODO: Remove meta.size
   const isWideSize = meta.mode === 'wide' || meta.size === 'wide';
-  let contentWidth = 'max-w-3xl xl:max-w-[44rem]';
+  let contentWidth = 'max-w-3xl xl:max-w-[47rem]';
   if (isApi || requestExample || responseExample) {
     contentWidth = 'max-w-3xl xl:max-w-[min(100% - 31rem, 44rem)]';
   } else if (isWideSize) {
@@ -86,7 +86,12 @@ export function MDXContentController({
 
   return (
     <div className="flex flex-row pt-9 gap-12 items-stretch">
-      <div className={clsx('relative grow mx-auto xl:-mx-1 overflow-auto px-1', contentWidth)}>
+      <div
+        className={clsx(
+          'relative grow mx-auto xl:-ml-12 overflow-auto xl:pr-1 xl:pl-12',
+          contentWidth
+        )}
+      >
         {isBlogMode ? <BlogHeader meta={meta} /> : <PageHeader meta={meta} section={section} />}
         {isApi ? (
           <ApiPlayground
