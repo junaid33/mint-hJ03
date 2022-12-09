@@ -97,11 +97,11 @@ export function UserFeedback() {
 
 export function FeedbackProvider({ subdomain, children }: { subdomain: string; children: any }) {
   const createSuggestHref = (path: string) => {
-    return `https://docs.mintlify.com/api/v1/app/suggest/${subdomain}?path=${path}.mdx`;
+    return `https://server.mintlify.com/api/v1/app/suggest/${subdomain}?path=${path}.mdx`;
   };
 
   const createIssueHref = (path: string) => {
-    return `https://docs.mintlify.com/api/v1/app/issue/${subdomain}?path=${path}.mdx`;
+    return `https://server.mintlify.com/api/v1/app/issue/${subdomain}?path=${path}.mdx`;
   };
 
   return (
