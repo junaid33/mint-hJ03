@@ -1,4 +1,3 @@
-import { Transition } from '@headlessui/react';
 import { AppearFromTop } from '@mintlify/components';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -143,8 +142,7 @@ const GroupDropdown = ({
             viewBox="0 -9 3 24"
             className={clsx(
               'transition-all text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500',
-              isOpen && 'duration-200 rotate-90',
-              !isOpen && 'duration-75'
+              isOpen && 'duration-75 rotate-90'
             )}
           >
             <path
@@ -156,17 +154,14 @@ const GroupDropdown = ({
             ></path>
           </svg>
         </div>
-        <ul className="-ml-px">
-          <AppearFromTop
-            show={isOpen}
-            className={clsx('children:mt-6 children:lg:mt-2 children:children:ml-0')}
-          >
+        {isOpen && (
+          <ul className="-ml-px children:mt-6 children:lg:mt-2 children:children:ml-0">
             {pages.map((subpage) => {
               const key = isGroup(subpage) ? subpage.group : subpage.sidebarTitle || subpage.title;
               return <NavItem groupPage={subpage} level={level + 1} mobile={mobile} key={key} />;
             })}
-          </AppearFromTop>
-        </ul>
+          </ul>
+        )}
       </li>
     </>
   );
