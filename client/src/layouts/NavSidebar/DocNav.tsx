@@ -159,7 +159,7 @@ const GroupDropdown = ({
         <ul className="-ml-px">
           <AppearFromTop
             show={isOpen}
-            className={clsx('children:mt-6 children:mt-2 children:children:ml-0')}
+            className={clsx('children:mt-6 children:lg:mt-2 children:children:ml-0')}
           >
             {pages.map((subpage) => {
               const key = isGroup(subpage) ? subpage.group : subpage.sidebarTitle || subpage.title;
