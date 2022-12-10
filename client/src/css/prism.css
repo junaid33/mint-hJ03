@@ -234,6 +234,10 @@ span.language-json .token.number {
   @apply text-green-600 dark:text-[#b5cea8];
 }
 
+code.language-toml .table {
+  display: inherit;
+}
+
 /*********************************************************
 * Line highlighting
 */
