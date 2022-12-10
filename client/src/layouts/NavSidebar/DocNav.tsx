@@ -142,8 +142,9 @@ const GroupDropdown = ({
             height="24"
             viewBox="0 -9 3 24"
             className={clsx(
-              'transition-all duration-200 text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500',
-              isOpen && 'rotate-90'
+              'transition-all text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500',
+              isOpen && 'duration-200 rotate-90',
+              !isOpen && 'duration-75'
             )}
           >
             <path
