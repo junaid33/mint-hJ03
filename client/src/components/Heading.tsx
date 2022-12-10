@@ -62,7 +62,7 @@ export function Heading({
       {!hidden && (
         <a
           href={`#${id}`}
-          className="absolute -ml-10 flex items-center opacity-0 border-0 group-hover:opacity-100"
+          className="absolute -ml-8 flex items-center opacity-0 border-0 group-hover:opacity-100"
           aria-label="Navigate to header"
         >
           &#8203;
@@ -76,7 +76,7 @@ export function Heading({
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                clip-rule="evenodd"
+                clipRule="evenodd"
                 d="m9 4c.55228 0 1 .44772 1 1v3h4v-3c0-.55228.4477-1 1-1s1 .44772 1 1v3h3c.5523 0 1 .44772 1 1s-.4477 1-1 1h-3v4h3c.5523 0 1 .4477 1 1s-.4477 1-1 1h-3v3c0 .5523-.4477 1-1 1s-1-.4477-1-1v-3h-4v3c0 .5523-.44772 1-1 1s-1-.4477-1-1v-3h-3c-.55228 0-1-.4477-1-1s.44772-1 1-1h3v-4h-3c-.55228 0-1-.44772-1-1s.44772-1 1-1h3v-3c0-.55228.44772-1 1-1zm5 10v-4h-4v4z"
                 fillRule="evenodd"
               />

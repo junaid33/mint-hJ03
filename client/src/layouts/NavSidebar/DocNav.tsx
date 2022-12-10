@@ -1,7 +1,9 @@
+import { Transition } from '@headlessui/react';
+import { AppearFromTop } from '@mintlify/components';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { forwardRef, useContext, useEffect, useState } from 'react';
+import { forwardRef, Fragment, useContext, useEffect, useState } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
@@ -89,7 +91,7 @@ const GroupDropdown = ({
 }) => {
   const router = useRouter();
   const currentPath = useCurrentPath();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(Boolean(isPathInGroup(currentPath, group)));
   const { group: name, pages } = group;
 
   // Open the menu when we navigate to a page in the group.
@@ -126,37 +128,45 @@ const GroupDropdown = ({
 
   return (
     <>
-      <span
-        className={clsx(
-          'group flex items-center border-l -ml-px cursor-pointer space-x-3 border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300',
-          getPaddingByLevel(level)
-        )}
-        onClick={onClick}
-      >
-        <div>{name}</div>
-        <svg
-          width="3"
-          height="24"
-          viewBox="0 -9 3 24"
+      <li className="border-l -ml-px border-transparent">
+        <div
           className={clsx(
-            'text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500',
-            isOpen && 'rotate-90'
+            'group flex items-center space-x-3 cursor-pointer hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300',
+            getPaddingByLevel(level)
           )}
+          onClick={onClick}
         >
-          <path
-            d="M0 0L3 3L0 6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          ></path>
-        </svg>
-      </span>
-      {isOpen &&
-        pages.map((subpage) => {
-          const key = isGroup(subpage) ? subpage.group : subpage.sidebarTitle || subpage.title;
-          return <NavItem groupPage={subpage} level={level + 1} mobile={mobile} key={key} />;
-        })}
+          <p>{name}</p>
+          <svg
+            width="3"
+            height="24"
+            viewBox="0 -9 3 24"
+            className={clsx(
+              'transition-all duration-200 text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500',
+              isOpen && 'rotate-90'
+            )}
+          >
+            <path
+              d="M0 0L3 3L0 6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            ></path>
+          </svg>
+        </div>
+        <ul className="-ml-px">
+          <AppearFromTop
+            show={isOpen}
+            className={clsx('children:mt-6 children:mt-2 children:children:ml-0')}
+          >
+            {pages.map((subpage) => {
+              const key = isGroup(subpage) ? subpage.group : subpage.sidebarTitle || subpage.title;
+              return <NavItem groupPage={subpage} level={level + 1} mobile={mobile} key={key} />;
+            })}
+          </AppearFromTop>
+        </ul>
+      </li>
     </>
   );
 };
