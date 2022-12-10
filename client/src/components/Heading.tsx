@@ -62,13 +62,13 @@ export function Heading({
       {!hidden && (
         <a
           href={`#${id}`}
-          className="absolute -ml-8 flex items-center opacity-0 border-0 group-hover:opacity-100"
+          className="absolute -ml-10 flex items-center opacity-0 border-0 group-hover:opacity-100"
           aria-label="Navigate to header"
         >
           &#8203;
           <div className="w-6 h-6 text-slate-400 ring-1 ring-slate-900/5 rounded-md shadow-sm flex items-center justify-center hover:ring-slate-900/10 hover:shadow hover:text-slate-700 dark:bg-slate-700 dark:text-slate-300 dark:shadow-none dark:ring-0">
             <svg
-              className="h-5 w-5"
+              className="h-4 w-4"
               fill="currentColor"
               height="512"
               viewBox="0 0 24 24"
