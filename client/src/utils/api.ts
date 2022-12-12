@@ -74,10 +74,9 @@ const getBody = (obj: Object, _: string) => {
 };
 
 const getHeaders = (obj: AxiosRequestHeaders, contentType: string): AxiosRequestHeaders => {
-  return {
-    ...obj,
-    'Content-Type': contentType,
-  };
+  const newObj = Object.assign({}, obj);
+  newObj['Content-Type'] = contentType;
+  return newObj;
 };
 
 export const getApiContext = (
