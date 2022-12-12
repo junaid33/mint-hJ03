@@ -1,4 +1,3 @@
-import { AppearFromTop } from '@mintlify/components';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

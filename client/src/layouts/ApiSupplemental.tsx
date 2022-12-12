@@ -137,7 +137,7 @@ export function OpenApiResponseExample({ openapi }: { openapi?: string }) {
         setOpenApiResponseExamples(responseExamplesOpenApi);
       }
     }
-  }, [openapi, openApi]);
+  }, [openapi, openApi, operation?.responses]);
 
   let responseChildren = [] as any;
 

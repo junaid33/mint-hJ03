@@ -109,6 +109,7 @@ function GitHubCta({ button }: { button: TopbarCta }) {
     axios.get(`https://api.github.com/repos/${github.user}/${github.repo}`).then(({ data }) => {
       setRepoData(data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [github?.user, github?.repo]);
 
   if (github == null) {
