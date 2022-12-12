@@ -175,7 +175,7 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
 
   return (
     <li>
-      <Link href={button.url}>
+      <Link href={button.url ?? '/'}>
         <a
           target="_blank"
           className="relative inline-flex items-center space-x-2 px-4 py-1.5 shadow-sm text-sm font-medium rounded-full text-white bg-primary-dark hover:bg-primary-ultradark dark:highlight-white/5"
@@ -218,7 +218,7 @@ export function NavItems() {
         } else {
           return (
             <li key={topbarLink.name}>
-              <Link href={topbarLink.url} passHref={true}>
+              <Link href={topbarLink.url ?? '/'} passHref={true}>
                 <a className="font-medium hover:text-primary dark:hover:text-primary-light">
                   {topbarLink.name}
                 </a>
