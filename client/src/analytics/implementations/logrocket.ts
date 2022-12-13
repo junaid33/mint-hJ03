@@ -1,5 +1,4 @@
 // IMPROVEMENT OPPORTUNITY: Figure out how to dynamically import
-import * as Sentry from '@sentry/nextjs';
 import LogRocket from 'logrocket';
 
 import {
@@ -20,7 +19,7 @@ export default class LogrocketAnalytics extends AbstractAnalyticsImplementation 
           this.initialized = true;
         }
       } catch (e) {
-        Sentry.captureException(e);
+        console.error(e);
       }
     }
   }

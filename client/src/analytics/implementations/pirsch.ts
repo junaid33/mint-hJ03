@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/nextjs';
-
 import {
   AbstractAnalyticsImplementation,
   ConfigInterface,
@@ -36,7 +34,7 @@ export default class PirschAnalytics extends AbstractAnalyticsImplementation {
           }
         })
         .catch((e) => {
-          Sentry.captureException(e);
+          console.error(e);
         });
     }
   }

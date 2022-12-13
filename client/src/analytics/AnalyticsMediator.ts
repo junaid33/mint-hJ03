@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/nextjs';
-
 import {
   AmplitudeConfigInterface,
   AbstractAnalyticsImplementation,
@@ -39,7 +37,6 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
   analyticsIntegrations: AbstractAnalyticsImplementation[] = [];
 
   constructor(analytics?: AnalyticsMediatorConstructorInterface) {
-    // Ran first so we can assign the Sentry tags to false when not set.
     const amplitudeEnabled = Boolean(analytics?.amplitude?.apiKey);
     const fathomEnabled = Boolean(analytics?.fathom?.siteId);
     const ga4Enabled = Boolean(analytics?.ga4?.measurementId);
@@ -48,14 +45,6 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
     const mixpanelEnabled = Boolean(analytics?.mixpanel?.projectToken);
     const pirschEnabled = Boolean(analytics?.pirsch?.id);
     const posthogEnabled = Boolean(analytics?.posthog?.apiKey);
-    Sentry.setTag('amplitude_enabled', `${amplitudeEnabled}`);
-    Sentry.setTag('fathom_enabled', `${fathomEnabled}`);
-    Sentry.setTag('ga4_enabled', `${ga4Enabled}`);
-    Sentry.setTag('hotjar_enabled', `${hotjarEnabled}`);
-    Sentry.setTag('logrocket_enabled', `${logrocketEnabled}`);
-    Sentry.setTag('mixpanel_enabled', `${mixpanelEnabled}`);
-    Sentry.setTag('pirschEnabled', `${pirschEnabled}`);
-    Sentry.setTag('posthog_enabled', `${posthogEnabled}`);
 
     if (!analytics || Object.keys(analytics).length === 0) {
       return;

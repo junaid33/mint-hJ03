@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/nextjs';
 import { stringify, parse } from 'flatted';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
@@ -81,15 +80,10 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
   const { subdomain, slug } = params;
   const path = slug ? slug.join('/') : 'index';
 
-  Sentry.setContext('site', {
-    subdomain,
-    slug,
-  });
-
   // The entire build will fail when data is undefined
   const { data, status } = await getPage(subdomain, path);
   if (data == null) {
-    Sentry.captureException('Page data is missing');
+    console.error('Page data is missing');
     return {
       notFound: true,
     };

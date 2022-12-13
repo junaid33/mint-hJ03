@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/nextjs';
-
 import {
   AbstractAnalyticsImplementation,
   ConfigInterface,
@@ -25,7 +23,7 @@ export default class FathomAnalytics extends AbstractAnalyticsImplementation {
           }
         })
         .catch((e) => {
-          Sentry.captureException(e);
+          console.error(e);
         });
     }
   }
