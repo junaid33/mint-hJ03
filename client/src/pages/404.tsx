@@ -1,26 +1,19 @@
-import Link from 'next/link';
-
 export function ErrorPage() {
   return (
-    <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto py-12 sm:py-20">
-        <div className="text-center">
-          <p className="text-xl font-semibold text-primary dark:text-primary-light">404</p>
-          <h1 className="mt-2 text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight sm:text-4xl sm:tracking-tight">
-            Page not found
+    <main className="h-screen bg-[#0f1117]">
+      <article className="bg-custom bg-fixed bg-center bg-cover relative flex flex-col items-center justify-center h-full">
+        <div className="w-full max-w-xl px-10">
+          <span className="inline-flex mb-6 rounded-full bg-green-600 bg-opacity-50 px-3 py-1 text-sm font-semibold">
+            Error&nbsp;404
+          </span>
+          <h1 className="font-semibold mb-3 text-3xl">
+            Well this is embarrassing…
           </h1>
-          <p className="mt-2 text-lg text-slate-500 dark:text-slate-400">
-            We can't find the page you're looking for
+          <p className="text-lg text-gray-400 mb-6">
+            We can't find the page you are looking for. Please <a href="mailto:hi@mintlify.com" className="font-medium text-gray-100 border-b hover:border-b-[2px] border-slate-500">contact support</a> or go to <a href="https://mintlify.com" className="font-medium text-gray-100 border-b hover:border-b-[2px] border-slate-500">mintlify.com</a> to find what you&nbsp;need.
           </p>
         </div>
-        <div className="mt-12 text-center">
-          <Link href="/">
-            <a className="text-sm font-medium text-primary hover:text-primary-dark dark:text-primary-light dark:hover:text-primary">
-              <span aria-hidden="true"> &larr;</span> Back to main page
-            </a>
-          </Link>
-        </div>
-      </div>
+      </article>
     </main>
   );
 }
