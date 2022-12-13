@@ -1,18 +1,19 @@
-// Used by Docusaurus and ReadMe section scrapers
-export default function getLinksRecursively(linkSections: any, $: any) {
+// Used by GitBook section scraper
+export default function getLinksRecursivelyGitBook(linkSections: any, $: any) {
   if (linkSections == null || linkSections.length === 0) {
     return [];
   }
 
   return linkSections
     .map((i, s) => {
-      const subsection = $(s);
-      let link = subsection.children().first();
+      let subsection = $(s);
 
-      if (!link.attr("href")) {
-        // Docusaurus nests the <a> inside a <div>
-        link = link.find("a[href]").first();
+      // GitBook has an extra div when more than one layer deep
+      if (subsection.children().length === 1) {
+        subsection = subsection.children().first();
       }
+
+      const link = subsection.children().first();
       const linkHref = link.attr("href");
 
       // Skip missing links. For example, GitBook uses
@@ -34,7 +35,7 @@ export default function getLinksRecursively(linkSections: any, $: any) {
         // When we support the section itself being a link we should update this
         return {
           group: link.text(),
-          pages: [linkHref, ...getLinksRecursively(childLinks, $)],
+          pages: [linkHref, ...getLinksRecursivelyGitBook(childLinks, $)],
         };
       }
 
