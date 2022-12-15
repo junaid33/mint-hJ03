@@ -22,7 +22,12 @@ export default function App(props: any) {
 
   return (
     <ErrorBoundary>
-      <main className={`${inter.variable} ${firaCode.variable} font-sans`}>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <main className={`${inter.variable} ${firaCode.variable}`}>
         <Component {...pageProps} />
       </main>
     </ErrorBoundary>
