@@ -5,7 +5,12 @@ import ErrorBoundary from '@/ui/ErrorBoundary';
 
 import '../css/main.css';
 
-const inter = Inter({ display: 'swap', subsets: ['latin'], variable: '--font-inter' });
+const inter = Inter({
+  display: 'swap',
+  fallback: ['arial'],
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 const firaCode = Fira_Code({
   display: 'swap',
   subsets: ['latin'],
