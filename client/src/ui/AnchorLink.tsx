@@ -32,8 +32,7 @@ const Anchor = forwardRef(
         onMouseLeave={() => setHovering(false)}
         style={isActive && !usePrimaryColorForText ? { color: color } : {}}
         className={clsx(
-          'group flex items-center lg:text-sm lg:leading-6',
-          className,
+          'group flex items-center lg:text-sm lg:leading-6 mb-5 sm:mb-4',
           isActive
             ? [
                 'font-semibold',
@@ -112,7 +111,6 @@ export function StyledAnchorLink({
       {...props}
       as={as}
       href={href}
-      className="mb-4"
       icon={AnchorIcon}
       isActive={isActive}
       color={color}
