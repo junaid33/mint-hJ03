@@ -296,7 +296,7 @@ export function Header({
                 <VersionSelect />
               </div>
               <div className="relative flex-none bg-white lg:w-64 xl:w-80 dark:bg-slate-900 pointer-events-auto rounded-md">
-                <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 rounded-md py-1.5 pl-2 pr-3 zinc-box ring-1 ring-zinc-500/10 bg-zinc-50 hover:ring-zinc-600/20 dark:hover:ring-zinc-500/20">
+                <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 rounded-md py-1.5 pl-2 pr-3 zinc-box bg-white ring-1 ring-zinc-400/20 hover:ring-zinc-600/25 dark:ring-zinc-600/30 dark:hover:ring-zinc-500/30">
                   {({ actionKey }: any) => (
                     <>
                       <Icon
