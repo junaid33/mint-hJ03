@@ -1672,10 +1672,10 @@
     "@types/mdx" "^2.0.0"
     "@types/react" ">=16"
 
-"@mintlify/components@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@mintlify/components/-/components-0.2.1.tgz#4e0185d9053b10f261fc747be43f260faa4742d2"
-  integrity sha512-d91iI84JNSbG7IYXj+kkidYS/+wKnayMjLmsytseWQA5d3CFE6iYkfmofLrmmfTRRWLJ+pggAk4nxoUYV/jfAA==
+"@mintlify/components@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@mintlify/components/-/components-0.2.3.tgz#8063f38bba3b8e27a5bb17ad17f8ca7fa2e9cc68"
+  integrity sha512-P7s9KF53QjYYOLvpt3FPDrZHQVgHO+5Jn2bEyyesW5tT3wWsASmd6iCgt5s3T+KFPHV0HIfhnIYZA9/GncyzBA==
   dependencies:
     "@headlessui/react" "^1.7.4"
     assert "^2.0.0"
