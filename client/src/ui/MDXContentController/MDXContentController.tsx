@@ -85,7 +85,7 @@ export function MDXContentController({
       params,
     };
   });
-
+  // TODO - make this undefined when nothing exists
   const api = openApiPlaygroundProps.api ?? pageMetadata.api ?? '';
 
   return (
@@ -136,7 +136,7 @@ export function MDXContentController({
           <ContentSideLayout sticky>
             <div className="space-y-6 pb-6 w-[28rem]">
               {requestExample}
-              {!requestExample && (
+              {!requestExample && api !== '' && (
                 <GeneratedRequestExamples
                   paramGroupDict={paramGroupDict}
                   apiPlaygroundInputs={apiPlaygroundInputs}
