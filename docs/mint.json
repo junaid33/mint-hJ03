@@ -55,7 +55,8 @@
         "settings/customization",
         "settings/page",
         "settings/versioning",
-        "settings/subdirectory-hosting"
+        "settings/subdirectory-hosting",
+        "settings/seo"
       ]
     },
     {
