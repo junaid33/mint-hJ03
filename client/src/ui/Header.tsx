@@ -173,26 +173,30 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
     return <GitHubCta button={button} />;
   }
 
-  return (
-    <li>
-      <Link
-        href={button.url ?? '/'}
-        target="_blank"
-        className="relative inline-flex items-center space-x-2 px-4 py-1.5 shadow-sm text-sm font-medium rounded-full text-white bg-primary-dark hover:bg-primary-ultradark"
-      >
-        <span>{button.name}</span>
-        <svg width="6" height="3" className="h-2 overflow-visible -rotate-90" aria-hidden="true">
-          <path
-            d="M0 0L3 3L6 0"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </Link>
-    </li>
-  );
+  if (button.url && button.name) {
+    return (
+      <li>
+        <Link
+          href={button.url ?? '/'}
+          target="_blank"
+          className="relative inline-flex items-center space-x-2 px-4 py-1.5 shadow-sm text-sm font-medium rounded-full text-white bg-primary-dark hover:bg-primary-ultradark"
+        >
+          <span>{button.name}</span>
+          <svg width="6" height="3" className="h-2 overflow-visible -rotate-90" aria-hidden="true">
+            <path
+              d="M0 0L3 3L6 0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </Link>
+      </li>
+    );
+  }
+
+  return null;
 }
 
 export function NavItems() {
