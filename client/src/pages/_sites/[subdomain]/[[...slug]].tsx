@@ -118,17 +118,17 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
     }
 
     return {
-      props: {
+      props: prepareToSerialize({
         mdxSource,
-        pageData: prepareToSerialize({
+        pageData: {
           navWithMetadata,
           pageMetadata,
           mintConfig,
           openApiFiles,
-        }),
-        favicons: prepareToSerialize(favicons),
+        },
+        favicons,
         subdomain,
-      },
+      }),
     };
   }
   return {
