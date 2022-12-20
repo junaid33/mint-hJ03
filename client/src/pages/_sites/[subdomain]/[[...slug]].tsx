@@ -1,4 +1,3 @@
-import { stringify, parse } from 'flatted';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
@@ -9,42 +8,31 @@ import { ErrorPage } from '@/pages/404';
 import type { Config } from '@/types/config';
 import { FaviconsProps } from '@/types/favicons';
 import { Groups, PageMetaTags } from '@/types/metadata';
+import { OpenApiFile } from '@/types/openApi';
 import getMdxSource from '@/utils/mdx/getMdxSource';
+import { prepareToSerialize } from '@/utils/prepareToSerialize';
 
 interface PageProps {
-  stringifiedMdxSource: string;
-  stringifiedData: string;
-  stringifiedFavicons: string;
+  mdxSource: string;
+  pageData: PageDataProps;
+  favicons: FaviconsProps;
   subdomain: string;
 }
 
-interface ParsedDataProps {
-  nav: Groups;
-  meta: PageMetaTags;
-  metaTagsForSeo: PageMetaTags;
+export interface PageDataProps {
+  navWithMetadata: Groups;
+  pageMetadata: PageMetaTags;
   title: string;
-  stringifiedConfig: string;
-  stringifiedOpenApi?: string;
+  mintConfig: Config;
+  openApiFiles?: OpenApiFile[];
 }
 
-export default function Page({
-  stringifiedMdxSource,
-  stringifiedData,
-  stringifiedFavicons,
-  subdomain,
-}: PageProps) {
+export default function Page({ mdxSource, pageData, favicons, subdomain }: PageProps) {
   try {
-    const mdxSource = parse(stringifiedMdxSource);
-    const parsedData = parse(stringifiedData) as ParsedDataProps;
-    const config = JSON.parse(parsedData.stringifiedConfig) as Config;
-    const openApi = parsedData.stringifiedOpenApi ? JSON.parse(parsedData.stringifiedOpenApi) : {};
-    const favicons = parse(stringifiedFavicons);
     return (
       <SupremePageLayout
         mdxSource={mdxSource}
-        parsedData={parsedData}
-        config={config}
-        openApi={openApi}
+        pageData={pageData}
         favicons={favicons}
         subdomain={subdomain}
       />
@@ -95,56 +83,50 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
     };
   }
   if (status === 308) {
-    const { redirect }: { redirect: { destination: string; permanent: boolean } } = data;
+    const redirect: { destination: string; permanent: boolean } = data;
     return { redirect };
   }
   if (status === 200) {
-    const {
+    let {
       content,
-      stringifiedConfig,
-      nav,
-      meta,
-      metaTagsForSeo,
-      title,
-      stringifiedOpenApi,
+      mintConfig,
+      navWithMetadata,
+      pageMetadata,
+      openApiFiles,
       favicons,
     }: {
       content: string;
-      stringifiedConfig: string;
-      nav: Groups;
-      meta: PageMetaTags;
-      metaTagsForSeo: PageMetaTags;
-      title: string;
-      stringifiedOpenApi?: string;
+      mintConfig: string;
+      navWithMetadata: Groups;
+      pageMetadata: PageMetaTags;
+      openApiFiles?: OpenApiFile[];
       favicons: FaviconsProps;
     } = data;
     let mdxSource: any = '';
 
     try {
       const response = await getMdxSource(content, {
-        meta,
+        pageMetadata,
       });
       mdxSource = response;
     } catch (err) {
       mdxSource = await getMdxSource(
         '🚧 A parsing error occured. Please contact the owner of this website. They can use the Mintlify CLI to test this website locally and see the errors that occur.',
-        { meta }
+        { pageMetadata }
       ); // placeholder content for when there is a syntax error.
       console.log(`⚠️ Warning: MDX failed to parse page ${path}: `, err);
     }
 
     return {
       props: {
-        stringifiedMdxSource: stringify(mdxSource),
-        stringifiedData: stringify({
-          nav,
-          meta,
-          metaTagsForSeo,
-          title,
-          stringifiedConfig,
-          stringifiedOpenApi,
+        mdxSource,
+        pageData: prepareToSerialize({
+          navWithMetadata,
+          pageMetadata,
+          mintConfig,
+          openApiFiles,
         }),
-        stringifiedFavicons: stringify(favicons),
+        favicons: prepareToSerialize(favicons),
         subdomain,
       },
     };
