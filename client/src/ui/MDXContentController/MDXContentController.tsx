@@ -145,7 +145,9 @@ export function MDXContentController({
                 />
               )}
               {responseExample}
-              {!responseExample && <OpenApiResponseExample openapi={pageMetadata.openapi} />}
+              {!responseExample && pageMetadata.openapi && (
+                <OpenApiResponseExample openapi={pageMetadata.openapi} />
+              )}
             </div>
           </ContentSideLayout>
         ) : isBlogMode ? (
