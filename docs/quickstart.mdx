@@ -5,6 +5,10 @@ description: "Build beautiful documentation that converts users"
 
 ![Hero Image](https://mintlify-assets.b-cdn.net/hero.png)
 
+<Tip>
+  The following guide assumes that you have completed onboarding from [Get Started](https://mintlify.com/start)
+</Tip>
+
 ## Basic Configuration
 
 Every Mintlify site needs a `mint.json` file with the core configuration settings added. You can learn more about the structure of the config file at [global settings guide](/settings/customization).
@@ -12,9 +16,6 @@ Every Mintlify site needs a `mint.json` file with the core configuration setting
 ## Deployments
 
 Once the files are ready for deployment, you can choose to host your docs from your source control provider. Follow one of the following guides to set up deployment.
-
-<Tabs>
-<Tab title="GitHub Setup Guide">
 
 ### Open a Public Repo
 
@@ -38,32 +39,3 @@ The result should look something like this.
 Install the Mintlify GitHub Bot using request link provided by the onboarding team. Make sure it's granted access to the repo with the documentation.
 
 Now, when you make changes to the docs and push them to the main branch, it will automatically deploy to your documentation page!
-
-</Tab>
-
-<Tab title="GitLab Setup Guide">
-
-### Generate a GitLab access token
-
-You can use a [Personal Access Tokens](https://gitlab.com/-/profile/personal_access_tokens) if you are on GitLab's free tier or a Project Access Token if you are on their paid tier.
-
-The token needs `read_api` and `read_repository` permissions. We recommend setting an expiration at least one year in the future.
-
-<img className="rounded" src="/img/token-permissions.png" />
-
-### Get your Project ID from your project's home page
-
-<img className="rounded" src="/img/project-id.png" />
-
-### Send us your details
-
-We need your `accessToken`, `projectId`, and `deployBranch`.
-
-Please use [Password Link](https://password.link/) to send the information securely. You don't need an account to use Password Link
-
-### Create a GitLab webhook
-
-On your project page go to Settings > Webhooks. Enter `https://server.mintlify.com/api/v1/sites/deploys/gitlab-listener` as the webhook URL. Enter your bearer token as the secret. Make the trigger run on push events to your deploy branch, likely "main" or "master" depending on your repository.
-
-</Tab>
-</Tabs>
