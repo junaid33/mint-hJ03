@@ -19,12 +19,12 @@
   },
   "topbarLinks": [
     {
-      "name": "Community",
-      "url": "https://mintlify.com/community"
+      "name": "Showcase",
+      "url": "https://mintlify.com/showcase"
     }
   ],
   "topbarCtaButton": {
-    "name": "Request Access",
+    "name": "Get Started",
     "url": "https://mintlify.com/start"
   },
   "anchors": [
