@@ -22,7 +22,7 @@ You can hide an entire anchor based on a version. This is useful when you have d
 
 Simply add `version` to your anchor. Anchors without a version value are shown in every version.
 
-```json Anchor Versioning Example
+```json mint.json
 "anchors": [
     {
         "name": "API Reference V1",
@@ -51,7 +51,7 @@ Simply add `version` to your groups. Groups without a version value are shown in
 
 In the example below, pages in `Nested Group V1` only show up when `v1` docs are shown.
 
-```json Group Versioning Example
+```json mint.json
 "navigation": [
     {
         "group": "Group without a version",
@@ -75,7 +75,7 @@ In the example below, pages in `Nested Group V1` only show up when `v1` docs are
 
 You can version a single page. Add `version` to the top of your page metadata like so:
 
-```md Page Versioning Example
+```md page.mdx
 ---
 title: "My page title"
 description: "My page description"
