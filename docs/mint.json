@@ -52,7 +52,7 @@
     {
       "group": "Settings",
       "pages": [
-        "settings/customization",
+        "settings/global",
         "settings/page",
         "settings/seo",
         "settings/versioning",

@@ -9,8 +9,7 @@ Add `"versions": ["v2", "v1"]` to your `mint.json` file where "v1" and "v2" are 
 
 <Tip>
   The versions dropdown will show your versions in the order you include them in
-  `mint.json`. Most people will want their versions written in descending order.
-  For example, `"versions": ["v3.1", "v3.0", "v2.0", "v1.0"]`.
+  `mint.json`.
 </Tip>
 
 ## Versioning Options
@@ -94,6 +93,7 @@ Not _all_ content has to be hidden though! Any content without a version value s
 
 Common errors and how to fix them
 
+<AccordionGroup>
 <Accordion title="Pages Show Up In Wrong Version" icon="circle-exclamation">
 You likely nested a version inside of another. For example, your group had version "v1" but your page had version "v2".
 
@@ -106,3 +106,4 @@ We do not recommend nesting versions inside of each other because it's hard to m
   navigation, make sure you spelled the version the same as in your `versions`
   array in `mint.json`.
 </Accordion>
+</AccordionGroup>
