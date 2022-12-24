@@ -54,9 +54,12 @@
       "pages": [
         "settings/customization",
         "settings/page",
-        "settings/subdirectory-hosting",
         "settings/seo",
-        "settings/versioning"
+        "settings/versioning",
+        {
+          "group": "Custom Domain",
+          "pages": ["settings/custom-domain/subdomain", "settings/custom-domain/subdirectory"]
+        }
       ]
     },
     {
