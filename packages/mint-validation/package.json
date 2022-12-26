@@ -1,6 +1,6 @@
 {
   "name": "@mintlify/mint-validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Validates mint.json files",
   "keywords": [
     "mintlify",
