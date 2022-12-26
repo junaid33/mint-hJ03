@@ -1,7 +1,9 @@
 {
   "name": "@mintlify/mint-validation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Validates mint.json files",
+  "main": "bin/index.js",
+  "module": "src/index.ts",
   "keywords": [
     "mintlify",
     "mint"
