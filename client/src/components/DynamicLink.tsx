@@ -11,7 +11,7 @@ export function DynamicLink({
   children,
 }: {
   href?: string;
-  ref: any;
+  ref?: any;
   onClick?: (el: any) => void;
   onMouseEnter?: any;
   onMouseLeave?: any;
