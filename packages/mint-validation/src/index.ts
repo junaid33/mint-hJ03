@@ -11,7 +11,7 @@ export function validateMintConfig(config: ConfigType): MintValidationResults {
     config == undefined ||
     Object.entries(config).length === 0
   ) {
-    results.errors.push("Config object cannot be empty");
+    results.errors.push("Mint Config object cannot be empty.");
     results.status = "error";
     return results;
   }

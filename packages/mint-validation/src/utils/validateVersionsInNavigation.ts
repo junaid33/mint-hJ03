@@ -36,7 +36,9 @@ export function validateVersionsInNavigation(
   const versionsFromNavigation = flattenNavigationVersions(navigation);
   versionsFromNavigation.forEach((v) => {
     if (!versions!.includes(v)) {
-      results.errors.push(`Version ${v} is not valid`);
+      results.errors.push(
+        `Version ${v} is not included in the versions array, but is used in the navigation. Please add ${v} to the versions array.`
+      );
     }
   });
 
