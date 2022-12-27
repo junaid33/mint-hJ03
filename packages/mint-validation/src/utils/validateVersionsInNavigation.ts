@@ -1,7 +1,7 @@
-import { navigationConfigSchema } from "@/schemas/navigation";
-import { versionsSchema } from "@/schemas/versions";
-import { NavigationEntry, NavigationType } from "@/types/navigation";
-import { VersionsType } from "@/types/versions";
+import { navigationConfigSchema } from "../schemas/navigation";
+import { versionsSchema } from "../schemas/versions";
+import { NavigationEntry, NavigationType } from "../types/navigation";
+import { VersionsType } from "../types/versions";
 import { MintValidationResults } from "./common";
 
 export function flattenNavigationVersions(

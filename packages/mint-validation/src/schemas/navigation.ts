@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { NavigationType } from "@/types/navigation";
+import { NavigationType } from "../types/navigation";
 
 const navigationSchema: z.ZodType<NavigationType> = z.lazy(() =>
   z.object({

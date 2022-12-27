@@ -1,6 +1,6 @@
 import { configSchema } from "./schemas/config";
 import { ConfigType } from "./types/config";
-import { MintValidationResults } from "@/utils/common";
+import { MintValidationResults } from "./utils/common";
 import { validateAnchorsWarnings } from "./utils/validateAnchorsWarnings";
 import { validateVersionsInNavigation } from "./utils/validateVersionsInNavigation";
 
