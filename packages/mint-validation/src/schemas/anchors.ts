@@ -1,48 +1,43 @@
 import { z } from "zod";
-import { isHexadecimal } from "../utils/isHexadecimal";
+import { anchorColorSchema } from "./anchorColors";
 
 export const anchorsSchema = z
   .object({
-    name: z.string().trim().min(1, "Anchor name is missing."),
-    url: z.string().trim().min(1, "Anchor URL is missing."),
-    icon: z.string().optional(),
-    color: z
-      .union([
-        z
-          .string()
-          .refine(
-            (val) => isHexadecimal(val),
-            "Anchor color must be a hexadecimal color."
-          ),
-        z
-          .object({
-            from: z
-              .string()
-              .refine(
-                (val) => isHexadecimal(val),
-                "Anchor color.from must be a hexadecimal color."
-              ),
-            via: z
-              .string()
-              .refine(
-                (val) => isHexadecimal(val),
-                "Anchor color.via must be undefined or a hexadecimal color."
-              )
-              .optional(),
-            to: z
-              .string()
-              .refine(
-                (val) => isHexadecimal(val),
-                "Anchor color.to must be a hexadecimal color."
-              ),
-          })
-          .strict(
-            "Anchors with gradient colors can only have properties from, via, and to with valid hexadecimal colors."
-          ),
-      ])
+    name: z
+      .string({
+        required_error: "Every anchor must have a name.",
+        invalid_type_error: "Anchor name must be a string.",
+      })
+      .trim()
+      .min(1, "Anchor name is empty."),
+    url: z
+      .string({
+        required_error: "Every anchor must have a url",
+        invalid_type_error: "Anchor url must be a string.",
+      })
+      .trim()
+      .min(1, "Anchor URL is missing."),
+    icon: z
+      .string({
+        invalid_type_error:
+          "Anchor icon must be the name of a Font Awesome icon. Visit this link to see all the available icons: https://fontawesome.com/icons",
+      })
+      .refine(
+        (iconStr) => !iconStr.startsWith("fa-"),
+        'icon does not need to start with "fa-". Please delete "fa-" and keep the rest of the icon name.'
+      )
       .optional(),
-    isDefaultHidden: z.boolean().optional(),
-    version: z.string().optional(),
+    color: anchorColorSchema.optional(),
+    isDefaultHidden: z
+      .boolean({
+        invalid_type_error:
+          "Anchor isDefaultHidden must be a boolean. Try writing true or false without quotes around them.",
+      })
+      .optional(),
+    version: z
+      .string({
+        invalid_type_error: "Version must be a string in the versions array.",
+      })
+      .optional(),
   })
-  .array()
-  .optional();
+  .array();
