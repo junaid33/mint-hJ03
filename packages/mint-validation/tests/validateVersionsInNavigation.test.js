@@ -8,7 +8,7 @@ describe("validateVersionsInNavigation", () => {
     const results = validateVersionsInNavigation([
       {
         group: "1",
-        pages: "",
+        pages: [""],
       },
     ]);
     expect(results.errors.length).toEqual(0);
@@ -19,13 +19,27 @@ describe("validateVersionsInNavigation", () => {
       [
         {
           group: "1",
-          pages: "",
+          pages: [""],
           version: "2",
         },
       ],
       ["1"]
     );
     expect(results.errors.length).toEqual(1);
+  });
+
+  test("returns warning when versions are defined but not used", () => {
+    const results = validateVersionsInNavigation(
+      [
+        {
+          group: "1",
+          pages: [""],
+        },
+      ],
+      ["v1"]
+    );
+    expect(results.errors.length).toEqual(0);
+    expect(results.warnings.length).toEqual(1);
   });
 });
 
@@ -34,7 +48,7 @@ describe("flattenNavigationVersions", () => {
     const data = flattenNavigationVersions([
       {
         group: "1",
-        pages: "",
+        pages: [""],
         version: "1",
       },
     ]);
@@ -45,7 +59,7 @@ describe("flattenNavigationVersions", () => {
     const data = flattenNavigationVersions([
       {
         group: "1",
-        pages: "",
+        pages: [""],
       },
     ]);
     expect(data).toEqual([]);
