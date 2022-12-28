@@ -1,47 +1,17 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
-import SupremePageLayout from '@/layouts/SupremePageLayout';
 import { getPage } from '@/lib/page';
 import { getPaths } from '@/lib/paths';
-import { ErrorPage } from '@/pages/404';
 import type { Config } from '@/types/config';
 import { FaviconsProps } from '@/types/favicons';
 import { Groups, PageMetaTags } from '@/types/metadata';
 import { OpenApiFile } from '@/types/openApi';
+import { PageProps } from '@/types/page';
+import Page from '@/ui/Page';
 import getMdxSource from '@/utils/mdx/getMdxSource';
 import { pickRedirect } from '@/utils/staticProps/pickRedirect';
 import { prepareToSerialize } from '@/utils/staticProps/prepareToSerialize';
-
-interface PageProps {
-  mdxSource: string;
-  pageData: PageDataProps;
-  favicons: FaviconsProps;
-  subdomain: string;
-}
-
-export interface PageDataProps {
-  navWithMetadata: Groups;
-  pageMetadata: PageMetaTags;
-  title: string;
-  mintConfig: Config;
-  openApiFiles?: OpenApiFile[];
-}
-
-export default function Page({ mdxSource, pageData, favicons, subdomain }: PageProps) {
-  try {
-    return (
-      <SupremePageLayout
-        mdxSource={mdxSource}
-        pageData={pageData}
-        favicons={favicons}
-        subdomain={subdomain}
-      />
-    );
-  } catch (e) {
-    return <ErrorPage />;
-  }
-}
 
 interface PathProps extends ParsedUrlQuery {
   subdomain: string;
@@ -151,3 +121,5 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
     notFound: true,
   };
 };
+
+export default Page;
