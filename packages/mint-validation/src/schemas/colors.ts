@@ -26,20 +26,6 @@ export const colorsSchema = z
           "Dark color must be a hexadecimal color including the # at the start."
         )
         .optional(),
-      ultraLight: z
-        .string({ invalid_type_error: "UltraLight color must be a string." })
-        .regex(
-          hexadecimalPattern,
-          "UltraLight color must be a hexadecimal color including the # at the start."
-        )
-        .optional(),
-      ultraDark: z
-        .string({ invalid_type_error: "UltraDark color must be a string." })
-        .regex(
-          hexadecimalPattern,
-          "UltraDark color must be a hexadecimal color including the # at the start."
-        )
-        .optional(),
       background: z
         .object({
           light: z
@@ -71,5 +57,5 @@ export const colorsSchema = z
     }
   )
   .strict(
-    "Some of the colors in mint.json are invalid. We only accept primary, light, dark, ultraLight, ultraDark, background, and anchors."
+    "Some of the colors in mint.json are invalid. We only accept primary, light, dark, background, and anchors."
   );
