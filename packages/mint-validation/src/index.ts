@@ -18,18 +18,22 @@ export function validateMintConfig(config: ConfigType): MintValidationResults {
 
   // Specific warnings and errors
   const validateAnchorsWarningResult = validateAnchorsWarnings(config.anchors);
-  results.warnings = [
-    ...results.warnings,
-    ...validateAnchorsWarningResult.warnings,
-  ];
   const validateVersionsInNavigationResult = validateVersionsInNavigation(
     config.navigation,
     config.versions ?? []
   );
+
   results.errors = [
     ...results.errors,
     ...validateVersionsInNavigationResult.errors,
   ];
+
+  results.warnings = [
+    ...results.warnings,
+    ...validateVersionsInNavigationResult.warnings,
+    ...validateAnchorsWarningResult.warnings,
+  ];
+
   // Global check
   const validateConfigResult = configSchema.safeParse(config);
 

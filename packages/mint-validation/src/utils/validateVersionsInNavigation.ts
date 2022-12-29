@@ -1,13 +1,15 @@
-import { navigationConfigSchema } from "../schemas/navigation";
-import { versionsSchema } from "../schemas/versions";
 import { NavigationEntry, NavigationType } from "../types/navigation";
 import { VersionsType } from "../types/versions";
 import { MintValidationResults } from "./common";
 
 export function flattenNavigationVersions(
-  nav: NavigationEntry[],
+  nav: NavigationEntry[] | undefined,
   versions: string[] = []
 ): string[] {
+  if (nav == null) {
+    return [];
+  }
+
   nav.forEach((val) => {
     if (typeof val === "string") {
       return versions;
@@ -28,9 +30,13 @@ export function flattenNavigationVersions(
 }
 
 export function validateVersionsInNavigation(
-  navigation: NavigationType[],
-  versions: VersionsType
+  navigation: NavigationType[] | undefined,
+  versions: VersionsType | undefined
 ) {
+  if (versions == null) {
+    versions = [];
+  }
+
   let results = new MintValidationResults();
 
   const versionsFromNavigation = flattenNavigationVersions(navigation);
@@ -41,6 +47,12 @@ export function validateVersionsInNavigation(
       );
     }
   });
+
+  if (versionsFromNavigation.length === 0 && versions.length > 0) {
+    results.warnings.push(
+      "You have versions defined in the config, but no versions are used in the navigation."
+    );
+  }
 
   return results;
 }
