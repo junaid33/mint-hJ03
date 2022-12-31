@@ -5,13 +5,13 @@ const navigationSchema: z.ZodType<NavigationType> = z.lazy(() =>
   z
     .object(
       {
-        group: z
-          .string({
-            required_error: "Missing navigation group name.",
-            invalid_type_error:
-              "Group must be a string. We use the group name to create the navigation sidebar.",
-          })
-          .min(1, "Group cannot be an empty string."),
+        // We allow top-level groups to be an empty string if the user wants to hide the title.
+        // Future work should refactor this so nested groups are non-empty strings.
+        group: z.string({
+          required_error: "Missing navigation group name.",
+          invalid_type_error:
+            "Group must be a string. We use the group name to create the navigation sidebar.",
+        }),
         pages: z
           .array(
             z.union([
