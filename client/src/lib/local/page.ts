@@ -2,6 +2,7 @@ import type { Config } from '@/types/config';
 import { FaviconsProps } from '@/types/favicons';
 import { Groups, PageMetaTags, findPageInGroup } from '@/types/metadata';
 import { OpenApiFile } from '@/types/openApi';
+import { Snippet } from '@/types/snippet';
 import { prepareToSerialize } from '@/utils/staticProps/prepareToSerialize';
 
 import {
@@ -9,6 +10,7 @@ import {
   getFileContents,
   getPrebuiltData,
   confirmFaviconsWereGenerated,
+  getSnippets,
 } from './utils';
 
 /**
@@ -29,6 +31,7 @@ export const getPageProps = async (
         openApiFiles: OpenApiFile[];
         pageMetadata: PageMetaTags;
       };
+      snippets: Snippet[];
       favicons?: FaviconsProps;
     }
 > => {
@@ -72,10 +75,16 @@ export const getPageProps = async (
   try {
     openApiFiles = await getPrebuiltData('openApiFiles');
   } catch {}
-
+  const snippets = await getSnippets();
   return {
     content,
-    pageData: prepareToSerialize({ mintConfig, navWithMetadata, openApiFiles, pageMetadata }),
+    pageData: prepareToSerialize({
+      mintConfig,
+      navWithMetadata,
+      openApiFiles,
+      pageMetadata,
+    }),
+    snippets,
     favicons,
   };
 };
