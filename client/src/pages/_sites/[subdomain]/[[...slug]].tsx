@@ -8,7 +8,9 @@ import { FaviconsProps } from '@/types/favicons';
 import { Groups, PageMetaTags } from '@/types/metadata';
 import { OpenApiFile } from '@/types/openApi';
 import { PageProps } from '@/types/page';
+import { Snippet } from '@/types/snippet';
 import Page from '@/ui/Page';
+import createSnippetTreeMap from '@/utils/mdx/createSnippetTreeMap';
 import getMdxSource from '@/utils/mdx/getMdxSource';
 import { pickRedirect } from '@/utils/staticProps/pickRedirect';
 import { prepareToSerialize } from '@/utils/staticProps/prepareToSerialize';
@@ -80,6 +82,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
       pageMetadata,
       openApiFiles,
       favicons,
+      snippets,
     }: {
       content: string;
       mintConfig: Config;
@@ -87,13 +90,19 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
       pageMetadata: PageMetaTags;
       openApiFiles?: OpenApiFile[];
       favicons: FaviconsProps;
+      snippets: Snippet[];
     } = data;
+    const snippetTreeMap = await createSnippetTreeMap(snippets ?? []);
     let mdxSource: any = '';
 
     try {
-      const response = await getMdxSource(content, {
-        pageMetadata,
-      });
+      const response = await getMdxSource(
+        content,
+        {
+          pageMetadata,
+        },
+        snippetTreeMap
+      );
       mdxSource = response;
     } catch (err) {
       mdxSource = await getMdxSource(
