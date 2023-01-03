@@ -85,6 +85,7 @@ export type Config = {
   topAnchor?: {
     name: string;
     icon?: string;
+    color?: string;
   };
   anchors?: Anchor[];
   footerSocials?: FooterSocial[] | FooterSocials;
