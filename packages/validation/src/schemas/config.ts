@@ -74,7 +74,8 @@ const createCtaButtonSchema = (ctaButtonName: string) =>
             .min(1, ctaButtonName + ".url cannot be empty"),
         })
         .strict(
-          "CTA button can only contain name, url, and type properties. Set a different type if you need to set other fields."
+          ctaButtonName +
+            " can only contain name, url, and type properties. Set a different type if you need to set other fields."
         ),
       z
         .object({
