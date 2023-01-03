@@ -4,6 +4,7 @@ import { slugToTitle } from './titleText/slugToTitle';
 
 // Everything here gets injected as metatags when available.
 const SEO_META_TAGS = [
+  'description',
   'og:site_name',
   'og:title',
   'og:description',
@@ -23,6 +24,7 @@ const SEO_META_TAGS = [
 export function getAllMetaTags(pageMeta: PageMetaTags, configMetadata: { [key: string]: any }) {
   const allMeta = {
     charset: 'utf-8',
+    'description': pageMeta.description,
     'og:type': 'website',
     'og:title': defaultTitle(pageMeta, configMetadata.name),
     'twitter:title': defaultTitle(pageMeta, configMetadata.name),
