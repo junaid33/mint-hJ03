@@ -177,17 +177,18 @@ export const configSchema = z.object({
             "topAnchor.name is missing, set it or delete the entire topAnchor property.",
           invalid_type_error: "topAnchor.name must be a string",
         }),
-        url: z.string({
-          required_error:
-            "topAnchor.url is missing, set it or delete the entire topAnchor property.",
-          invalid_type_error: "topAnchor.url must be a string",
-        }),
+        icon: z
+          .string({
+            invalid_type_error: "topAnchor.icon must be a string",
+          })
+          .optional(),
       },
       {
         invalid_type_error:
-          "topAnchor must be an object with a name and url property. Delete the topAnchor if you don't want to customize the values.",
+          "topAnchor must be an object with a name property. Delete the topAnchor if you don't want to customize the values.",
       }
     )
+    .strict("topAnchor can only have name and icon properties.")
     .optional(),
   anchors: anchorsSchema.optional(),
   footerSocials: footerSocialsSchema.optional(),
