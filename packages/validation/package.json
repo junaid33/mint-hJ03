@@ -1,6 +1,6 @@
 {
   "name": "@mintlify/validation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Validates mint.json files",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mintlify/mint/packages/validation"
+    "url": "https://github.com/mintlify/mint/tree/main/packages/validation"
   },
   "bugs": {
     "url": "https://github.com/mintlify/mint/issues"

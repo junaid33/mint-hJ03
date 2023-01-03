@@ -1,15 +1,16 @@
-# mint-validation
+# @mintlify/validation
 
-`mint-validation` is a small package to validate `mint.json` files.
+`@mintlify/validation` is a small package to validate `mint.json` files.
 
 # Installation
 
-`npm install mint-validation`
+`npm install @mintlify/validation
+`
 
 # Usage
 
 ```
-import mintValidation from "mint-validation"
+import mintValidation from "@mintlify/validation"
 
 const configObject = { name: "Site Name", navigation: [] }
 

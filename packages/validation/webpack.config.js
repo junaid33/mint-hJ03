@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "index.js",
-    library: "@mintlify/mint-validation",
+    library: "@mintlify/validation",
     libraryTarget: "umd",
     globalObject: "this",
   },
