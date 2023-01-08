@@ -251,10 +251,10 @@ export function Header({
   section?: string;
 }) {
   const { mintConfig, subdomain } = useContext(ConfigContext);
-  let [isOpaque, setIsOpaque] = useState(false);
+  const [isOpaque, setIsOpaque] = useState(false);
 
   useEffect(() => {
-    let offset = 50;
+    const offset = 50;
     function onScroll() {
       if (!isOpaque && window.scrollY > offset) {
         setIsOpaque(true);
