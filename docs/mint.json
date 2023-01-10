@@ -50,6 +50,7 @@
     {
       "group": "Settings",
       "pages": [
+        "settings/navigation",
         "settings/global",
         "settings/page",
         "settings/seo",
