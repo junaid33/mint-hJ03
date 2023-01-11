@@ -1,10 +1,18 @@
 import chokidar from "chokidar";
 import fse from "fs-extra";
 import pathUtil from "path";
-import { fileBelongsInPagesFolder } from "./utils/fileBelongsInPagesFolder.js";
-import openApiCheck from "./utils/openApiCheck.js";
-import { createMetadataFile } from "./metadata.js";
+import { fileIsMdxOrMd } from "./utils/fileIsMdxOrMd.js";
+import { openApiCheck } from "./utils.js";
+import {
+  updateGeneratedNav,
+  updateFile,
+  updateOpenApiFiles,
+} from "./update.js";
 import { CLIENT_PATH, CMD_EXEC_PATH } from "./constants.js";
+import { promises as _promises } from "fs";
+import createPage from "./utils/createPage.js";
+
+const { readFile } = _promises;
 
 const listener = () => {
   chokidar
@@ -15,26 +23,44 @@ const listener = () => {
     })
     .on("all", async (event, filename) => {
       if (event === "unlink" || event === "unlinkDir") {
-        if (fileBelongsInPagesFolder(filename)) {
+        if (fileIsMdxOrMd(filename)) {
           const targetPath = pathUtil.join(
             CLIENT_PATH,
             "src",
-            "pages",
+            "_props",
             filename
           );
           await fse.remove(targetPath);
-          console.log("Page deleted: ", filename);
-        } else if (
-          filename === "mint.config.json" ||
-          filename === "mint.json"
-        ) {
-          const targetPath = pathUtil.join(CLIENT_PATH, "src", "mint.json");
+          console.log(
+            `${
+              filename.startsWith("_snippets") ? "Snippet" : "Page"
+            } deleted: `,
+            filename
+          );
+        } else if (filename === "mint.json") {
+          const targetPath = pathUtil.join(
+            CLIENT_PATH,
+            "src",
+            "_props",
+            "mint.json"
+          );
           await fse.remove(targetPath);
           console.log(
             "⚠️ mint.json deleted. Please create a new mint.json file as it is mandatory."
           );
           process.exit(1);
         } else {
+          const extension = pathUtil.parse(filename).ext.slice(1);
+          if (
+            extension &&
+            (extension === "json" ||
+              extension === "yaml" ||
+              extension === "yml")
+          ) {
+            await updateOpenApiFiles();
+            await updateGeneratedNav();
+            return;
+          }
           // all other files
           const targetPath = pathUtil.join(CLIENT_PATH, "public", filename);
           await fse.remove(targetPath);
@@ -42,16 +68,30 @@ const listener = () => {
         }
       } else {
         const filePath = pathUtil.join(CMD_EXEC_PATH, filename);
-        let updateMetadata = false;
-        if (fileBelongsInPagesFolder(filename)) {
-          updateMetadata = true;
+        let regenerateNav = false;
+        if (fileIsMdxOrMd(filename)) {
           const targetPath = pathUtil.join(
             CLIENT_PATH,
             "src",
-            "pages",
+            "_props",
             filename
           );
-          await fse.copy(filePath, targetPath);
+          if (filename.startsWith("_snippets")) {
+            await updateFile(CMD_EXEC_PATH, targetPath, filename);
+            return;
+          }
+          regenerateNav = true;
+
+          const contentStr = (await readFile(filePath)).toString();
+          const { fileContent } = await createPage(
+            filename,
+            contentStr,
+            CMD_EXEC_PATH,
+            []
+          );
+          await fse.outputFile(targetPath, fileContent, {
+            flag: "w",
+          });
           switch (event) {
             case "add":
             case "addDir":
@@ -61,12 +101,14 @@ const listener = () => {
               console.log("Page edited: ", filename);
               break;
           }
-        } else if (
-          filename === "mint.config.json" ||
-          filename === "mint.json"
-        ) {
-          updateMetadata = true;
-          const targetPath = pathUtil.join(CLIENT_PATH, "src", "mint.json");
+        } else if (filename === "mint.json") {
+          regenerateNav = true;
+          const targetPath = pathUtil.join(
+            CLIENT_PATH,
+            "src",
+            "_props",
+            "mint.json"
+          );
           await fse.copy(filePath, targetPath);
           switch (event) {
             case "add":
@@ -91,14 +133,8 @@ const listener = () => {
             );
             isOpenApi = openApiInfo.isOpenApi;
             if (isOpenApi) {
-              await fse.outputFile(
-                pathUtil.join(CLIENT_PATH, "src", "openapi.json"),
-                JSON.stringify(openApiInfo.openapi),
-                {
-                  flag: "w",
-                }
-              );
-              updateMetadata = true;
+              await updateOpenApiFiles();
+              regenerateNav = true;
             }
           }
           if (!isOpenApi) {
@@ -124,8 +160,9 @@ const listener = () => {
               break;
           }
         }
-        if (updateMetadata) {
-          await createMetadataFile();
+        if (regenerateNav) {
+          // TODO: Instead of re-generating the entire nav, optimize by just updating the specific page that changed.
+          await updateGeneratedNav();
         }
       }
     });
