@@ -1,15 +1,14 @@
 {
   "name": "mintlify",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "The Mintlify CLI",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch",
-    "publish-package": "npm run build && npm publish --access public",
     "local": "tsc && npm uninstall -g mintlify && npm i -g ."
   },
   "author": "Mintlify, Inc.",

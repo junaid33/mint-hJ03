@@ -53,11 +53,16 @@ const dev = async () => {
   const MINT_PATH = path.join(DOT_MINTLIFY, "mint");
   shell.cd(MINT_PATH);
   const gitPullStatus = shellExec("git show").stdout;
+  const currBranch = shellExec("git rev-parse --abbrev-ref HEAD").stdout;
   if (
-    gitPullStatus.startsWith("commit 78d764335877932a0dc305d615411dedd18bd18a")
+    gitPullStatus.startsWith(
+      "commit 78d764335877932a0dc305d615411dedd18bd18a"
+    ) ||
+    currBranch === "legacy-components-import"
   ) {
     await fse.emptyDir(MINT_PATH);
   }
+
   let runYarn = true;
   const gitInstalled = shell.which("git");
   let firstInstallation = false;
