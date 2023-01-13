@@ -145,7 +145,11 @@ export const update = async (
   if (mintConfig.openApi) {
     try {
       const { data } = await axios.get(mintConfig.openApi, {
-        responseType: 'blob',
+        responseType: 'text',
+        transformResponse: (res) => {
+          // Disable automatic JSON parsing
+          return res;
+        },
       });
       const specFromUrl = await SwaggerParser.validate(loadOpenApi(mintConfig.openApi, data));
       openApiFiles.push({
@@ -153,7 +157,7 @@ export const update = async (
         spec: specFromUrl,
       });
     } catch (e) {
-      console.log('Invalid openApi url in mint.json:', mintConfig.openApi);
+      console.log("OpenApi file couldn't be downloaded from url. The error message is:", e.message);
     }
   }
 
