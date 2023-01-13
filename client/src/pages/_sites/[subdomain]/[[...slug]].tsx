@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
 
   const { subdomain, slug } = params;
   const path = slug ? slug.join('/') : 'index';
-
+  console.log({ subdomain, path });
   // The entire build will fail when data is undefined
   const { data, status } = await getPage(subdomain, path);
   if (data == null) {
