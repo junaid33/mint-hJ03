@@ -37,7 +37,7 @@
 Download the Mintlify CLI using the following command
 
 ```
-npm i mintlify -g
+npm i -g mintlify
 ```
 
 ### 👩‍💻 Development
@@ -54,10 +54,10 @@ Note - `mintlify dev` requires `yarn` and it's recommended you install it as a g
 
 Steps you can take if the dev CLI is not working (After each step try to run `mintlify dev` again):
 
+- Make sure you are running in a folder with a `mint.json` file.
 - Make sure you are using Node v18 or higher.
 - Run `mintlify install` to re-install dependencies.
 - Navigate to the `.mintlify` folder in your home directory and delete its contents.
-- If all else fails navigate to `~/.mintlify` and `git clone https://github.com/mintlify/mint.git --branch legacy-components-import`
 
 ### 🏃 Get Started
 
