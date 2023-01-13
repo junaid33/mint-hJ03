@@ -29,6 +29,7 @@ export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
       }));
     }
   );
+  console.log({ paths });
   return {
     paths,
     fallback: 'blocking',
