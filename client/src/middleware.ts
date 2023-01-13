@@ -21,7 +21,7 @@ export default function middleware(req: NextRequest) {
     : hostname.replace(/\.localhost:\d{4}/, '');
 
   // rewrite root application to main folder
-  if (hostname.match(/localhost:\d{4}/)) {
+  if (hostname.match(/^localhost:\d{4}$/)) {
     // TODO: change so it detects if it's at a subdomain or not
     return NextResponse.rewrite(url);
   }
