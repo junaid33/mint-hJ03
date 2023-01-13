@@ -1,19 +1,35 @@
-import matter from 'gray-matter';
-import isAbsoluteUrl from 'is-absolute-url';
-import { remark } from 'remark';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkGfm from 'remark-gfm';
-import remarkMdx from 'remark-mdx';
-import visit from 'unist-util-visit';
+// TODO: Put in the prebuild package
+import matter from "gray-matter";
+import isAbsoluteUrl from "is-absolute-url";
+import { remark } from "remark";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
+import remarkMdx from "remark-mdx";
+import { visit } from "unist-util-visit";
+import type { OpenApiFile } from "./types.js";
 
-export const getPageMetadataAndSlug = (pagePath, pageContent, openApiFiles) => {
+const createPage = async (
+  pagePath: string,
+  pageContent: string,
+  contentDirectoryPath: string,
+  openApiFiles: OpenApiFile[]
+) => {
   let { data: metadata } = matter(pageContent);
+  try {
+    const parsedContent = await preParseMdx(pageContent, contentDirectoryPath);
+    pageContent = parsedContent;
+  } catch (error) {
+    pageContent = `🚧 A parsing error occured. Please contact the owner of this website.`;
+  }
 
   // Replace .mdx so we can pass file paths into this function
-  const slug = pagePath.replace(/\.mdx?$/, '');
+  const slug = pagePath.replace(/\.mdx?$/, "");
   let defaultTitle = slugToTitle(slug);
   // Append data from OpenAPI if it exists
-  const { title, description } = getOpenApiTitleAndDescription(openApiFiles, metadata?.openapi);
+  const { title, description } = getOpenApiTitleAndDescription(
+    openApiFiles,
+    metadata?.openapi
+  );
 
   if (title) {
     defaultTitle = title;
@@ -28,21 +44,12 @@ export const getPageMetadataAndSlug = (pagePath, pageContent, openApiFiles) => {
 
   return {
     pageMetadata,
+    pageContent,
     slug: removeLeadingSlash(slug),
   };
 };
 
-export const preParseMdx = async (fileContent, contentDirectoryPath) => {
-  try {
-    const parsedContent = await preParseMdxHelper(fileContent, contentDirectoryPath);
-    fileContent = parsedContent;
-  } catch (error) {
-    fileContent = `🚧 A parsing error occured. Please contact the owner of this website.`;
-  }
-  return fileContent;
-};
-
-const preParseMdxHelper = async (fileContent, contentDirectoryPath) => {
+const preParseMdx = async (fileContent, contentDirectoryPath) => {
   const removeContentDirectoryPath = (filePath) => {
     const pathArr = createPathArr(filePath);
     const contentDirectoryPathArr = createPathArr(contentDirectoryPath);
@@ -51,7 +58,7 @@ const preParseMdxHelper = async (fileContent, contentDirectoryPath) => {
         pathArr.pop();
       }
     });
-    return pathArr.join('/');
+    return pathArr.join("/");
   };
 
   const removeContentDirectoryPaths = () => {
@@ -60,8 +67,10 @@ const preParseMdxHelper = async (fileContent, contentDirectoryPath) => {
         if (node == null) {
           return;
         }
-        if (node.name === 'img' || node.name === 'source') {
-          const srcAttrIndex = node.attributes.findIndex((attr) => attr?.name === 'src');
+        if (node.name === "img" || node.name === "source") {
+          const srcAttrIndex = node.attributes.findIndex(
+            (attr) => attr?.name === "src"
+          );
           const nodeUrl = node.attributes[srcAttrIndex].value;
           if (
             // <img/> component
@@ -69,11 +78,12 @@ const preParseMdxHelper = async (fileContent, contentDirectoryPath) => {
             !isAbsoluteUrl(nodeUrl) &&
             !isDataString(nodeUrl)
           ) {
-            node.attributes[srcAttrIndex].value = removeContentDirectoryPath(nodeUrl);
+            node.attributes[srcAttrIndex].value =
+              removeContentDirectoryPath(nodeUrl);
           }
         } else if (
           // ![]() format
-          node.type === 'image' &&
+          node.type === "image" &&
           node.url &&
           !isAbsoluteUrl(node.url) &&
           !isDataString(node.url)
@@ -88,7 +98,7 @@ const preParseMdxHelper = async (fileContent, contentDirectoryPath) => {
   const file = await remark()
     .use(remarkMdx)
     .use(remarkGfm)
-    .use(remarkFrontmatter, ['yaml', 'toml'])
+    .use(remarkFrontmatter, ["yaml", "toml"])
     .use(removeContentDirectoryPaths)
     .process(fileContent);
   return String(file);
@@ -96,21 +106,24 @@ const preParseMdxHelper = async (fileContent, contentDirectoryPath) => {
 
 const removeLeadingSlash = (str) => {
   const path = createPathArr(str);
-  return path.join('/');
+  return path.join("/");
 };
 
 const createPathArr = (path) => {
-  return path.split('/').filter((dir) => dir !== '');
+  return path.split("/").filter((dir) => dir !== "");
 };
 
-const isDataString = (str) => str.startsWith('data:');
+const isDataString = (str) => str.startsWith("data:");
 
 const getOpenApiTitleAndDescription = (openApiFiles, openApiMetaField) => {
   if (openApiFiles == null || !openApiMetaField || openApiMetaField == null) {
     return {};
   }
 
-  const { operation } = getOpenApiOperationMethodAndEndpoint(openApiFiles, openApiMetaField);
+  const { operation } = getOpenApiOperationMethodAndEndpoint(
+    openApiFiles,
+    openApiMetaField
+  );
 
   if (operation == null) {
     return {};
@@ -122,8 +135,12 @@ const getOpenApiTitleAndDescription = (openApiFiles, openApiMetaField) => {
   };
 };
 
-const getOpenApiOperationMethodAndEndpoint = (openApiFiles, openApiMetaField) => {
-  const { endpoint, method, filename } = extractMethodAndEndpoint(openApiMetaField);
+const getOpenApiOperationMethodAndEndpoint = (
+  openApiFiles,
+  openApiMetaField
+) => {
+  const { endpoint, method, filename } =
+    extractMethodAndEndpoint(openApiMetaField);
 
   let path;
 
@@ -160,8 +177,12 @@ const extractMethodAndEndpoint = (openApiMetaField) => {
   const trimmed = openApiMetaField.trim();
   const foundMethod = trimmed.match(methodRegex);
 
-  const startIndexOfMethod = foundMethod ? openApiMetaField.indexOf(foundMethod[0]) : 0;
-  const endIndexOfMethod = foundMethod ? startIndexOfMethod + foundMethod[0].length - 1 : 0;
+  const startIndexOfMethod = foundMethod
+    ? openApiMetaField.indexOf(foundMethod[0])
+    : 0;
+  const endIndexOfMethod = foundMethod
+    ? startIndexOfMethod + foundMethod[0].length - 1
+    : 0;
 
   const filename = openApiMetaField.substring(0, startIndexOfMethod).trim();
 
@@ -173,16 +194,18 @@ const extractMethodAndEndpoint = (openApiMetaField) => {
 };
 
 function optionallyAddLeadingSlash(path) {
-  if (!path || path.startsWith('/')) {
+  if (!path || path.startsWith("/")) {
     return path;
   }
-  return '/' + path;
+  return "/" + path;
 }
 
 export const slugToTitle = (slug) => {
-  const slugArr = slug.split('/');
-  let defaultTitle = slugArr[slugArr.length - 1].split('-').join(' '); //replace all dashes
-  defaultTitle = defaultTitle.split('_').join(' '); //replace all underscores
+  const slugArr = slug.split("/");
+  let defaultTitle = slugArr[slugArr.length - 1].split("-").join(" "); //replace all dashes
+  defaultTitle = defaultTitle.split("_").join(" "); //replace all underscores
   defaultTitle = defaultTitle.charAt(0).toUpperCase() + defaultTitle.slice(1); //capitalize first letter
   return defaultTitle;
 };
+
+export default createPage;

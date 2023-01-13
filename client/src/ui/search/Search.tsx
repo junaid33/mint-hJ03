@@ -257,7 +257,8 @@ export function SearchProvider({ subdomain, children }: { subdomain?: string; ch
   );
 
   const onSearch = async (query: string) => {
-    if (!query) {
+    // Search not available for local previews
+    if (!query || subdomain == null) {
       setHits([]);
       return;
     }
@@ -285,11 +286,6 @@ export function SearchProvider({ subdomain, children }: { subdomain?: string; ch
     router.push(`/${hit.slug}${sectionSlug}`);
     setHits([]);
   };
-  if (!subdomain) {
-    // TODO: Make search work in single-tenant
-    // https://github.com/mintlify/mint/issues/119
-    return children;
-  }
 
   return (
     <>

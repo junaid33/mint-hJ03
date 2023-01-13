@@ -1,6 +1,8 @@
 import { promises as _promises } from 'fs';
 import { pathExists } from 'fs-extra';
+import matter from 'gray-matter';
 
+import { OpenApiFile } from '@/types/openApi';
 import { Snippet } from '@/types/snippet';
 
 const { readdir, readFile } = _promises;
@@ -96,4 +98,117 @@ export const getSnippets = async (): Promise<Snippet[]> => {
     })
   );
   return snippetArr;
+};
+
+export const extractPageMetadata = (
+  pagePath: string,
+  pageContent: string,
+  openApiFiles: OpenApiFile[]
+) => {
+  let { data: metadata, content } = matter(pageContent);
+
+  // Replace .mdx so we can pass file paths into this function
+  const slug = pagePath.replace(/\.mdx?$/, '');
+  let defaultTitle = slugToTitle(slug);
+  // Append data from OpenAPI if it exists
+  const { title, description } = getOpenApiTitleAndDescription(openApiFiles, metadata?.openapi);
+
+  if (title) {
+    defaultTitle = title;
+  }
+
+  const pageMetadata = {
+    title: defaultTitle,
+    description,
+    ...metadata,
+    href: optionallyAddLeadingSlash(slug),
+  };
+
+  return { pageMetadata, content };
+};
+
+const slugToTitle = (slug: string) => {
+  const slugArr = slug.split('/');
+  let defaultTitle = slugArr[slugArr.length - 1].split('-').join(' '); //replace all dashes
+  defaultTitle = defaultTitle.split('_').join(' '); //replace all underscores
+  defaultTitle = defaultTitle.charAt(0).toUpperCase() + defaultTitle.slice(1); //capitalize first letter
+  return defaultTitle;
+};
+
+function optionallyAddLeadingSlash(path: string) {
+  if (path.startsWith('/')) {
+    return path;
+  }
+  return '/' + path;
+}
+
+const getOpenApiTitleAndDescription = (openApiFiles: OpenApiFile[], openApiMetaField: string) => {
+  if (openApiFiles == null || !openApiMetaField || openApiMetaField == null) {
+    return {};
+  }
+
+  const { operation } = getOpenApiOperationMethodAndEndpoint(openApiFiles, openApiMetaField);
+
+  if (operation == null) {
+    return {};
+  }
+
+  return {
+    title: operation?.summary,
+    description: operation?.description,
+  };
+};
+
+// TODO: Proper types
+const getOpenApiOperationMethodAndEndpoint = (
+  openApiFiles: OpenApiFile[],
+  openApiMetaField: string
+): any => {
+  const { endpoint, method, filename } = extractMethodAndEndpoint(openApiMetaField);
+
+  let path;
+
+  openApiFiles?.forEach((file) => {
+    const openApiFile = file.spec;
+    const openApiPath = openApiFile.paths && openApiFile.paths[endpoint];
+    const isFilenameOrNone = !filename || filename === file.filename;
+    if (openApiPath && isFilenameOrNone) {
+      path = openApiPath;
+    }
+  });
+
+  if (path == null) {
+    return {};
+  }
+
+  let operation;
+  if (method) {
+    operation = path[method.toLowerCase()];
+  } else {
+    const firstOperationKey = Object.keys(path)[0];
+    operation = path[firstOperationKey];
+  }
+
+  return {
+    operation,
+    method,
+    endpoint,
+  };
+};
+
+const extractMethodAndEndpoint = (openApiMetaField: string) => {
+  const methodRegex = /(get|post|put|delete|patch)\s/i;
+  const trimmed = openApiMetaField.trim();
+  const foundMethod = trimmed.match(methodRegex);
+
+  const startIndexOfMethod = foundMethod ? openApiMetaField.indexOf(foundMethod[0]) : 0;
+  const endIndexOfMethod = foundMethod ? startIndexOfMethod + foundMethod[0].length - 1 : 0;
+
+  const filename = openApiMetaField.substring(0, startIndexOfMethod).trim();
+
+  return {
+    method: foundMethod ? foundMethod[0].slice(0, -1).toUpperCase() : undefined,
+    endpoint: openApiMetaField.substring(endIndexOfMethod).trim(),
+    filename: filename ? filename : undefined,
+  };
 };

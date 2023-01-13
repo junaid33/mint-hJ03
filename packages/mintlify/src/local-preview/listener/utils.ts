@@ -1,10 +1,13 @@
-import SwaggerParser from '@apidevtools/swagger-parser';
-import yaml from 'js-yaml';
-import pathUtil from 'path';
+import SwaggerParser from "@apidevtools/swagger-parser";
+import { promises as _promises } from "fs";
+
+const { readdir } = _promises;
 
 export const getFileExtension = (filename) => {
-  const parsed = pathUtil.parse(filename);
-  return parsed.ext ? parsed.ext.slice(1) : filename;
+  return (
+    filename.substring(filename.lastIndexOf(".") + 1, filename.length) ||
+    filename
+  );
 };
 
 export const openApiCheck = async (path) => {
@@ -37,7 +40,7 @@ const filterOutNullInPages = (pages) => {
     if (page == null) {
       return;
     }
-    if (page.hasOwnProperty('pages')) {
+    if (page.hasOwnProperty("pages")) {
       const newGroup = filterOutNullInGroup(page);
       newPages.push(newGroup);
     } else {
@@ -48,10 +51,19 @@ const filterOutNullInPages = (pages) => {
   return newPages;
 };
 
-export const loadOpenApi = (openApiSrc, openApiString) => {
-  // Load yaml
-  if (openApiSrc.endsWith('.yaml') || openApiSrc.endsWith('.yml')) {
-    return yaml.load(openApiString);
+export const getFileList = async (dirName: string, og = dirName) => {
+  let files = [];
+  const items = await readdir(dirName, { withFileTypes: true });
+
+  for (const item of items) {
+    if (item.isDirectory()) {
+      files = [...files, ...(await getFileList(`${dirName}/${item.name}`, og))];
+    } else {
+      const path = `${dirName}/${item.name}`;
+      const name = path.replace(og, "");
+      files.push(name);
+    }
   }
-  return JSON.parse(openApiString);
+
+  return files;
 };

@@ -1,9 +1,12 @@
+import SwaggerParser from '@apidevtools/swagger-parser';
+import axios from 'axios';
 import { promises as _promises } from 'fs';
 import fse, { pathExists, outputFile } from 'fs-extra';
 import path from 'path';
 
-import createPage from './createPage.js';
+import { getPageMetadataAndSlug, preParseMdx } from './createPage.js';
 import { generateFavicons, generateNavFromPages } from './generate.js';
+import { loadOpenApi } from './utils.js';
 
 const { readFile } = _promises;
 
@@ -117,12 +120,8 @@ export const update = async (
         const targetPath = path.join('src', '_props', filename);
 
         const contentStr = (await readFile(sourcePath)).toString();
-        const { slug, pageMetadata, fileContent } = await createPage(
-          filename,
-          contentStr,
-          contentDirectoryPath,
-          openApiFiles
-        );
+        const fileContent = await preParseMdx(contentStr, contentDirectoryPath);
+        const { slug, pageMetadata } = getPageMetadataAndSlug(filename, contentStr, openApiFiles);
         await outputFile(targetPath, fileContent, {
           flag: 'w',
         });
@@ -138,10 +137,28 @@ export const update = async (
     ...contentPromises,
     ...updateFiles(contentDirectoryPath, 'public', staticFilenames),
     ...updateFiles(contentDirectoryPath, 'src/_props', snippets),
-    updateOpenApiFiles(openApiFiles),
   ]);
+
   const mintConfig = initialFileUploadResponses[0];
+
+  // Download OpenApi file if url is provided
+  if (mintConfig.openApi) {
+    try {
+      const { data } = await axios.get(mintConfig.openApi, {
+        responseType: 'blob',
+      });
+      const specFromUrl = await SwaggerParser.validate(loadOpenApi(mintConfig.openApi, data));
+      openApiFiles.push({
+        filename: 'openapi-from-url',
+        spec: specFromUrl,
+      });
+    } catch (e) {
+      console.log('Invalid openApi url in mint.json:', mintConfig.openApi);
+    }
+  }
+
   await Promise.all([
+    updateOpenApiFiles(openApiFiles),
     updateGeneratedNav(pagesAcc, mintConfig.navigation),
     updateFavicons(mintConfig, contentDirectoryPath),
   ]);

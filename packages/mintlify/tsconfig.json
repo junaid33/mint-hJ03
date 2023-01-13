@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "node16",
-    "moduleResolution": "node16",
-    "target": "es2017",
-    "lib": ["es2016", "dom", "ES2021.String"],
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "lib": ["es2020", "dom", "ES2021.String"],
     "sourceMap": true,
     "outDir": "bin",
     "baseUrl": ".",
@@ -11,7 +11,8 @@
       "*": ["node_modules/*", "src/types/*"]
     },
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*"]
 }

@@ -1,6 +1,6 @@
 import type { Config } from '@/types/config';
 import { FaviconsProps } from '@/types/favicons';
-import { Groups, PageMetaTags, findPageInGroup } from '@/types/metadata';
+import { Groups, PageMetaTags } from '@/types/metadata';
 import { OpenApiFile } from '@/types/openApi';
 import { Snippet } from '@/types/snippet';
 import { prepareToSerialize } from '@/utils/staticProps/prepareToSerialize';
@@ -11,6 +11,7 @@ import {
   getPrebuiltData,
   confirmFaviconsWereGenerated,
   getSnippets,
+  extractPageMetadata,
 } from './utils';
 
 /**
@@ -44,23 +45,23 @@ export const getPageProps = async (
     // We just fall back to the empty value, but we will want to do
     // better error handling.
   }
+  let openApiFiles: OpenApiFile[] = [];
+  try {
+    openApiFiles = await getPrebuiltData('openApiFiles');
+  } catch {}
   const pagePath = await getPagePath(slug);
   let content = '';
+  let pageMetadata: PageMetaTags = {};
   if (pagePath) {
-    content = await getFileContents(pagePath);
+    const contentWithFrontmatter = await getFileContents(pagePath);
+    const metadataAndContent = extractPageMetadata(pagePath, contentWithFrontmatter, openApiFiles);
+    content = metadataAndContent.content;
+    pageMetadata = metadataAndContent.pageMetadata;
   } else {
     // redirect
     return { navWithMetadata };
   }
-  let pageMetadata: PageMetaTags = {};
-  navWithMetadata.forEach((group) => {
-    const foundPage = findPageInGroup(group, '/' + slug);
-    if (foundPage) {
-      pageMetadata = foundPage.page;
-      return false;
-    }
-    return true;
-  });
+
   let mintConfig: Config = { name: '' };
   try {
     mintConfig = await getPrebuiltData('mint');
@@ -71,10 +72,7 @@ export const getPageProps = async (
   }
   const favicons: FaviconsProps | undefined =
     mintConfig?.favicon && (await confirmFaviconsWereGenerated()) ? defaultFavicons : undefined;
-  let openApiFiles: OpenApiFile[] = [];
-  try {
-    openApiFiles = await getPrebuiltData('openApiFiles');
-  } catch {}
+
   const snippets = await getSnippets();
   return {
     content,
