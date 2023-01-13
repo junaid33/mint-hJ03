@@ -183,7 +183,12 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
         >
           <span className="absolute z-0 inset-0 bg-primary-dark rounded-full group-hover:opacity-[0.9]"></span>
           <span className="z-10 mr-2 text-white">{button.name}</span>
-          <svg width="6" height="3" className="h-2 overflow-visible -rotate-90 text-white" aria-hidden="true">
+          <svg
+            width="6"
+            height="3"
+            className="h-2 overflow-visible -rotate-90 text-white"
+            aria-hidden="true"
+          >
             <path
               d="M0 0L3 3L6 0"
               fill="none"
@@ -250,7 +255,7 @@ export function Header({
   title?: string;
   section?: string;
 }) {
-  const { mintConfig, subdomain } = useContext(ConfigContext);
+  const { mintConfig } = useContext(ConfigContext);
   const [isOpaque, setIsOpaque] = useState(false);
 
   useEffect(() => {
