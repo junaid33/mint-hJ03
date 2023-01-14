@@ -1,3 +1,4 @@
+import zodToJsonSchema from "zod-to-json-schema";
 import { configSchema } from "./schemas/config";
 import { ConfigType } from "./types/config";
 import { MintValidationResults } from "./utils/common";
@@ -60,3 +61,5 @@ export function validateMintConfig(config: ConfigType): MintValidationResults {
   results.status = results.errors.length ? "error" : "success";
   return results;
 }
+
+export const mintConfigSchema = zodToJsonSchema(configSchema, "mintConfigSchema");
