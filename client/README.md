@@ -1,6 +1,6 @@
 # Mintlify Client
 
-The client is essentially a frontend template used to host documentation. In production, when `yarn prebuild` is ran it fetches all the relevant assets (the config file, the content (mdx files), and static assets) and plugs them into the appropriate locations before building.
+The client is essentially a frontend template used to host documentation.
 
 ## Your First Code Contribution
 
