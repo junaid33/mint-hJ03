@@ -247,6 +247,14 @@ module.exports = {
     'flex-wrap',
     'border-none',
     'aspect-video',
-    'dark:bg-white'
+    'dark:bg-white',
+
+    // API Square Colors used by openApiColors.ts
+    'bg-green-600/80 dark:bg-green-400/80',
+    'bg-blue-600/80 dark:bg-blue-400/80',
+    'bg-yellow-600/80 dark:bg-yellow-400/80',
+    'bg-red-600/80 dark:bg-red-400/80',
+    'bg-orange-600/80 dark:bg-orange-400/80',
+    'bg-slate-600 dark:bg-slate-400/80',
   ],
 };

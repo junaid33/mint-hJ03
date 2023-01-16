@@ -1,3 +1,5 @@
+// Update the safelist in tailwind config if you change these colors.
+// Tailwind does not scan this file so it does not know to include them.
 export const getMethodDotsColor = (method?: string) => {
   switch (method?.toUpperCase()) {
     case 'GET':
