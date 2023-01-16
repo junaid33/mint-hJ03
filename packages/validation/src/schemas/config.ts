@@ -158,6 +158,7 @@ const integrationsSchema = z.object(
 );
 
 export const configSchema = z.object({
+  $schema: z.string().url().optional().default('https://mintlify.com/schema.json'),
   mintlify: z.string().optional(),
   name: nameSchema,
   logo: logoSchema.optional(),

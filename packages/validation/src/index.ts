@@ -62,4 +62,10 @@ export function validateMintConfig(config: ConfigType): MintValidationResults {
   return results;
 }
 
-export const mintConfigSchema = zodToJsonSchema(configSchema, "mintConfigSchema");
+export const mintConfigSchema = (() => {
+  var schema = zodToJsonSchema(configSchema, "Schema") as any;
+  delete schema.definitions?.Schema?.properties.__injected;
+  delete schema.definitions?.Schema?.properties.colors.properties.ultraDark;
+  delete schema.definitions?.Schema?.properties.colors.properties.ultraLight;
+  return schema;
+})()
