@@ -4,7 +4,7 @@ import { outputFile } from "fs-extra";
 import path from "path";
 import createPage from "./utils/createPage.js";
 import { OpenApiFile } from "./utils/types.js";
-import categorizeFiles from "./categorizeFiles.js";
+import { categorizeFiles } from "./categorize.js";
 import { CMD_EXEC_PATH } from "../../constants.js";
 import { getConfigObj } from "./utils/mintConfigFile.js";
 const { readFile } = _promises;

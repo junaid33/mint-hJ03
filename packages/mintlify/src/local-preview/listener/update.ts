@@ -5,7 +5,7 @@ import { getConfigPath } from "./utils/mintConfigFile.js";
 import { CLIENT_PATH, CMD_EXEC_PATH } from "../../constants.js";
 import { join } from "path";
 import { generateNav } from "./generate.js";
-import categorizeFiles from "./categorizeFiles.js";
+import { categorizeFiles } from "./categorize.js";
 
 const { readFile } = _promises;
 

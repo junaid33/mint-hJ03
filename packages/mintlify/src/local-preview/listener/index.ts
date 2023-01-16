@@ -1,12 +1,13 @@
 import chokidar from "chokidar";
 import fse from "fs-extra";
 import pathUtil from "path";
-import { fileIsMdxOrMd } from "./utils/fileIsMdxOrMd.js";
 import { openApiCheck } from "./utils.js";
 import { updateGeneratedNav, updateOpenApiFiles } from "./update.js";
 import { CLIENT_PATH, CMD_EXEC_PATH } from "../../constants.js";
 import { promises as _promises } from "fs";
 import createPage from "./utils/createPage.js";
+import { getCategory } from "./categorize.js";
+import { PotentialFileCategory, FileCategory } from "./utils/types.js";
 
 const { readFile } = _promises;
 
@@ -17,153 +18,172 @@ const listener = () => {
       ignored: ["node_modules", ".git", ".idea"],
       cwd: CMD_EXEC_PATH,
     })
-    .on("all", async (event, filename) => {
-      if (event === "unlink" || event === "unlinkDir") {
-        if (fileIsMdxOrMd(filename)) {
-          const targetPath = pathUtil.join(
-            CLIENT_PATH,
-            "src",
-            "_props",
-            filename
-          );
+    .on("add", async (filename: string) => {
+      try {
+        const category = await onUpdateEvent(filename);
+        switch (category) {
+          case "page":
+            console.log("New page detected: ", filename);
+            break;
+          case "snippet":
+            console.log("New snippet detected: ", filename);
+            break;
+          case "mintConfig":
+            console.log("Config added");
+            break;
+          case "openApi":
+            console.log("OpenApi spec added: ", filename);
+            break;
+          case "staticFile":
+            console.log("Static file added: ", filename);
+            break;
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    })
+    .on("change", async (filename: string) => {
+      try {
+        const category = await onUpdateEvent(filename);
+        switch (category) {
+          case "page":
+            console.log("Page edited: ", filename);
+            break;
+          case "snippet":
+            console.log("Snippet edited: ", filename);
+            break;
+          case "mintConfig":
+            console.log("Config edited");
+            break;
+          case "openApi":
+            console.log("OpenApi spec edited: ", filename);
+            break;
+          case "staticFile":
+            console.log("Static file edited: ", filename);
+            break;
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    })
+    .on("unlink", async (filename: string) => {
+      try {
+        const potentialCategory = getCategory(filename);
+        const targetPath = getTargetPath(potentialCategory, filename);
+        if (
+          potentialCategory === "page" ||
+          potentialCategory === "snippet" ||
+          potentialCategory === "mintConfig" ||
+          potentialCategory === "staticFile"
+        ) {
           await fse.remove(targetPath);
-          console.log(
-            `${
-              filename.startsWith("_snippets") ? "Snippet" : "Page"
-            } deleted: `,
-            filename
-          );
-        } else if (filename === "mint.json") {
-          const targetPath = pathUtil.join(
-            CLIENT_PATH,
-            "src",
-            "_props",
-            "mint.json"
-          );
-          await fse.remove(targetPath);
-          console.log(
-            "⚠️ mint.json deleted. Please create a new mint.json file as it is mandatory."
-          );
-          process.exit(1);
-        } else {
-          const extension = pathUtil.parse(filename).ext.slice(1);
-          if (
-            extension &&
-            (extension === "json" ||
-              extension === "yaml" ||
-              extension === "yml")
-          ) {
+        }
+        switch (potentialCategory) {
+          case "page":
+            console.log(`Page deleted: ${filename}`);
+            break;
+          case "snippet":
+            console.log(`Snippet deleted: ${filename}`);
+            break;
+          case "mintConfig":
+            console.log(
+              "⚠️ mint.json deleted. Please create a new mint.json file as it is mandatory."
+            );
+            process.exit(1);
+          case "potentialJsonOpenApiSpec":
+          case "potentialYamlOpenApiSpec":
             await updateOpenApiFiles();
             await updateGeneratedNav();
-            return;
-          }
-          // all other files
-          const targetPath = pathUtil.join(CLIENT_PATH, "public", filename);
-          await fse.remove(targetPath);
-          console.log("Static file deleted: ", filename);
+            break;
+          case "staticFile":
+            console.log("Static file deleted: ", filename);
+            break;
         }
-      } else {
-        const filePath = pathUtil.join(CMD_EXEC_PATH, filename);
-        let regenerateNav = false;
-        if (fileIsMdxOrMd(filename)) {
-          const targetPath = pathUtil.join(
-            CLIENT_PATH,
-            "src",
-            "_props",
-            filename
-          );
-          if (filename.startsWith("_snippets")) {
-            const sourcePath = pathUtil.join(CMD_EXEC_PATH, filename);
-            await fse.remove(targetPath);
-            await fse.copy(sourcePath, targetPath);
-            return;
-          }
-          regenerateNav = true;
-
-          const contentStr = (await readFile(filePath)).toString();
-          const { pageContent } = await createPage(
-            filename,
-            contentStr,
-            CMD_EXEC_PATH,
-            []
-          );
-          await fse.outputFile(targetPath, pageContent, {
-            flag: "w",
-          });
-          switch (event) {
-            case "add":
-            case "addDir":
-              console.log("New page detected: ", filename);
-              break;
-            default:
-              console.log("Page edited: ", filename);
-              break;
-          }
-        } else if (filename === "mint.json") {
-          regenerateNav = true;
-          const targetPath = pathUtil.join(
-            CLIENT_PATH,
-            "src",
-            "_props",
-            "mint.json"
-          );
-          await fse.copy(filePath, targetPath);
-          switch (event) {
-            case "add":
-            case "addDir":
-              console.log("Config added");
-              break;
-            default:
-              console.log("Config edited");
-              break;
-          }
-        } else {
-          const extension = pathUtil.parse(filename).ext.slice(1);
-          let isOpenApi = false;
-          if (
-            extension &&
-            (extension === "json" ||
-              extension === "yaml" ||
-              extension === "yml")
-          ) {
-            const openApiInfo = await openApiCheck(
-              pathUtil.join(CMD_EXEC_PATH, filename)
-            );
-            isOpenApi = openApiInfo.isOpenApi;
-            if (isOpenApi) {
-              await updateOpenApiFiles();
-              regenerateNav = true;
-            }
-          }
-          if (!isOpenApi) {
-            // all other files
-            const targetPath = pathUtil.join(CLIENT_PATH, "public", filename);
-            await fse.copy(filePath, targetPath);
-          }
-          switch (event) {
-            case "add":
-            case "addDir":
-              if (isOpenApi) {
-                console.log("OpenApi file added: ", filename);
-              } else {
-                console.log("Static file added: ", filename);
-              }
-              break;
-            default:
-              if (isOpenApi) {
-                console.log("OpenApi file edited: ", filename);
-              } else {
-                console.log("Static file edited: ", filename);
-              }
-              break;
-          }
-        }
-        if (regenerateNav) {
-          // TODO: Instead of re-generating the entire nav, optimize by just updating the specific page that changed.
-          await updateGeneratedNav();
-        }
+      } catch (error) {
+        console.error(error.message);
       }
     });
+};
+
+const getTargetPath = (
+  potentialCategory: PotentialFileCategory,
+  filePath: string
+): string => {
+  switch (potentialCategory) {
+    case "page":
+    case "snippet":
+      return pathUtil.join(CLIENT_PATH, "src", "_props", filePath);
+    case "mintConfig":
+      return pathUtil.join(CLIENT_PATH, "src", "_props", "mint.json");
+    case "potentialYamlOpenApiSpec":
+    case "potentialJsonOpenApiSpec":
+      return pathUtil.join(CLIENT_PATH, "src", "_props", "openApiFiles.json");
+    case "staticFile":
+      return pathUtil.join(CLIENT_PATH, "public", filePath);
+    default:
+      throw new Error("Invalid category");
+  }
+};
+
+/**
+ * This function is called when a file is added or changed
+ * @param filename
+ * @returns FileCategory
+ */
+const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
+  const filePath = pathUtil.join(CMD_EXEC_PATH, filename);
+  const potentialCategory = getCategory(filename);
+  const targetPath = getTargetPath(potentialCategory, filename);
+  let regenerateNav = false;
+  let category: FileCategory =
+    potentialCategory === "potentialYamlOpenApiSpec" ||
+    potentialCategory === "potentialJsonOpenApiSpec"
+      ? "staticFile"
+      : potentialCategory;
+  switch (potentialCategory) {
+    case "page":
+      regenerateNav = true;
+      const contentStr = (await readFile(filePath)).toString();
+      const { pageContent } = await createPage(
+        filename,
+        contentStr,
+        CMD_EXEC_PATH,
+        []
+      );
+      await fse.outputFile(targetPath, pageContent, {
+        flag: "w",
+      });
+      break;
+    case "snippet":
+      await fse.copy(filePath, targetPath);
+      break;
+    case "mintConfig":
+      regenerateNav = true;
+      await fse.copy(filePath, targetPath);
+      break;
+    case "potentialYamlOpenApiSpec":
+    case "potentialJsonOpenApiSpec":
+      let isOpenApi = false;
+      const openApiInfo = await openApiCheck(
+        pathUtil.join(CMD_EXEC_PATH, filename)
+      );
+      isOpenApi = openApiInfo.isOpenApi;
+      if (isOpenApi) {
+        // TODO: Instead of re-generating all openApi files, optimize by just updating the specific file that changed.
+        await updateOpenApiFiles();
+        regenerateNav = true;
+        category = "openApi";
+      }
+      break;
+    case "staticFile":
+      await fse.copy(filePath, targetPath);
+      break;
+  }
+  if (regenerateNav) {
+    // TODO: Instead of re-generating the entire nav, optimize by just updating the specific page that changed.
+    await updateGeneratedNav();
+  }
+  return category;
 };
 
 export default listener;
