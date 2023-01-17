@@ -31,15 +31,29 @@ Run the following command at the root of your documentation where `mint.json` is
 mintlify dev
 ```
 
+## Mintlify Versions
+
+Each CLI is linked to a specific version of Mintlify. Please update the CLI if your local website looks different than production.
+
+<CodeGroup>
+
+```bash Update with npm
+npm i -g mintlify@latest
+```
+
+```bash Update with yarn
+yarn global upgrade mintlify
+```
+
+</CodeGroup>
+
 ## Troubleshooting
 
 Here's how to solve some common problems when working with the CLI.
 
 <AccordionGroup>
-  <Accordion title="Mintlify is not loading">
-    Update to Node v18 and the latest version of Git.
-  </Accordion>
-  <Accordion title="Mintlify is not loading after updating Node and Git">
+  <Accordion title="Mintlify is not loading">Update to Node v18.</Accordion>
+  <Accordion title="Mintlify is not loading after updating Node">
     Run `mintlify install` and try again.
   </Accordion>
   <Accordion title="Port 3000 is already taken">

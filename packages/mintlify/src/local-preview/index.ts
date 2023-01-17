@@ -1,16 +1,18 @@
 import Chalk from "chalk";
 import open from "open";
-import { promises as _promises } from "fs";
 import fse, { pathExists } from "fs-extra";
 import inquirer from "inquirer";
 import { isInternetAvailable } from "is-internet-available";
 import path from "path";
 import shell from "shelljs";
+import { Octokit } from "@octokit/rest";
 import {
   CLIENT_PATH,
   HOME_DIR,
   DOT_MINTLIFY,
   CMD_EXEC_PATH,
+  TARGET_MINT_VERSION,
+  VERSION_PATH,
 } from "../constants.js";
 import { buildLogger, ensureYarn } from "../util.js";
 import listener from "./listener/index.js";
@@ -52,77 +54,103 @@ const dev = async () => {
   await fse.ensureDir(path.join(DOT_MINTLIFY, "mint"));
   const MINT_PATH = path.join(DOT_MINTLIFY, "mint");
   shell.cd(MINT_PATH);
-  const gitPullStatus = shellExec("git show").stdout;
-  const currBranch = shellExec("git rev-parse --abbrev-ref HEAD").stdout;
-  if (
-    gitPullStatus.startsWith(
-      "commit 78d764335877932a0dc305d615411dedd18bd18a"
-    ) ||
-    currBranch === "legacy-components-import"
-  ) {
-    await fse.emptyDir(MINT_PATH);
-  }
 
-  let runYarn = true;
-  const gitInstalled = shell.which("git");
-  let firstInstallation = false;
-  const gitRepoInitialized = await pathExists(
-    path.join(DOT_MINTLIFY, "mint", ".git")
-  );
-  if (!gitRepoInitialized) {
-    firstInstallation = true;
-    if (gitInstalled) {
-      logger.start("Initializing local Mintlify instance...");
-      shellExec("git init");
-      shellExec(
-        "git remote add -f mint-origin https://github.com/mintlify/mint.git"
-      );
-    } else {
-      logger.fail(
-        "git must be installed (https://github.com/git-guides/install-git)"
-      );
-      process.exit(1);
-    }
-  }
-
+  // The CLI can only run offline if Mint was already downloaded
   const internet = await isInternetAvailable();
-  let pullOutput = null;
-  if (internet && gitInstalled) {
-    shellExec("git config core.sparseCheckout true");
-    shellExec('echo "client/" >> .git/info/sparse-checkout');
-    pullOutput = shellExec("git pull mint-origin main").stdout;
-    shellExec("git config core.sparseCheckout false");
-    shellExec("rm .git/info/sparse-checkout");
+  if (!internet && !(await pathExists(CLIENT_PATH))) {
+    logger.fail(
+      "Running mintlify dev for the first time requires an internet connection."
+    );
+    process.exit(1);
   }
-  if (pullOutput === "Already up to date.\n") {
-    runYarn = false;
-  }
-  shell.cd(CLIENT_PATH);
-  if (internet && (runYarn || !(await nodeModulesExists()))) {
-    if (firstInstallation) {
-      logger.succeed("Local Mintlify instance initialized");
+
+  // Avoid checking if we are on the target Mint if we are offline
+  if (internet) {
+    const mintVersionExists = await pathExists(VERSION_PATH);
+
+    // We always download the target version of Mintlify if the mint-version.txt file doesn't exist.
+    // We do this because users updating from an older version of the CLI never have mint-version.txt set.
+    let downloadTargetMint = !mintVersionExists;
+
+    // Download target mint if the current version is different. Keep in mind this also allows
+    // downgrading to an older version of Mintlify by installing an older CLI version.
+    if (mintVersionExists) {
+      const currVersion = fse.readFileSync(VERSION_PATH, "utf8");
+      if (currVersion !== TARGET_MINT_VERSION) {
+        downloadTargetMint = true;
+      }
     }
-    logger.start("Updating dependencies...");
-    ensureYarn(logger);
-    shellExec("yarn");
-    if (firstInstallation) {
-      logger.succeed("Installation complete");
-    } else {
-      logger.succeed("Dependencies updated");
+
+    if (downloadTargetMint) {
+      // Delete any existing contents
+      fse.emptyDirSync(MINT_PATH);
+
+      logger.text = "Downloading Mintlify framework...";
+
+      const octokit = new Octokit();
+      const downloadRes = await octokit.repos.downloadTarballArchive({
+        owner: "mintlify",
+        repo: "mint",
+        ref: TARGET_MINT_VERSION,
+      });
+
+      logger.text = "Extracting Mintlify framework...";
+      const TAR_PATH = path.join(MINT_PATH, "mint.tar.gz");
+
+      // Unzip tar file
+      fse.writeFileSync(TAR_PATH, Buffer.from(downloadRes.data as any));
+      shellExec("tar -xzf mint.tar.gz");
+
+      // List all files in tar file and get the first one.
+      // There is never anything else in the tar file, so this is safe.
+      // We do this because the folder name includes the commit sha, so we can't hardcode it.
+      // Lastly, we call .trim() to remove the newline character.
+      const extractedFolderName = shellExec(
+        'tar -tzf mint.tar.gz | head -1 | cut -f1 -d"/"'
+      ).stdout.trim();
+
+      // Delete tar file
+      fse.removeSync(TAR_PATH);
+
+      fse.moveSync(
+        path.join(MINT_PATH, extractedFolderName, "client"),
+        path.join(CLIENT_PATH)
+      );
+
+      // Store the currently downloaded version
+      fse.writeFileSync(VERSION_PATH, TARGET_MINT_VERSION);
+
+      // Delete unnecessary contents downloaded from GitHub
+      fse.removeSync(path.join(MINT_PATH, extractedFolderName));
+
+      logger.text = "Installing dependencies...";
+
+      ensureYarn(logger);
+      shell.cd(CLIENT_PATH);
+      shellExec("yarn");
     }
   }
 
   if (!(await nodeModulesExists())) {
-    logger.fail(`Dependencies weren\'t installed, run
-    
-    mintlify install
-    
-    `);
+    if (!internet) {
+      logger.fail(`Dependencies are missing and you are offline. Connect to the internet and run
+  
+      mintlify install
+      
+      `);
+    } else {
+      logger.fail(`Dependencies were not installed correctly, run
+  
+      mintlify install
+      
+      `);
+    }
     process.exit(1);
   }
+
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
   shellExec(`yarn preconfigure ${relativePath}`);
-  logger.succeed("Local Mintlify instance initialized");
+  logger.succeed("Local Mintlify instance started.");
   run();
 };
 
