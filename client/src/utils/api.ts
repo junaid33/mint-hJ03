@@ -168,9 +168,9 @@ export const extractBaseAndPath = (
   }
 
   const url = new URL(fullEndpoint);
+
   const base = decodeURI(url.origin);
   const path = fullEndpoint.substring(fullEndpoint.indexOf(base) + base.length);
-
   return {
     path,
     base,

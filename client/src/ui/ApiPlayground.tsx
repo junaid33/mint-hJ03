@@ -45,12 +45,21 @@ export function ApiPlayground({
   const { mintConfig, openApiFiles } = useContext(ConfigContext);
   const [apiBaseIndex, setApiBaseIndex] = useState(0);
   const { method, endpoint } = extractMethodAndEndpoint(api);
-  const { base, path } = extractBaseAndPath(
-    endpoint,
-    apiBaseIndex,
-    mintConfig?.api?.baseUrl,
-    openApiFiles
-  );
+
+  let base = '';
+  let path = '';
+  try {
+    const extracted = extractBaseAndPath(
+      endpoint,
+      apiBaseIndex,
+      mintConfig?.api?.baseUrl,
+      openApiFiles
+    );
+    base = extracted.base;
+    path = extracted.path;
+  } catch (e) {
+    // Invalid URL. Keep the default empty strings.
+  }
 
   const [apiBase, setApiBase] = useState<string>(base);
   const [isSendingRequest, setIsSendingResponse] = useState<boolean>(false);
