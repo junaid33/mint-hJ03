@@ -22,8 +22,8 @@ yargs(hideBin(process.argv))
     "dev",
     "Runs Mintlify locally (Must run in directory with mint.json)",
     () => {},
-    async () => {
-      await dev();
+    async (argv) => {
+      await dev(argv);
     }
   )
   .command(

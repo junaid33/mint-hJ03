@@ -16,6 +16,7 @@ import {
 } from "../constants.js";
 import { buildLogger, ensureYarn } from "../util.js";
 import listener from "./listener/index.js";
+import { ArgumentsCamelCase } from "yargs";
 
 const shellExec = (cmd: string) => {
   return shell.exec(cmd, { silent: true });
@@ -47,7 +48,7 @@ const promptForYarn = async () => {
   }
 };
 
-const dev = async () => {
+const dev = async (argv: ArgumentsCamelCase) => {
   shell.cd(HOME_DIR);
   await promptForYarn();
   const logger = buildLogger("Starting a local Mintlify instance...");
@@ -151,18 +152,25 @@ const dev = async () => {
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
   shellExec(`yarn preconfigure ${relativePath}`);
   logger.succeed("Local Mintlify instance started.");
-  run();
+  run((argv.port as string) || "3000");
 };
 
-const run = () => {
+const run = (port: string) => {
   shell.cd(CLIENT_PATH);
   console.log(
     `🌿 ${Chalk.green(
-      "Navigate to your local preview at http://localhost:3000"
+      `Your local preview is available at http://localhost:${port}`
     )}`
   );
-  shell.exec("npm run dev-watch", { async: true });
-  open("http://localhost:3000");
+  console.log(
+    `🌿 ${Chalk.green("Press Ctrl+C any time to stop the local preview.")}`
+  );
+
+  // next-remote-watch can only receive ports as env variables
+  // https://github.com/hashicorp/next-remote-watch/issues/23
+  shell.exec(`PORT=${port} npm run dev-watch`, { async: true });
+
+  open(`http://localhost:${port}`);
   listener();
 };
 

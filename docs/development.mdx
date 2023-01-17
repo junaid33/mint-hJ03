@@ -8,7 +8,7 @@ description: "Install the Mintlify CLI to preview changes locally"
 
 Using the [npm](https://www.npmjs.com) package manager
 
-```bash
+```bash Terminal
 npm i -g mintlify
 ```
 
@@ -16,7 +16,7 @@ npm i -g mintlify
   <Tab title="yarn">
   Using the [yarn](https://yarnpkg.com) package manager
 
-```bash
+```bash Terminal
 yarn global add mintlify
 ```
 
@@ -27,8 +27,22 @@ yarn global add mintlify
 
 Run the following command at the root of your documentation where `mint.json` is located. Mintlify will open at `localhost:3000`.
 
-```bash Terminal
+```bash Running Mintlify
 mintlify dev
+```
+
+### Custom Ports
+
+Mintlify uses port 3000 by default. You can use the `--port` flag to customize the port Mintlify runs on. For example, use this command to run in port 3333:
+
+```bash Running Mintlify with a custom port
+mintlify dev --port 3333
+```
+
+You will see an error like this if you try to run Mintlify in a port that's already taken:
+
+```md Example error message when port is busy
+Error: listen EADDRINUSE: address already in use :::3000
 ```
 
 ## Mintlify Versions
@@ -55,11 +69,5 @@ Here's how to solve some common problems when working with the CLI.
   <Accordion title="Mintlify is not loading">Update to Node v18.</Accordion>
   <Accordion title="Mintlify is not loading after updating Node">
     Run `mintlify install` and try again.
-  </Accordion>
-  <Accordion title="Port 3000 is already taken">
-    The Mintlify CLI will automatically move to the next port if you were
-    already running something at `localhost:3000`. For example, if you were
-    running two documentation sites, they would be at `localhost:3000` and
-    `localhost:3001`.
   </Accordion>
 </AccordionGroup>

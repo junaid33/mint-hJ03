@@ -1,6 +1,6 @@
 {
   "name": "mintlify",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "The Mintlify CLI",
   "engines": {
     "node": ">=18.0.0"
@@ -12,7 +12,6 @@
     "local": "tsc && npm uninstall -g mintlify && npm i -g ."
   },
   "author": "Mintlify, Inc.",
-  "license": "ISC",
   "exports": "./bin/index.js",
   "bin": {
     "mintlify": "bin/index.js"

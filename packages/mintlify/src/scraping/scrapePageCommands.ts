@@ -6,6 +6,7 @@ import { scrapeReadMePage } from "./site-scrapers/scrapeReadMePage.js";
 import { detectFramework, Frameworks } from "./detectFramework.js";
 import { getHrefFromArgs } from "../util.js";
 import { getHtmlWithPuppeteer } from "../browser.js";
+import { ArgumentsCamelCase } from "yargs";
 
 function validateFramework(framework) {
   if (!framework) {
@@ -20,7 +21,7 @@ function validateFramework(framework) {
 }
 
 export async function scrapePageWrapper(
-  argv: any,
+  argv: ArgumentsCamelCase,
   scrapeFunc: ScrapePageFn,
   options?: { version?: string; puppeteer?: boolean }
 ) {

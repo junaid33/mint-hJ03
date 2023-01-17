@@ -8,9 +8,10 @@ import { scrapeGitBookSection } from "./site-scrapers/scrapeGitBookSection.js";
 import openNestedGitbookMenus from "./site-scrapers/openNestedGitbookMenus.js";
 import { scrapeReadMeSection } from "./site-scrapers/scrapeReadMeSection.js";
 import { startBrowser } from "../browser.js";
+import { ArgumentsCamelCase } from "yargs";
 
 export async function scrapeSectionAxiosWrapper(
-  argv: any,
+  argv: ArgumentsCamelCase,
   scrapeFunc: ScrapeSectionFn
 ) {
   const href = getHrefFromArgs(argv);
