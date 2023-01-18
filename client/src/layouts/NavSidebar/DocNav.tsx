@@ -19,8 +19,10 @@ const getPaddingByLevel = (level: number) => {
       return 'pl-4';
     case 1:
       return 'pl-7';
-    default:
+    case 2:
       return 'pl-10';
+    default:
+      return 'pl-[3.25rem]';
   }
 };
 
