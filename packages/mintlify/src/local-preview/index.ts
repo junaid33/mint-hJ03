@@ -1,4 +1,5 @@
 import Chalk from "chalk";
+import child_process from "child_process";
 import open from "open";
 import fse, { pathExists } from "fs-extra";
 import inquirer from "inquirer";
@@ -51,7 +52,7 @@ const promptForYarn = async () => {
 const dev = async (argv: ArgumentsCamelCase) => {
   shell.cd(HOME_DIR);
   await promptForYarn();
-  const logger = buildLogger("Starting a local Mintlify instance...");
+  const logger = buildLogger("Preparing local Mintlify instance...");
   await fse.ensureDir(path.join(DOT_MINTLIFY, "mint"));
   const MINT_PATH = path.join(DOT_MINTLIFY, "mint");
   shell.cd(MINT_PATH);
@@ -151,26 +152,45 @@ const dev = async (argv: ArgumentsCamelCase) => {
 
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
   shellExec(`yarn preconfigure ${relativePath}`);
-  logger.succeed("Local Mintlify instance started.");
+  logger.succeed("Local Mintlify instance is ready. Launching your site now.");
   run((argv.port as string) || "3000");
 };
 
 const run = (port: string) => {
   shell.cd(CLIENT_PATH);
-  console.log(
-    `🌿 ${Chalk.green(
-      `Your local preview is available at http://localhost:${port}`
-    )}`
-  );
-  console.log(
-    `🌿 ${Chalk.green("Press Ctrl+C any time to stop the local preview.")}`
-  );
 
   // next-remote-watch can only receive ports as env variables
   // https://github.com/hashicorp/next-remote-watch/issues/23
-  shell.exec(`PORT=${port} npm run dev-watch`, { async: true });
-
-  open(`http://localhost:${port}`);
+  const mintlifyDevProcess = child_process.spawn("npm run dev-watch", {
+    env: {
+      ...process.env,
+      PORT: port,
+    },
+    cwd: CLIENT_PATH,
+    stdio: "pipe",
+    shell: true,
+  });
+  mintlifyDevProcess.stdout.on("data", (data) => {
+    const output = data.toString();
+    console.log(output);
+    if (output.startsWith("> Ready on http://localhost:")) {
+      console.log(
+        `🌿 ${Chalk.green(
+          `Your local preview is available at http://localhost:${port}`
+        )}`
+      );
+      console.log(
+        `🌿 ${Chalk.green("Press Ctrl+C any time to stop the local preview.")}`
+      );
+      open(`http://localhost:${port}`);
+    }
+  });
+  const onExit = () => {
+    mintlifyDevProcess.kill("SIGINT");
+    process.exit(0);
+  };
+  process.on("SIGINT", onExit);
+  process.on("SIGTERM", onExit);
   listener();
 };
 
