@@ -1,6 +1,8 @@
 import chokidar from "chokidar";
 import fse from "fs-extra";
 import pathUtil from "path";
+import Chalk from "chalk";
+import mintValidation from "@mintlify/validation";
 import { openApiCheck } from "./utils.js";
 import { updateGeneratedNav, updateOpenApiFiles } from "./update.js";
 import { CLIENT_PATH, CMD_EXEC_PATH } from "../../constants.js";
@@ -159,7 +161,36 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
       break;
     case "mintConfig":
       regenerateNav = true;
-      await fse.copy(filePath, targetPath);
+
+      const mintJsonFileContent = (await readFile(filePath)).toString();
+      try {
+        const mintConfig = JSON.parse(mintJsonFileContent);
+        const { status, errors, warnings } =
+          mintValidation.validateMintConfig(mintConfig);
+
+        errors.forEach((error) => {
+          console.error(`🚨 ${Chalk.red(error)}`);
+        });
+
+        warnings.forEach((warning) => {
+          console.warn(`⚠️ ${Chalk.yellow(warning)}`);
+        });
+
+        if (status === "success") {
+          await fse.copy(filePath, targetPath);
+        }
+      } catch (error) {
+        if (error.name === "SyntaxError") {
+          console.error(
+            `🚨 ${Chalk.red(
+              "mint.json has invalid JSON. You are likely missing a comma or a bracket. You can paste your mint.json file into https://jsonlint.com/ to get a more specific error message."
+            )}`
+          );
+        } else {
+          console.error(`🚨 ${Chalk.red(error.message)}`);
+        }
+      }
+
       break;
     case "potentialYamlOpenApiSpec":
     case "potentialJsonOpenApiSpec":
