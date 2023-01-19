@@ -19,7 +19,10 @@ export function validateMintConfig(config: ConfigType): MintValidationResults {
   }
 
   // Specific warnings and errors
-  const validateAnchorsWarningResult = validateAnchorsWarnings(config.anchors);
+  const validateAnchorsWarningResult = validateAnchorsWarnings(
+    config.anchors,
+    config.navigation
+  );
   const validateVersionsInNavigationResult = validateVersionsInNavigation(
     config.navigation,
     config.versions ?? []
@@ -68,4 +71,4 @@ export const mintConfigSchema = (() => {
   delete schema.definitions?.Schema?.properties.colors.properties.ultraDark;
   delete schema.definitions?.Schema?.properties.colors.properties.ultraLight;
   return schema;
-})()
+})();
