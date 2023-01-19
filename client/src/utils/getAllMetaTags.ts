@@ -11,6 +11,7 @@ const SEO_META_TAGS = [
   'og:url',
   'og:image',
   'og:locale',
+  'og:logo',
   'article:publisher',
   'twitter:title',
   'twitter:description',
