@@ -149,7 +149,7 @@ const dev = async (argv: ArgumentsCamelCase) => {
     }
     process.exit(1);
   }
-
+  shell.cd(CLIENT_PATH);
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
   shellExec(`yarn preconfigure ${relativePath}`);
   logger.succeed("Local Mintlify instance is ready. Launching your site now.");
