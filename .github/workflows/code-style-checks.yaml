@@ -1,4 +1,4 @@
-name: CI Check
+name: Code Style Checks
 
 on: push
 
@@ -7,7 +7,7 @@ defaults:
     working-directory: client
 
 jobs:
-  check:
+  style-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

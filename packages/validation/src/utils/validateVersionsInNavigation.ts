@@ -1,15 +1,12 @@
+import { navigationConfigSchema } from "../schemas/navigation";
 import { NavigationEntry, NavigationType } from "../types/navigation";
 import { VersionsType } from "../types/versions";
 import { MintValidationResults } from "./common";
 
 export function flattenNavigationVersions(
-  nav: NavigationEntry[] | undefined,
+  nav: NavigationEntry[],
   versions: string[] = []
 ): string[] {
-  if (nav == null) {
-    return [];
-  }
-
   nav.forEach((val) => {
     if (val == null || typeof val === "string") {
       return versions;
@@ -34,6 +31,12 @@ export function validateVersionsInNavigation(
   versions: VersionsType | undefined = []
 ) {
   let results = new MintValidationResults();
+  if (
+    navigation == null ||
+    navigationConfigSchema.safeParse(navigation).success === false
+  ) {
+    return results;
+  }
 
   const versionsFromNavigation = flattenNavigationVersions(navigation);
   versionsFromNavigation.forEach((v) => {
@@ -50,5 +53,43 @@ export function validateVersionsInNavigation(
     );
   }
 
+  navigation.forEach((nav) => {
+    results.warnings.push(...warnVersionNesting(nav, null));
+  });
+
   return results;
+}
+
+function warnVersionNesting(
+  navigation: NavigationEntry,
+  currentVersion: string | null | undefined
+): string[] {
+  if (typeof navigation === "string") {
+    return [];
+  }
+
+  let warnings = [];
+
+  if (
+    navigation.version &&
+    currentVersion != null &&
+    navigation.version !== currentVersion
+  ) {
+    warnings.push(
+      `Please do not set versions on groups nested inside a group that already has a version. The group "${navigation.group}" has version "${navigation.version}" set and it is nested in a group that has the version "${currentVersion}" set.`
+    );
+  }
+
+  if (navigation.pages) {
+    return warnings.concat(
+      navigation.pages
+        .map((entry) =>
+          warnVersionNesting(entry, currentVersion || navigation.version)
+        )
+        .flat()
+        .filter(Boolean) as string[]
+    );
+  }
+
+  return [];
 }
