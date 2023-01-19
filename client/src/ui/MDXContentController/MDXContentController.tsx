@@ -76,8 +76,8 @@ export function MDXContentController({
 
   const paramGroupDict = getParamGroupsFromApiComponents(
     openApiPlaygroundProps.apiComponents ?? apiComponents,
-    pageMetadata.auth,
-    mintConfig?.api
+    pageMetadata.auth || mintConfig?.api?.auth?.method,
+    mintConfig?.api?.auth?.name
   );
   const paramGroups = Object.entries(paramGroupDict).map(([groupName, params]) => {
     return {

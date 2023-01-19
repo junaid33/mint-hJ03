@@ -258,37 +258,33 @@ const getParams = (apiComponents?: ApiComponent[]): Param[] => {
 };
 
 export const getParamGroupsFromApiComponents = (
-  apiComponents?: ApiComponent[],
-  auth?: string,
-  apiConfig?: ApiConfig
+  apiComponents: ApiComponent[] | undefined,
+  authMethod: string | undefined,
+  authName: string | undefined
 ): Record<string, Param[]> => {
   const groups: Record<string, Param[]> = {};
 
   // Add auth if configured
-  if (auth?.toLowerCase() !== 'none') {
-    if (apiConfig?.auth?.name) {
-      groups.Authorization = [
-        {
-          name: apiConfig.auth.name,
-          required: true,
-        },
-      ];
-    }
-
-    if (apiConfig?.auth?.method === 'basic') {
-      const name = apiConfig.auth.name || 'username:password';
+  if (authMethod?.toLowerCase() !== 'none') {
+    if (authMethod?.toLowerCase() === 'basic') {
+      const name = authName || 'username:password';
       groups.Authorization = name.split(':').map((section) => {
         return {
           name: section,
           required: true,
         };
       });
-    }
-
-    if (apiConfig?.auth?.method?.toLowerCase() === 'bearer' || auth?.toLowerCase() === 'bearer') {
+    } else if (authMethod?.toLowerCase() === 'bearer') {
       groups.Authorization = [
         {
           name: 'Bearer',
+          required: true,
+        },
+      ];
+    } else if (authName) {
+      groups.Authorization = [
+        {
+          name: authName,
           required: true,
         },
       ];
