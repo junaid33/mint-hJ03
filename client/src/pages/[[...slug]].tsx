@@ -49,9 +49,9 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
       navWithMetadata: Groups;
     };
     if (Array.isArray(navWithMetadata) && navWithMetadata.length > 0) {
-      const redirect = pickRedirect(navWithMetadata, slugStr);
-      if (redirect) {
-        return redirect;
+      const { destination } = pickRedirect(navWithMetadata, slugStr);
+      if (destination) {
+        return { redirect: { destination, permanent: false } };
       }
     }
 
