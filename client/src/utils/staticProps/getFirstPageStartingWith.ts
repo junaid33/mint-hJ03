@@ -1,4 +1,4 @@
-import { GroupPage, Groups, PageMetaTags, isPage, isGroup } from '@/types/metadata';
+import { GroupPage, Groups, PageMetaTags, isPage } from '@/types/metadata';
 
 export function getFirstPageStartingWith(navWithMetadata: Groups, hrefStart: string): PageMetaTags {
   let firstStartingWith = {};
@@ -29,15 +29,9 @@ const findFirstStartingWith = (entry: GroupPage, hrefStart: string): PageMetaTag
 
   // Recursively search for the first page
   for (const subEntry of entry.pages) {
-    if (isGroup(subEntry)) {
-      const first = findFirstStartingWith(subEntry, hrefStart);
-      if (first) {
-        return first;
-      }
-    } else if (isPage(subEntry)) {
-      if (subEntry.href?.startsWith(hrefStart)) {
-        return subEntry;
-      }
+    const first = findFirstStartingWith(subEntry, hrefStart);
+    if (first) {
+      return first;
     }
   }
 
