@@ -36,8 +36,6 @@ export function TableOfContents({ tableOfContents, currentSection, meta }: any) 
     <div className="hidden xl:flex flex-none z-10 pl-10 w-[19rem]">
       <ul className="fixed text-slate-700 text-sm leading-6 w-[16.5rem] h-[calc(100%-8rem)] overflow-y-auto">
         {tableOfContents.map((section: TableOfContentsSection) => {
-          let prevDepth = section.depth;
-          let prevMargin = 0;
           return (
             <Fragment key={section.slug}>
               <li>
@@ -56,12 +54,9 @@ export function TableOfContents({ tableOfContents, currentSection, meta }: any) 
                 </a>
               </li>
               {section.children.map((subsection: TableOfContentsSection) => {
-                if (subsection.depth - prevDepth >= 1) {
-                  prevMargin += 4;
-                }
-                prevDepth = subsection.depth;
+                const depthStartingFromH2 = subsection.depth - 2;
                 return (
-                  <li className={`ml-${prevMargin}`} key={subsection.slug}>
+                  <li style={{ marginLeft: depthStartingFromH2 + 'rem' }} key={subsection.slug}>
                     <a
                       href={`#${subsection.slug}`}
                       onClick={closeNav}
