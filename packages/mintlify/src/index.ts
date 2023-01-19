@@ -82,6 +82,7 @@ yargs(hideBin(process.argv))
   )
 
   // Print the help menu when the user enters an invalid command.
+  .strictCommands()
   .demandCommand(
     1,
     "Unknown command. See above for the list of supported commands."
