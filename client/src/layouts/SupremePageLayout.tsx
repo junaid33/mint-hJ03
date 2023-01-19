@@ -32,7 +32,7 @@ export default function SupremePageLayout({
 }: {
   mdxSource: any;
   pageData: PageDataProps;
-  favicons: FaviconsProps;
+  favicons?: FaviconsProps;
   subdomain?: string;
 }) {
   const { mintConfig, navWithMetadata, pageMetadata, openApiFiles } = pageData;
@@ -64,7 +64,7 @@ export default function SupremePageLayout({
           <AnalyticsContext.Provider value={analyticsMediator}>
             <ColorVariables />
             <Head>
-              {favicons.icons.map((favicon) => (
+              {favicons?.icons?.map((favicon) => (
                 <link
                   rel={favicon.rel}
                   type={favicon.type}
@@ -73,7 +73,7 @@ export default function SupremePageLayout({
                   key={favicon.href}
                 />
               ))}
-              <meta name="msapplication-config" content={favicons.browserconfig} />
+              <meta name="msapplication-config" content={favicons?.browserconfig} />
               <meta name="apple-mobile-web-app-title" content={mintConfig.name} />
               <meta name="application-name" content={mintConfig.name} />
               <meta name="theme-color" content="#ffffff" />
