@@ -91,13 +91,19 @@
     {
       "group": "API Components",
       "pages": [
-        "api-components/playground",
-        "api-components/configuration",
+        {
+          "group": "API Playground",
+          "pages": [
+            "api-components/playground",
+            "api-components/configuration",
+            "api-components/authentication",
+            "api-components/openapi"
+          ]
+        },
         "api-components/param",
         "api-components/response",
         "api-components/expandable",
-        "api-components/examples",
-        "api-components/openapi"
+        "api-components/examples"
       ]
     },
     {
