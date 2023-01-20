@@ -41,7 +41,15 @@ const apiSchema = z
         .optional(),
       auth: z
         .object({
-          method: z.string().optional(),
+          method: z
+            .union(
+              [z.literal("bearer"), z.literal("basic"), z.literal("key")],
+              {
+                invalid_type_error:
+                  "auth.method has to be one of: bearer, basic, key",
+              }
+            )
+            .optional(),
           name: z.string().optional(),
           inputPrefix: z.string().optional(),
         })
@@ -158,7 +166,11 @@ const integrationsSchema = z.object(
 );
 
 export const configSchema = z.object({
-  $schema: z.string().url().optional().default('https://mintlify.com/schema.json'),
+  $schema: z
+    .string()
+    .url()
+    .optional()
+    .default("https://mintlify.com/schema.json"),
   mintlify: z.string().optional(),
   name: nameSchema,
   logo: logoSchema.optional(),

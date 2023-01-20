@@ -13,11 +13,6 @@ import { getOpenApiOperationMethodAndEndpoint } from '@/utils/openApi/getOpenApi
 import { getParameterType } from '@/utils/openApi/getParameterType';
 import { createExpandable, createParamField, getProperties } from '@/utils/openapi';
 
-type OpenApiContentProps = {
-  endpointStr: string;
-  auth?: string;
-};
-
 const MarkdownComponents = {
   p: (props: any) => <p className="m-0" {...props} />,
 };
@@ -171,7 +166,7 @@ function ExpandableFields({ schema }: any) {
   );
 }
 
-export function OpenApiParameters({ endpointStr }: OpenApiContentProps) {
+export function OpenApiParameters({ endpointStr }: { endpointStr: string }) {
   const { openApiFiles } = useContext(ConfigContext);
   const { operation, path } = getOpenApiOperationMethodAndEndpoint(endpointStr, openApiFiles);
 

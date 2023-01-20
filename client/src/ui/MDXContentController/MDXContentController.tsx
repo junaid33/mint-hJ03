@@ -76,7 +76,7 @@ export function MDXContentController({
 
   const paramGroupDict = getParamGroupsFromApiComponents(
     openApiPlaygroundProps.apiComponents ?? apiComponents,
-    pageMetadata.auth || mintConfig?.api?.auth?.method,
+    pageMetadata.authMethod || mintConfig?.api?.auth?.method,
     mintConfig?.api?.auth?.name
   );
   const paramGroups = Object.entries(paramGroupDict).map(([groupName, params]) => {
@@ -121,9 +121,7 @@ export function MDXContentController({
           <ContentsContext.Provider value={{ registerHeading, unregisterHeading } as any}>
             <MDXProvider components={{ a: DynamicLink, Heading }}>{children}</MDXProvider>
           </ContentsContext.Provider>
-          {pageMetadata.openapi && (
-            <OpenApiParameters endpointStr={pageMetadata.openapi} auth={pageMetadata.auth} />
-          )}
+          {pageMetadata.openapi && <OpenApiParameters endpointStr={pageMetadata.openapi} />}
         </div>
 
         <Footer

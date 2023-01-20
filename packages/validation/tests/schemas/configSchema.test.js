@@ -49,6 +49,25 @@ describe("configSchema", () => {
     expect(data.success).toEqual(true);
   });
 
+  test("works when defining bearer authentication", () => {
+    const data = configSchema.safeParse({
+      name: "Name",
+      favicon: "favicon.svg",
+      colors: { primary: "#ff0000" },
+      api: {
+        auth: {
+          method: "bearer",
+        },
+      },
+      navigation: [{ group: "Group", pages: ["page"] }],
+      topbarCtaButton: {
+        type: "github",
+        url: "https://github.com/org/repo",
+      },
+    });
+    expect(data.success).toEqual(true);
+  });
+
   test("fails when GitHub cta is an invalid link", () => {
     const data = configSchema.safeParse({
       name: "Name",
@@ -58,6 +77,21 @@ describe("configSchema", () => {
       topbarCtaButton: {
         type: "github",
         url: "",
+      },
+    });
+    expect(data.success).toEqual(false);
+  });
+
+  test("fails when auth method is not supported", () => {
+    const data = configSchema.safeParse({
+      name: "Name",
+      favicon: "favicon.svg",
+      colors: { primary: "#ff0000" },
+      navigation: [{ group: "Group", pages: ["page"] }],
+      api: {
+        auth: {
+          method: "invalid",
+        },
       },
     });
     expect(data.success).toEqual(false);
