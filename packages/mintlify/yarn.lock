@@ -60,10 +60,10 @@
   resolved "https://registry.npmjs.org/@jsdevtools/ono/-/ono-7.1.3.tgz"
   integrity sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==
 
-"@mintlify/validation@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.3.tgz#5217e580c76e6aa500c42a4a1de473209de583fd"
-  integrity sha512-TlEBm5SlDmC4nKEg/JLNGr+H8f7ikaiGKhvEW8bMzupWHlclr9HuIy4b23ugK9CQ2ZyX+C3fNTN/uKdkDond9Q==
+"@mintlify/validation@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.4.tgz#cc01959d1ddeccc283df59ea3e229b1fbedf8b22"
+  integrity sha512-O0WCLeFuAeUHeZuHntvZ0Pz5xBJLPoWspJa3teIX+C7IxrpW/I3hKa82CA2NRttmciud/DFWHgY7q1BomoRr9w==
   dependencies:
     zod "^3.19.1"
     zod-to-json-schema "^3.20.2"
