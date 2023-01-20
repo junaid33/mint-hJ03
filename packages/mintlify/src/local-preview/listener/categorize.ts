@@ -37,11 +37,7 @@ export const categorizeFiles = async (contentDirectoryPath: string) => {
               spec: openApiInfo.spec,
             });
           }
-        } else if (
-          (!filename.endsWith("mint.config.json") ||
-            !filename.endsWith("mint.json")) &&
-          !isOpenApi
-        ) {
+        } else if (!filename.endsWith("mint.json") && !isOpenApi) {
           // all other files
           staticFilenames.push(filename);
         }
