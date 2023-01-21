@@ -47,6 +47,7 @@
     "yargs": "^17.6.0"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.31",
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^9.0.1",
     "@types/node": "^18.7.13",

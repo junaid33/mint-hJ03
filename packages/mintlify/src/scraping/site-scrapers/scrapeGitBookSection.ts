@@ -37,6 +37,7 @@ export async function scrapeGitBookSection(
 
   // Get all links per group
   const groupsConfig: MintNavigation[] = navigationSections
+    .toArray()
     .map((i, s) => {
       const section = $(s);
       const sectionTitle = $(section)
@@ -56,7 +57,6 @@ export async function scrapeGitBookSection(
         pages: firstHref ? [firstHref, ...pages] : pages,
       };
     })
-    .toArray()
     .filter(Boolean);
 
   // Merge groups with empty titles together

@@ -22,6 +22,21 @@ export async function scrapeGitBookPage(
   const title = titleComponent.text().trim();
 
   const content = $('[data-testid="page.contentEditor"]').first();
+
+  // Replace code blocks with parseable html
+  const codeBlocks = content.find('[spellcheck="false"] div');
+  codeBlocks.each((i, c) => {
+    const code = $(c);
+    code.find('[contenteditable="false"]').empty();
+    const codeContent = code
+      .children()
+      .toArray()
+      .map((d) => $(d).text())
+      .filter((text) => text !== "")
+      .join("\n");
+    code.replaceWith(`<pre><code>${codeContent}</code></pre>`);
+  });
+
   const contentHtml = $.html(content);
 
   const modifyFileName = (fileName) =>
@@ -41,8 +56,8 @@ export async function scrapeGitBookPage(
   const nhm = new NodeHtmlMarkdown({ useInlineLinks: false });
   let markdown = nhm.translate(contentHtml);
 
-  // Keep headers on one line and increase their depth by one
-  markdown = markdown.replace(/# \n\n/g, "## ");
+  // Keep headers on one line
+  markdown = markdown.replace(/# \n\n/g, "# ");
 
   // Remove unnecessary nonwidth blank space characters
   markdown = markdown.replace(/\u200b/g, "");

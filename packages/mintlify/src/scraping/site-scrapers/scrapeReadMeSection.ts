@@ -26,6 +26,7 @@ export async function scrapeReadMeSection(
     .find(".rm-Sidebar-section");
 
   const groupsConfig: MintNavigation[] = navigationSections
+    .toArray()
     .map((i, s) => {
       const section = $(s);
       const sectionTitle = section.find("h3").first().text();
@@ -45,8 +46,7 @@ export async function scrapeReadMeSection(
         group: sectionTitle,
         pages: pages,
       };
-    })
-    .toArray();
+    });
 
   // Scrape each link in the navigation.
   const groupsConfigCleanPaths = await Promise.all(
