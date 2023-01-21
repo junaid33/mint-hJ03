@@ -11,7 +11,7 @@ describe("configSchema", () => {
     expect(data.success).toEqual(true);
   });
 
-  test("works when defining a button cta", () => {
+  test("works when defining a button cta and valid api method", () => {
     const data = configSchema.safeParse({
       name: "Name",
       favicon: "favicon.svg",
@@ -20,6 +20,11 @@ describe("configSchema", () => {
       topbarCtaButton: {
         name: "Button",
         url: "/internal/link",
+      },
+      api: {
+        auth: {
+          method: "bearer",
+        },
       },
       topbarLinks: [
         {
@@ -95,6 +100,9 @@ describe("configSchema", () => {
       },
     });
     expect(data.success).toEqual(false);
+    expect(data.error.errors[0].message).toEqual(
+      "api.auth.method has to be one of: bearer, basic, key"
+    );
   });
 
   test("fails if user attempts to define injected property that's assigned internally", () => {

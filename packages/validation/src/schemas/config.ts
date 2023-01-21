@@ -42,11 +42,15 @@ const apiSchema = z
       auth: z
         .object({
           method: z
-            .union(
-              [z.literal("bearer"), z.literal("basic"), z.literal("key")],
+            .string({
+              invalid_type_error:
+                "api.auth.method has to be a string equal to one of: bearer, basic, key",
+            })
+            .refine(
+              (value) =>
+                value === "bearer" || value === "basic" || value === "key",
               {
-                invalid_type_error:
-                  "auth.method has to be one of: bearer, basic, key",
+                message: "api.auth.method has to be one of: bearer, basic, key",
               }
             )
             .optional(),
