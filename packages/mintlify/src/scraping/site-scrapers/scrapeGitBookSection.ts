@@ -38,7 +38,7 @@ export async function scrapeGitBookSection(
   // Get all links per group
   const groupsConfig: MintNavigation[] = navigationSections
     .toArray()
-    .map((i, s) => {
+    .map((s) => {
       const section = $(s);
       const sectionTitle = $(section)
         .find('div > div[dir="auto"]')
