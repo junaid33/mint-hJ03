@@ -2,8 +2,9 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-python';
 
-import { RequestExample } from '@/components/ApiExample';
 import { CodeBlock } from '@/components/CodeBlock';
+import { CodeGroup } from '@/components/CodeGroup';
+import { RequestExample } from '@/components/StickyCodeBlocks';
 import { OpenApiFile } from '@/types/openApi';
 
 import { extractBaseAndPath, extractMethodAndEndpoint, Param } from '../api';
@@ -97,7 +98,7 @@ export function generateRequestExamples(
     const snippets = [curlSnippet, pythonSnippet];
 
     return (
-      <RequestExample>
+      <CodeGroup isSmallText>
         {snippets.map((snippet) => {
           return (
             <CodeBlock filename={snippet.filename} key={snippet.filename}>
@@ -117,7 +118,7 @@ export function generateRequestExamples(
             </CodeBlock>
           );
         })}
-      </RequestExample>
+      </CodeGroup>
     );
   } catch (e) {
     // Invalid endpoint. extractBaseAndpath will throw an error when the base URL is invalid.

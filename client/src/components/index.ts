@@ -14,7 +14,6 @@ import { ApiPlayground } from '@mintlify/components';
 import Link from 'next/link';
 
 import { Accordion, AccordionGroup } from '@/components/Accordion';
-import { RequestExample, ResponseExample } from '@/components/ApiExample';
 import { Card } from '@/components/Card';
 import { CodeBlock } from '@/components/CodeBlock';
 import { CodeGroup, SnippetGroup } from '@/components/CodeGroup';
@@ -22,6 +21,7 @@ import { Expandable } from '@/components/Expandable';
 import { Heading } from '@/components/Heading';
 import { Param, ParamField } from '@/components/Param';
 import { ResponseField } from '@/components/ResponseField';
+import { RequestExample, ResponseExample } from '@/components/StickyCodeBlocks';
 import { MDXContentController } from '@/ui/MDXContentController/MDXContentController';
 
 const components: any = {
@@ -29,35 +29,34 @@ const components: any = {
   Accordion,
   AccordionGroup,
   Heading,
+  Card,
+  CardGroup,
+  Check,
   CodeGroup,
   CodeBlock,
-  SnippetGroup,
-  RequestExample,
-  ResponseExample,
+  Expandable,
+  Frame,
+  Info,
+  Link,
+  MDXContentController,
+  Note,
   Param,
   ParamField,
-  Card,
+  RequestExample,
+  ResponseExample,
   ResponseField,
-  Expandable,
-  CardGroup,
-  Info,
-  Warning,
-  Note,
-  Tip,
-  Check,
-  Tabs,
   Tab,
+  Tabs,
+  Tip,
   Tooltip,
-  MDXContentController,
-  Frame,
-  Link,
+  SnippetGroup,
+  Warning,
 };
 
 export const allowedComponents = [
   'ApiPlayground',
   'Accordion',
   'AccordionGroup',
-  'Heading',
   'CodeGroup',
   'CodeBlock',
   'SnippetGroup',
@@ -66,10 +65,14 @@ export const allowedComponents = [
   'Param',
   'ParamField',
   'Card',
-  'ResponseField',
-  'Expandable',
   'CardGroup',
+  'Expandable',
+  'Frame',
+  'Heading',
   'Info',
+  'Link',
+  'MDXContentController',
+  'ResponseField',
   'Warning',
   'Note',
   'Tip',
@@ -77,9 +80,6 @@ export const allowedComponents = [
   'Tabs',
   'Tab',
   'Tooltip',
-  'MDXContentController',
-  'Frame',
-  'Link',
   'img',
   'iframe',
   'video',

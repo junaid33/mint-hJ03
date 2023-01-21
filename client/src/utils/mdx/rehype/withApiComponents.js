@@ -1,5 +1,4 @@
 import { toHtml } from 'hast-util-to-html';
-import { filter } from 'unist-util-filter';
 import visit from 'unist-util-visit';
 
 import { addExport } from '../remark/utils.js';
@@ -22,8 +21,8 @@ const withApiComponents = () => {
     let apiComponents = [];
     visit(tree, 'mdxJsxFlowElement', (node, _, parent) => {
       if (['ResponseExample', 'RequestExample'].includes(node.name)) {
-        // remove all jsx components to convert to html (removes <ResponseExample> and <RequestExample>)
-        const children = node.children.map((child, i) => {
+        // Store ResponseExample and RequestExample in apiComponents.
+        const children = node.children.map((child) => {
           const preComponent = child.children[0];
           const html = toHtml(preComponent);
           let filename =
@@ -53,7 +52,7 @@ const withApiComponents = () => {
       }
     });
     addExport(tree, 'apiComponents', apiComponents);
-    return filter(tree, (node) => !['ResponseExample', 'RequestExample'].includes(node.name));
+    return tree;
   };
 };
 

@@ -4,11 +4,8 @@ import { Component } from '@/enums/components';
 import { ApiComponent } from '@/types/apiComponent';
 import { htmlToReactComponent } from '@/utils/htmlToReactComponent';
 
+// The RequestExample and ResponseExample classes are hidden on large screens, so we need to re-assemble them here.
 export function createUserDefinedExamples(apiComponents: ApiComponent[]) {
-  // Response and Request Examples from MDX
-  //   const [mdxRequestExample, setMdxRequestExample] = useState<JSX.Element | undefined>(undefined);
-  //   const [mdxResponseExample, setMdxResponseExample] = useState<JSX.Element | undefined>(undefined);
-
   const requestComponentSkeleton = apiComponents.find((apiComponent) => {
     return apiComponent.type === Component.RequestExample;
   });

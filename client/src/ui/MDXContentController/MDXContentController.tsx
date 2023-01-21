@@ -89,6 +89,17 @@ export function MDXContentController({
   const api = openApiPlaygroundProps.api ?? pageMetadata.api ?? '';
 
   const showApiPlayground = isApi && !mintConfig?.api?.hidePlayground;
+  let generatedRequestExamples = null;
+  if (!requestExample && api !== '' && showApiPlayground) {
+    generatedRequestExamples = (
+      <GeneratedRequestExamples
+        paramGroupDict={paramGroupDict}
+        apiPlaygroundInputs={apiPlaygroundInputs}
+        apiBaseIndex={apiBaseIndex}
+        endpointStr={api}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-row pt-9 gap-12 items-stretch">
@@ -115,6 +126,9 @@ export function MDXContentController({
             onApiBaseIndexChange={setApiBaseIndex}
           />
         )}
+        {generatedRequestExamples ? (
+          <div className="block xl:hidden mt-8">{generatedRequestExamples}</div>
+        ) : null}
 
         {/* The MDXProvider here renders the MDX for the page */}
         <div className="relative z-20 prose prose-slate mt-8 dark:prose-dark">
@@ -136,14 +150,7 @@ export function MDXContentController({
           <ContentSideLayout sticky>
             <div className="space-y-6 pb-6 w-[28rem]">
               {requestExample}
-              {!requestExample && api !== '' && (
-                <GeneratedRequestExamples
-                  paramGroupDict={paramGroupDict}
-                  apiPlaygroundInputs={apiPlaygroundInputs}
-                  apiBaseIndex={apiBaseIndex}
-                  endpointStr={api}
-                />
-              )}
+              {generatedRequestExamples}
               {responseExample}
               {!responseExample && pageMetadata.openapi && (
                 <OpenApiResponseExample openapi={pageMetadata.openapi} />
