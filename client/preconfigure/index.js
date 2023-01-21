@@ -13,7 +13,7 @@ const preconfigure = async () => {
 
 (async function () {
   try {
-    const configPath = await getConfigPath();
+    const configPath = await getConfigPath(contentDirectoryPath);
     if (configPath == null) {
       console.error('⚠️ Must be ran in a directory where a mint.json file exists.');
       return;

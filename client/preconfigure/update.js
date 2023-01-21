@@ -18,16 +18,6 @@ export const getConfigPath = async (contentDirectoryPath) => {
   return configPath;
 };
 
-export const getConfigObj = async () => {
-  const configPath = await getConfigPath();
-  let configObj = null;
-  if (configPath) {
-    const configContents = await readFile(configPath);
-    configObj = JSON.parse(JSON.stringify(configContents));
-  }
-  return configObj;
-};
-
 export const updateConfigFile = async (contentDirectoryPath) => {
   const configTargetPath = 'src/_props/mint.json';
   await fse.remove(configTargetPath);
