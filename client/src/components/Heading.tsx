@@ -22,7 +22,6 @@ export function Heading({
   children,
   className = '',
   hidden = false,
-  ignore = false,
   style = {},
   nextElementDepth = -1,
   ...props

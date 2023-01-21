@@ -5,6 +5,7 @@ import { createContext, useContext, useState } from 'react';
 import { DynamicLink } from '@/components/DynamicLink';
 import { Heading } from '@/components/Heading';
 import { ConfigContext } from '@/context/ConfigContext';
+import { Component } from '@/enums/components';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { usePrevNext } from '@/hooks/usePrevNext';
 import { useTableOfContents } from '@/hooks/useTableOfContents';
@@ -207,7 +208,7 @@ function getOpenApiPlaygroundProps(
   const apiComponents: ApiComponent[] = [];
 
   // Get the Parameter ApiComponents
-  parameters.forEach((parameter: any, i: number) => {
+  parameters.forEach((parameter: any) => {
     const { name, required, schema, in: paramType, example } = parameter;
     const type = schema == null ? parameter?.type : getParameterType(schema);
     const paramField = createParamField({
@@ -233,7 +234,12 @@ function getOpenApiPlaygroundProps(
         ? JSON.stringify(bodySchema.example[property])
         : undefined;
       const last = i + 1 === operation.parameters?.length;
-      let children;
+      let children:
+        | {
+            name: Component;
+            children: any;
+          }[]
+        | undefined;
       if (propertyValue.properties) {
         const properties = getProperties(propertyValue.properties);
         children = [createExpandable(properties)];

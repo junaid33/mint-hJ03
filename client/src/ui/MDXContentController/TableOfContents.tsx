@@ -4,7 +4,7 @@ import { useContext, Fragment } from 'react';
 import { SidebarContext } from '@/layouts/NavSidebar';
 import { TableOfContentsSection } from '@/types/tableOfContentsSection';
 
-export function TableOfContents({ tableOfContents, currentSection, meta }: any) {
+export function TableOfContents({ tableOfContents, currentSection }: any) {
   const sidebarContext = useContext(SidebarContext);
   const isMainNav = Boolean(sidebarContext);
 

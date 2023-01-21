@@ -294,10 +294,10 @@ export function Header({
             <div className="relative flex items-center">
               <div className="flex-1 flex items-center space-x-3">
                 <Link
-                  href={getLogoHref(mintConfig!)}
+                  href={mintConfig ? getLogoHref(mintConfig) : '/'}
                   onContextMenu={(e) => {
                     e.preventDefault();
-                    Router.push(getLogoHref(mintConfig!));
+                    Router.push(mintConfig ? getLogoHref(mintConfig) : '/');
                   }}
                 >
                   <span className="sr-only">{mintConfig?.name} home page</span>

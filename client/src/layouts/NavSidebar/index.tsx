@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
 import isAbsoluteUrl from 'is-absolute-url';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, Dispatch, SetStateAction } from 'react';
 import { createContext } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
@@ -39,14 +39,12 @@ export function SidebarLayout({
   navIsOpen,
   setNavIsOpen,
   navWithMetadata,
-  layoutProps: { allowOverflow = true } = {},
   pageMetadata,
   children,
 }: {
   navIsOpen: boolean;
-  setNavIsOpen: any;
+  setNavIsOpen: Dispatch<SetStateAction<boolean>>;
   navWithMetadata: Groups;
-  layoutProps?: any;
   pageMetadata: PageMetaTags;
   children: ReactNode;
 }) {
@@ -58,7 +56,7 @@ export function SidebarLayout({
 
   return (
     <SidebarContext.Provider value={{ navIsOpen, setNavIsOpen }}>
-      <Wrapper allowOverflow={allowOverflow}>
+      <Wrapper allowOverflow>
         <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="hidden lg:block fixed z-20 ml-4 top-[3.8125rem] bottom-0 left-[max(0px,calc(50%-46rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto">
             <Nav nav={navForDivisionInVersion} pageMetadata={pageMetadata} />

@@ -1,5 +1,6 @@
 import { Inter, Fira_Code } from '@next/font/google';
 import 'focus-visible';
+import type { AppProps } from 'next/app';
 
 import ErrorBoundary from '@/ui/ErrorBoundary';
 
@@ -16,7 +17,7 @@ const firaCode = Fira_Code({
   variable: '--font-fira-code',
 });
 
-export default function App(props: any) {
+export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (

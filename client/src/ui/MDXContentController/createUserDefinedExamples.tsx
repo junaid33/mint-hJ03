@@ -14,11 +14,11 @@ export function createUserDefinedExamples(apiComponents: ApiComponent[]) {
     return apiComponent.type === Component.ResponseExample;
   });
 
-  const output = {} as any;
-
+  let requestExample: React.ReactNode | undefined = undefined;
+  let responseExample: React.ReactNode | undefined = undefined;
   // Create Request Example
   if (requestComponentSkeleton) {
-    output.requestExample = (
+    requestExample = (
       <CodeGroup isSmallText>
         {requestComponentSkeleton.children.map((child, i) => {
           return (
@@ -33,7 +33,7 @@ export function createUserDefinedExamples(apiComponents: ApiComponent[]) {
 
   // Create ResponseExample
   if (responseComponentSkeleton) {
-    output.responseExample = (
+    responseExample = (
       <CodeGroup isSmallText>
         {responseComponentSkeleton.children.map((child, i) => {
           return (
@@ -46,5 +46,5 @@ export function createUserDefinedExamples(apiComponents: ApiComponent[]) {
     );
   }
 
-  return output;
+  return { requestExample, responseExample };
 }

@@ -525,3 +525,22 @@ function isBrandsIcon(icon?: string): boolean {
   ];
   return brands.includes(icon.toLowerCase());
 }
+
+export const getIconType = (str: string | undefined) => {
+  if (
+    ['brands', 'duotone', 'light', 'regular', 'sharp-solid', 'solid', 'thin', undefined].includes(
+      str
+    )
+  ) {
+    return str as
+      | 'brands'
+      | 'duotone'
+      | 'light'
+      | 'regular'
+      | 'sharp-solid'
+      | 'solid'
+      | 'thin'
+      | undefined;
+  }
+  return undefined;
+};

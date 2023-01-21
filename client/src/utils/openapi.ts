@@ -1,6 +1,12 @@
 import { Component } from '@/enums/components';
 
-export const createParamField = (attributes: Record<string, any>, children?: any) => {
+export const createParamField = (
+  attributes: Record<string, any>,
+  children?: {
+    name: Component;
+    children: any;
+  }[]
+) => {
   const attributesArray = Object.entries(attributes).map(([key, value]) => {
     return {
       type: 'mdx',

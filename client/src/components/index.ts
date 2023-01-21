@@ -24,7 +24,7 @@ import { ResponseField } from '@/components/ResponseField';
 import { RequestExample, ResponseExample } from '@/components/StickyCodeBlocks';
 import { MDXContentController } from '@/ui/MDXContentController/MDXContentController';
 
-const components: any = {
+const components = {
   ApiPlayground,
   Accordion,
   AccordionGroup,

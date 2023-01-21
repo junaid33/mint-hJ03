@@ -1,7 +1,9 @@
+import Image from 'next/image';
+
 export function AuthorProfile({ image, name }: { image: string; name: string }) {
   return (
     <div className="flex items-center font-medium whitespace-nowrap">
-      <img
+      <Image
         src={image}
         alt={name}
         className="mr-3 w-7 h-7 rounded-full bg-slate-50 dark:bg-slate-800"

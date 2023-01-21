@@ -4,7 +4,6 @@ import 'prismjs/components/prism-python';
 
 import { CodeBlock } from '@/components/CodeBlock';
 import { CodeGroup } from '@/components/CodeGroup';
-import { RequestExample } from '@/components/StickyCodeBlocks';
 import { OpenApiFile } from '@/types/openApi';
 
 import { extractBaseAndPath, extractMethodAndEndpoint, Param } from '../api';

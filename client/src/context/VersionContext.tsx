@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState } from 'react';
 
 export type VersionInterface = {
   selectedVersion: string;
-  setSelectedVersion: any;
+  setSelectedVersion: (version: string) => void;
 };
 
 export const VersionContext = createContext({

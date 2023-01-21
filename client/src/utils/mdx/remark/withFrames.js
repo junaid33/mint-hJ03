@@ -4,7 +4,7 @@ const withFrames = () => {
   return (tree) => {
     let preTree = { children: [] };
 
-    tree.children = tree.children.map((node, index) => {
+    tree.children = tree.children.map((node) => {
       // Start of horizontal block: -- block
       if (
         node.type === 'paragraph' &&

@@ -1,4 +1,5 @@
 import { ReactNode, useContext } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContext } from '@/context/VersionContext';
@@ -16,7 +17,7 @@ export function DocumentationLayout({
   navWithMetadata,
 }: {
   navIsOpen: boolean;
-  setNavIsOpen: any;
+  setNavIsOpen: Dispatch<SetStateAction<boolean>>;
   pageMetadata: PageMetaTags;
   children: ReactNode;
   navWithMetadata: Groups;

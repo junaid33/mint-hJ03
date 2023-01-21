@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 import React from 'react';
 
-import { ComponentIcon } from '@/ui/Icon';
+import { ComponentIcon, getIconType } from '@/ui/Icon';
 
 export function Card({
   title,
@@ -21,11 +21,12 @@ export function Card({
   href?: string;
   children?: React.ReactNode;
 }) {
+  const validatedIconType = getIconType(iconType);
   const Icon =
     typeof icon === 'string' ? (
       <ComponentIcon
         icon={icon}
-        iconType={iconType as any}
+        iconType={validatedIconType}
         color={color}
         className="h-6 w-6 bg-primary dark:bg-primary-light"
         overrideColor
