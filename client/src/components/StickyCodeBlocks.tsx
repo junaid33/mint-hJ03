@@ -5,7 +5,7 @@ import { CodeGroup } from './CodeGroup';
 export function RequestExample({ children }: { children: ReactNode }) {
   return (
     <div className="block xl:hidden mt-8">
-      <CodeGroup isSmallText>{children}</CodeGroup>
+      <CodeGroup>{children}</CodeGroup>
     </div>
   );
 }
@@ -13,7 +13,7 @@ export function RequestExample({ children }: { children: ReactNode }) {
 export function ResponseExample({ children }: { children: ReactNode }) {
   return (
     <div className="block xl:hidden mt-8">
-      <CodeGroup isSmallText>{children}</CodeGroup>
+      <CodeGroup>{children}</CodeGroup>
     </div>
   );
 }

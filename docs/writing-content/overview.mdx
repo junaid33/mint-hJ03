@@ -5,7 +5,12 @@ description: "Introduction on how to add and edit content"
 
 Components are reusable building blocks for your documentation. They can be added **directly within your files**. Some components are rendered from [Markdown syntax](https://www.markdownguide.org/basic-syntax/), while other components work the same way as [React components](https://reactjs.org/docs/components-and-props.html).
 
-Visit [our text guide](/components/text) to learn basic markdown syntax.
+<Tip>
+  Mintlify provides a library of [built-in components](/components) to make your
+  docs beautiful without formatting things yourself.
+</Tip>
+
+Visit [our text guide](/writing-content/text) to learn basic markdown syntax.
 
 ## Examples
 
@@ -13,13 +18,13 @@ Visit [our text guide](/components/text) to learn basic markdown syntax.
 
 You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
 
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/components/text)` links to the page "Text" in our components section.
+Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
 
 Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
 
 ### Using a Component
 
-The following example is a [Code](/components/code) component, which lets you display syntax-highlighted code.
+The following example is a [Code](/writing-content/code) component, which lets you display syntax-highlighted code.
 
 ```java
 class HelloWorld {
@@ -53,7 +58,7 @@ To present additional context outside of the main content, you can use a [Callou
 
 ## Components
 
-There are a variety of components like [Cards](/components/card), [Tables](/components/table), and tons others that you can explore in the `Components` section of the menu.
+There are a variety of components like [Accordions](/components/accordion), [Cards](/components/card), and tons others that you can explore in the [components reference](/components).
 
 ### Requests
 

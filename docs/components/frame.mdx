@@ -1,0 +1,24 @@
+---
+title: "Image Frame"
+description: "Use the Frame component to wrap images or other components in a container."
+---
+
+Frames are very helpful if you want to center an image.
+
+<Frame caption="Caption Text">
+  <img class="rounded-md" src="/img/mountain.jpg" />
+</Frame>
+
+<RequestExample>
+  ```jsx Frame Example
+  <Frame caption="Caption Text">
+    <img src="/docs/path/image.jpg" />
+  </Frame>
+  ```
+</RequestExample>
+
+## Props
+
+<ResponseField name="caption" type="string">
+  Optional caption text to show centered under your component.
+</ResponseField>

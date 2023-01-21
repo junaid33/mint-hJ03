@@ -27,9 +27,9 @@
   },
   "anchors": [
     {
-      "name": "Showcase",
-      "icon": "trophy-star",
-      "url": "https://mintlify.com/showcase"
+      "name": "Components",
+      "icon": "grid-2",
+      "url": "components"
     },
     {
       "name": "Community",
@@ -65,45 +65,25 @@
       ]
     },
     {
-      "group": "Components",
+      "group": "Writing Content",
       "pages": [
-        "components/overview",
-        "components/text",
-        "components/image",
-        "components/list",
-        "components/code",
-        "components/callout",
-        "components/embed",
-        "components/table"
+        "writing-content/overview",
+        "writing-content/text",
+        "writing-content/image",
+        "writing-content/list",
+        "writing-content/code",
+        "writing-content/embed",
+        "writing-content/table",
+        "writing-content/custom-snippets"
       ]
     },
     {
-      "group": "Advanced Components",
+      "group": "API Playground",
       "pages": [
-        "components/advanced/accordion",
-        "components/advanced/card",
-        "components/advanced/frame",
-        "components/advanced/tabs",
-        "components/advanced/tooltip",
-        "components/advanced/custom-snippets"
-      ]
-    },
-    {
-      "group": "API Components",
-      "pages": [
-        {
-          "group": "API Playground",
-          "pages": [
-            "api-components/playground",
-            "api-components/configuration",
-            "api-components/authentication",
-            "api-components/openapi"
-          ]
-        },
-        "api-components/param",
-        "api-components/response",
-        "api-components/expandable",
-        "api-components/examples"
+        "api-playground/demo",
+        "api-playground/configuration",
+        "api-playground/authentication",
+        "api-playground/openapi"
       ]
     },
     {
@@ -125,6 +105,29 @@
             "analytics/set-up/posthog"
           ]
         }
+      ]
+    },
+    {
+      "group": "Organization Components",
+      "pages": [
+        "components/accordion",
+        "components/accordion-group",
+        "components/card",
+        "components/card-group",
+        "components/tabs"
+      ]
+    },
+    {
+      "group": "Context Components",
+      "pages": ["components/callouts", "components/frame", "components/tooltip"]
+    },
+    {
+      "group": "API Components",
+      "pages": [
+        "components/api/param",
+        "components/api/response",
+        "components/api/expandable",
+        "components/api/sticky-examples"
       ]
     }
   ],

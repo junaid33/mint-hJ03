@@ -1,47 +1,45 @@
 ---
-title: "Parameters"
+title: "Parameter Types"
 description: "Set path, query, and body parameters"
 ---
 
+All `ParamField` components are added as interactive elements in the API playground. See the [demo](/api-components/playground) for an example.
+
 <ParamField path="user_id" type="string">
   The id of the user
 </ParamField>
 
-<ParamField query="filter" type="string" default="none" required>
+<ParamField query="filter" type="string" required>
   The filtering command used to sort through the users
 </ParamField>
 
-<ParamField body="user_age" type="integer" default="0" required>
+<ParamField body="user_age" type="integer" default="0">
   The age of the user. Cannot be less than 0
 </ParamField>
 
-## ParamField Component
+<RequestExample>
 
-The `<ParamField>` component is used to display the documentation for individual parameters
-
-<CodeGroup>
-
-```jsx Path
+```jsx Path Example
 <ParamField path="user_id" type="string">
   The id of the user
 </ParamField>
 ```
 
-```jsx Query
+```jsx Query Example
 <ParamField query="filter" type="string" default="none" required>
   The filtering command used to sort through the users
 </ParamField>
 ```
 
-```jsx Body
+```jsx Body Example
 <ParamField body="user_age" type="integer" default="0" required>
   The age of the user. Cannot be less than 0
 </ParamField>
 ```
 
-</CodeGroup>
+</RequestExample>
 
-### Properties
+## Props
 
 | Name                              | Type    | Description                                                                 |
 | --------------------------------- | ------- | --------------------------------------------------------------------------- |
@@ -52,9 +50,3 @@ The `<ParamField>` component is used to display the documentation for individual
 | `default`                         | string  | Default value                                                               |
 | `placeholder`                     | string  | Placeholder value for the input in the playground                           |
 | `children`                        | string  | Description of the parameter (markdown enabled)                             |
-
-<Info>
-
-All `Param` components are added as interactive elements in the API playground. See the [demo](/api-components/playground) for an example
-
-</Info>
