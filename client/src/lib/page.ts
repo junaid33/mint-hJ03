@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export const getPage = async (subdomain: string, path: string) => {
   try {
     const { data, status } = await axios.get(
-      `${process.env.API_ENDPOINT}/api/v2/internal/deployment/${subdomain}/static-props`,
+      `${process.env.API_ENDPOINT}/api/v2/internal/deployment/${subdomain}/static-props-temp-jan-2023`,
       {
         params: {
           path,
@@ -13,13 +13,14 @@ export const getPage = async (subdomain: string, path: string) => {
       }
     );
     return { data, status };
-  } catch (err: any) {
-    const {
-      response: { data, status },
-    }: { response: { data: any; status: number } } = err;
-    return {
-      data,
-      status,
-    };
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    // Show a 404 page instead of crashing
+    if (axiosError?.response?.status === 400 || axiosError?.response?.status === 404) {
+      return { data: {}, status: axiosError?.response.status };
+    } else {
+      throw error;
+    }
   }
 };

@@ -1,4 +1,5 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
+import { MDXRemoteSerializeResult } from 'next-mdx-remote/dist/types';
 import type { ParsedUrlQuery } from 'querystring';
 
 import { getPage } from '@/lib/page';
@@ -50,7 +51,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
     };
   }
 
-  if (status === 308) {
+  if (data.redirect) {
     const { navWithMetadata }: { navWithMetadata: Groups } = data;
     if (Array.isArray(navWithMetadata) && navWithMetadata.length > 0) {
       const { destination, permanent } = pickRedirect(navWithMetadata, path);
@@ -65,10 +66,10 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
     };
   }
 
-  // The server providing data to static props only sends 404s when there is no data at all
+  // The server providing data to static props only sends 400s when there is no data at all
   // for the subdomain. Most not found pages are the result of broken mint.json files
   // preventing the 308 redirect above from finding a page to redirect to.
-  if (status === 404) {
+  if (status === 400 || status === 404) {
     return {
       notFound: true,
     };
@@ -93,7 +94,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
       snippets: Snippet[];
     } = data;
     const snippetTreeMap = await createSnippetTreeMap(snippets ?? []);
-    let mdxSource: any = '';
+    let mdxSource: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
 
     try {
       const response = await getMdxSource(
