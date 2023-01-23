@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 export const getPage = async (subdomain: string, path: string) => {
   try {
     const { data, status } = await axios.get(
-      `${process.env.API_ENDPOINT}/api/v2/internal/deployment/${subdomain}/static-props-temp-jan-2023`,
+      `${process.env.API_ENDPOINT}/api/v2/internal/deployment/${subdomain}/static-props`,
       {
         params: {
           path,
