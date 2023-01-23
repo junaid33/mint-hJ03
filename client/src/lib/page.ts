@@ -16,8 +16,16 @@ export const getPage = async (subdomain: string, path: string) => {
   } catch (error) {
     const axiosError = error as AxiosError;
 
+    if (axiosError?.response?.status === 403) {
+      console.warn(
+        'Attempted to fetch props for subdomain',
+        subdomain,
+        'but the request was forbidden (403).'
+      );
+    }
+
     // Show a 404 page instead of crashing
-    if (axiosError?.response?.status === 400 || axiosError?.response?.status === 404) {
+    if (axiosError?.response?.status === 400 || axiosError?.response?.status === 403) {
       return { data: {}, status: axiosError?.response.status };
     } else {
       throw error;

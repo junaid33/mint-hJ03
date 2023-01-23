@@ -42,13 +42,11 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
   const { subdomain, slug } = params;
   const path = slug ? slug.join('/') : 'index';
 
-  // The entire build will fail when data is undefined
   const { data, status } = await getPage(subdomain, path);
+
+  // We put this check in case 200 status codes are sending invalid data.
   if (data == null) {
-    console.error('Page data is missing');
-    return {
-      notFound: true,
-    };
+    throw 'Page data is missing at path: ' + path + ' for subdomain: ' + subdomain;
   }
 
   if (data.redirect) {
@@ -59,17 +57,12 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
         return { redirect: { destination, permanent } };
       }
     }
-
-    console.warn('Could not find a page to redirect to.');
-    return {
-      notFound: true,
-    };
+    throw 'Could not find a page to redirect to at path: ' + path + ' for subdomain: ' + subdomain;
   }
 
-  // The server providing data to static props only sends 400s when there is no data at all
-  // for the subdomain. Most not found pages are the result of broken mint.json files
-  // preventing the 308 redirect above from finding a page to redirect to.
-  if (status === 400 || status === 404) {
+  // The server providing data to static props only sends 400 and 403 when there is no data at all
+  // for the subdomain.
+  if (status === 400 || status === 403) {
     return {
       notFound: true,
     };
