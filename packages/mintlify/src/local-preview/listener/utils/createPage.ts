@@ -58,7 +58,7 @@ const preParseMdx = async (fileContent, contentDirectoryPath) => {
         pathArr.pop();
       }
     });
-    return pathArr.join("/");
+    return "/" + pathArr.join("/");
   };
 
   const removeContentDirectoryPaths = () => {
