@@ -61,30 +61,26 @@ const downloadTargetMint = async (logger) => {
 
   logger.text = "Extracting Mintlify framework...";
   const TAR_PATH = path.join(MINT_PATH, "mint.tar.gz");
-
-  // Unzip tar file
   fse.writeFileSync(TAR_PATH, Buffer.from(downloadRes.data as any));
-  shell.exec("tar -xzf mint.tar.gz", { silent: true });
 
-  // List all files in tar file and get the first one.
-  // There is never anything else in the tar file, so this is safe.
-  // We do this because the folder name includes the commit sha, so we can't hardcode it.
-  // Lastly, we call .trim() to remove the newline character.
-  const extractedFolderName = shell
-    .exec('tar -tzf mint.tar.gz | head -1 | cut -f1 -d"/"', { silent: true })
-    .stdout.trim();
+  // strip-components 1 removes the top level directory from the unzipped content
+  // which is a folder with the release sha
+  fse.mkdirSync(path.join(MINT_PATH, "mint-tmp"));
+  shell.exec("tar -xzf mint.tar.gz -C mint-tmp --strip-components 1", {
+    silent: true,
+  });
 
   fse.removeSync(TAR_PATH);
 
   fse.moveSync(
-    path.join(MINT_PATH, extractedFolderName, "client"),
+    path.join(MINT_PATH, "mint-tmp", "client"),
     path.join(CLIENT_PATH)
   );
 
   fse.writeFileSync(VERSION_PATH, TARGET_MINT_VERSION);
 
-  // Delete unnecessary contents downloaded from GitHub
-  fse.removeSync(path.join(MINT_PATH, extractedFolderName));
+  // Delete unnecessary content downloaded from GitHub
+  fse.removeSync(path.join(MINT_PATH, "mint-tmp"));
 
   logger.text = "Installing dependencies...";
 
