@@ -108,6 +108,15 @@
       ]
     },
     {
+      "group": "Product Updates",
+      "pages": [
+        {
+          "group": "Command Line Changelog",
+          "pages": ["changelog/command-line/2.0.15"]
+        }
+      ]
+    },
+    {
       "group": "Organization Components",
       "pages": [
         "components/accordion",
