@@ -45,7 +45,7 @@ export function getAllMetaTags(pageMeta: PageMetaTags, config: { [key: string]: 
 }
 
 function defaultTitle(pageMeta: PageMetaTags, siteName: string) {
-  const title = pageMeta.sidebarTitle || pageMeta.title || slugToTitle(pageMeta.href || '');
+  const title = pageMeta.title || pageMeta.sidebarTitle || slugToTitle(pageMeta.href || '');
   if (title && siteName) {
     return title + ' - ' + siteName;
   } else if (siteName) {
