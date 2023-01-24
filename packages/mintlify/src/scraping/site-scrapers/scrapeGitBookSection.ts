@@ -1,5 +1,4 @@
 import cheerio from "cheerio";
-import path from "path";
 import { scrapeGettingFileNameFromUrl } from "../scrapeGettingFileNameFromUrl.js";
 import { scrapeGitBookPage } from "./scrapeGitBookPage.js";
 import combineNavWithEmptyGroupTitles from "../combineNavWithEmptyGroupTitles.js";
@@ -38,7 +37,7 @@ export async function scrapeGitBookSection(
   // Get all links per group
   const groupsConfig: MintNavigation[] = navigationSections
     .toArray()
-    .map((s: string) => {
+    .map((s: cheerio.Element) => {
       const section = $(s);
       const sectionTitle = $(section)
         .find('div > div[dir="auto"]')

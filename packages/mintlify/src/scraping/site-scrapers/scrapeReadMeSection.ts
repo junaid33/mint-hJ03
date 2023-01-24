@@ -27,7 +27,7 @@ export async function scrapeReadMeSection(
 
   const groupsConfig: MintNavigation[] = navigationSections
     .toArray()
-    .map((s: string) => {
+    .map((s: cheerio.Element) => {
       const section = $(s);
       const sectionTitle = section.find("h3").first().text();
 

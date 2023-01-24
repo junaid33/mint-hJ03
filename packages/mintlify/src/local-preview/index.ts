@@ -21,10 +21,6 @@ import listener from "./listener/index.js";
 import { ArgumentsCamelCase } from "yargs";
 import { getConfigPath } from "./listener/utils/mintConfigFile.js";
 
-const shellExec = (cmd: string) => {
-  return shell.exec(cmd, { silent: true });
-};
-
 const nodeModulesExists = async () => {
   return pathExists(path.join(DOT_MINTLIFY, "mint", "client", "node_modules"));
 };
@@ -68,15 +64,15 @@ const downloadTargetMint = async (logger) => {
 
   // Unzip tar file
   fse.writeFileSync(TAR_PATH, Buffer.from(downloadRes.data as any));
-  shellExec("tar -xzf mint.tar.gz");
+  shell.exec("tar -xzf mint.tar.gz", { silent: true });
 
   // List all files in tar file and get the first one.
   // There is never anything else in the tar file, so this is safe.
   // We do this because the folder name includes the commit sha, so we can't hardcode it.
   // Lastly, we call .trim() to remove the newline character.
-  const extractedFolderName = shellExec(
-    'tar -tzf mint.tar.gz | head -1 | cut -f1 -d"/"'
-  ).stdout.trim();
+  const extractedFolderName = shell
+    .exec('tar -tzf mint.tar.gz | head -1 | cut -f1 -d"/"', { silent: true })
+    .stdout.trim();
 
   fse.removeSync(TAR_PATH);
 
@@ -94,7 +90,7 @@ const downloadTargetMint = async (logger) => {
 
   ensureYarn(logger);
   shell.cd(CLIENT_PATH);
-  shellExec("yarn");
+  shell.exec("yarn", { silent: true });
 };
 
 const checkForMintJson = async (logger) => {
@@ -157,7 +153,7 @@ const dev = async (argv: ArgumentsCamelCase) => {
   await checkForMintJson(logger);
   shell.cd(CLIENT_PATH);
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
-  shellExec(`yarn preconfigure ${relativePath}`);
+  child_process.spawnSync("yarn preconfigure", [relativePath], { shell: true });
   logger.succeed("Local Mintlify instance is ready. Launching your site...");
   run((argv.port as string) || "3000");
 };
