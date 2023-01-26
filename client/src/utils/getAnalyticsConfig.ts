@@ -35,13 +35,13 @@ const constructAnalytics = (analytics: any): AnalyticsMediatorConstructorInterfa
   }
   if (analytics?.hotjar?.hjid || analytics?.hotjar?.hjsv) {
     properlyTypedAnalytics.hotjar = {
-      hjid: analytics?.hotjar?.hjid,
-      hjsv: analytics?.hotjar?.hjsv,
+      hjid: analytics.hotjar.hjid,
+      hjsv: analytics.hotjar.hjsv,
     };
   }
-  if (analytics?.koala.projectId) {
+  if (analytics?.koala?.projectId) {
     properlyTypedAnalytics.koala = {
-      projectId: analytics?.koala.projectId,
+      projectId: analytics.koala.projectId,
     };
   }
   if (analytics?.logrocket?.appId) {
