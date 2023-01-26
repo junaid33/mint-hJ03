@@ -198,7 +198,7 @@ function getOpenApiPlaygroundProps(
     return acc.concat(file.spec?.servers);
   }, []);
   const configBaseUrl =
-    mintConfig?.api?.baseUrl ?? openApiServers?.map((server: { url: string }) => server.url);
+    mintConfig?.api?.baseUrl ?? openApiServers?.map((server: { url: string }) => server?.url);
   const baseUrl =
     configBaseUrl && Array.isArray(configBaseUrl) ? configBaseUrl[apiBaseIndex] : configBaseUrl;
   const api = `${method} ${baseUrl}${endpoint}`;
