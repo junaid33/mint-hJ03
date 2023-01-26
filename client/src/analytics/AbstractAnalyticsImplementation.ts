@@ -40,6 +40,10 @@ export type PlausibleInterface = {
   domain?: string;
 };
 
+export type KoalaInterface = {
+  projectId?: string;
+};
+
 // We can use & instead of | because all keys are optional
 export type ConfigInterface = AmplitudeConfigInterface &
   FathomConfigInterface &
@@ -50,7 +54,8 @@ export type ConfigInterface = AmplitudeConfigInterface &
   MixpanelConfigInterface &
   PirschConfigInterface &
   PostHogConfigInterface &
-  PlausibleInterface;
+  PlausibleInterface &
+  KoalaInterface;
 
 // TypeScript doesn't recommend setting interfaces on constructors.
 // How an object is constructed should not matter because an interface

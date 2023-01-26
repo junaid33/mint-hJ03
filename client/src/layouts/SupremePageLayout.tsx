@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import AnalyticsContext from '@/analytics/AnalyticsContext';
 import GA4Script from '@/analytics/GA4Script';
 import GTMScript from '@/analytics/GTMScript';
+import KoalaScript from '@/analytics/KoalaScript';
 import PlausibleScript from '@/analytics/PlausibleScript';
 import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
@@ -113,6 +114,7 @@ export default function SupremePageLayout({
             <GA4Script ga4={analyticsConfig.ga4} />
             <GTMScript gtm={analyticsConfig.gtm} />
             <PlausibleScript plausible={analyticsConfig.plausible} />
+            <KoalaScript koala={analyticsConfig.koala} />
             <FeedbackProvider subdomain={subdomain}>
               <SearchProvider subdomain={subdomain}>
                 <div className="relative antialiased text-slate-500 dark:text-slate-400">

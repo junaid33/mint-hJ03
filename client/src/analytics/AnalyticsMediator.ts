@@ -11,6 +11,7 @@ import {
   PirschConfigInterface,
   GoogleTagManagerConfigInterface,
   PlausibleInterface,
+  KoalaInterface,
 } from '@/analytics/AbstractAnalyticsImplementation';
 import PostHogAnalytics from '@/analytics/implementations/posthog';
 
@@ -33,6 +34,7 @@ export type AnalyticsMediatorConstructorInterface = {
   pirsch?: PirschConfigInterface;
   posthog?: PostHogConfigInterface;
   plausible?: PlausibleInterface;
+  koala?: KoalaInterface;
 };
 
 export default class AnalyticsMediator implements AnalyticsMediatorInterface {

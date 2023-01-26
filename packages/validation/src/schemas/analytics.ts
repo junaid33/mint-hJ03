@@ -147,6 +147,24 @@ const plausibleConfigInterfaceSchema = z.object(
   }
 );
 
+const koalaConfigInterfaceSchema = z.object(
+  {
+    projectId: z
+      .string({
+        required_error: "Project ID is required for the snippet to run.",
+        invalid_type_error: "Koala Project ID must be a string.",
+      })
+      .refine(
+        (projectId) => projectId.length >= 2,
+        "Koala Project ID must have at least two characters"
+      ),
+  },
+  {
+    invalid_type_error:
+      "Koala config must be an object with a projectId property.",
+  }
+);
+
 export const analyticsSchema = z
   .object({
     amplitude: amplitudeConfigInterfaceSchema.optional(),
@@ -159,7 +177,8 @@ export const analyticsSchema = z
     pirsch: pirschConfigInterfaceSchema.optional(),
     posthog: postHogConfigInterfaceSchema.optional(),
     plausible: plausibleConfigInterfaceSchema.optional(),
+    koala: koalaConfigInterfaceSchema.optional(),
   })
   .strict(
-    "Mintlify only supports analytics integrations from: amplitude, fathom, ga4, gtm, hotjar, logrocket, mixpanel, pirsch, posthog, and plausible."
+    "Mintlify only supports analytics integrations from: amplitude, fathom, ga4, gtm, hotjar, logrocket, mixpanel, pirsch, posthog, plausible, and koala."
   );
