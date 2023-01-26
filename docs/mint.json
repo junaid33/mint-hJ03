@@ -113,7 +113,10 @@
       "pages": [
         {
           "group": "Command Line Changelog",
-          "pages": ["changelog/command-line/2.0.15"]
+          "pages": [
+            "changelog/command-line/2.0.16",
+            "changelog/command-line/2.0.15"
+          ]
         }
       ]
     },
