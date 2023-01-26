@@ -33,7 +33,6 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
 
   const { slug } = params;
   const slugStr = slug ? slug.join('/') : 'index'; // TODO index logic
-
   const data = await getPageProps(slugStr);
 
   if (data.hasOwnProperty('notFound')) {
