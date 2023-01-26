@@ -113,8 +113,8 @@ export default function SupremePageLayout({
             />
             <GA4Script ga4={analyticsConfig.ga4} />
             <GTMScript gtm={analyticsConfig.gtm} />
-            <PlausibleScript plausible={analyticsConfig.plausible} />
             <KoalaScript koala={analyticsConfig.koala} />
+            <PlausibleScript plausible={analyticsConfig.plausible} />
             <FeedbackProvider subdomain={subdomain}>
               <SearchProvider subdomain={subdomain}>
                 <div className="relative antialiased text-slate-500 dark:text-slate-400">

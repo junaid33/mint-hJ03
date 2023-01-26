@@ -19,6 +19,10 @@ export type HotjarConfigInterface = {
   hjsv?: string;
 };
 
+export type KoalaInterface = {
+  projectId?: string;
+};
+
 export type LogrocketConfigInterface = {
   appId?: string;
 };
@@ -40,22 +44,18 @@ export type PlausibleInterface = {
   domain?: string;
 };
 
-export type KoalaInterface = {
-  projectId?: string;
-};
-
 // We can use & instead of | because all keys are optional
 export type ConfigInterface = AmplitudeConfigInterface &
   FathomConfigInterface &
   GoogleAnalyticsConfigInterface &
   GoogleTagManagerConfigInterface &
   HotjarConfigInterface &
+  KoalaInterface &
   LogrocketConfigInterface &
   MixpanelConfigInterface &
   PirschConfigInterface &
   PostHogConfigInterface &
-  PlausibleInterface &
-  KoalaInterface;
+  PlausibleInterface;
 
 // TypeScript doesn't recommend setting interfaces on constructors.
 // How an object is constructed should not matter because an interface

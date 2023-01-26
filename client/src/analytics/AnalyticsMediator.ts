@@ -3,15 +3,15 @@ import {
   AbstractAnalyticsImplementation,
   AnalyticsMediatorInterface,
   FathomConfigInterface,
+  GoogleAnalyticsConfigInterface,
+  GoogleTagManagerConfigInterface,
   HotjarConfigInterface,
+  KoalaInterface,
+  LogrocketConfigInterface,
   MixpanelConfigInterface,
   PostHogConfigInterface,
-  GoogleAnalyticsConfigInterface,
-  LogrocketConfigInterface,
   PirschConfigInterface,
-  GoogleTagManagerConfigInterface,
   PlausibleInterface,
-  KoalaInterface,
 } from '@/analytics/AbstractAnalyticsImplementation';
 import PostHogAnalytics from '@/analytics/implementations/posthog';
 
@@ -28,13 +28,13 @@ export type AnalyticsMediatorConstructorInterface = {
   fathom?: FathomConfigInterface;
   ga4?: GoogleAnalyticsConfigInterface;
   gtm?: GoogleTagManagerConfigInterface;
-  logrocket?: LogrocketConfigInterface;
   hotjar?: HotjarConfigInterface;
+  koala?: KoalaInterface;
+  logrocket?: LogrocketConfigInterface;
   mixpanel?: MixpanelConfigInterface;
   pirsch?: PirschConfigInterface;
   posthog?: PostHogConfigInterface;
   plausible?: PlausibleInterface;
-  koala?: KoalaInterface;
 };
 
 export default class AnalyticsMediator implements AnalyticsMediatorInterface {
