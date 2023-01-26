@@ -157,7 +157,7 @@ export const extractBaseAndPath = (
     openApiFiles.reduce((acc: any, file: OpenApiFile) => {
       return acc.concat(file.spec?.servers);
     }, []);
-  baseUrl = baseUrl ?? openApiServers?.map((server: { url: string }) => server.url);
+  baseUrl = baseUrl ?? openApiServers?.map((server: { url: string } | undefined) => server?.url);
   if (isAbsoluteUrl(endpoint)) {
     fullEndpoint = endpoint;
   } else if (baseUrl) {
