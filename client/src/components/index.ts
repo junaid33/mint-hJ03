@@ -11,6 +11,7 @@ import {
   Frame,
 } from '@mintlify/components';
 import { ApiPlayground } from '@mintlify/components';
+import { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
 
 import { Accordion, AccordionGroup } from '@/components/Accordion';
@@ -23,7 +24,6 @@ import { Param, ParamField } from '@/components/Param';
 import { ResponseField } from '@/components/ResponseField';
 import { RequestExample, ResponseExample } from '@/components/StickyCodeBlocks';
 import { MDXContentController } from '@/ui/MDXContentController/MDXContentController';
-import { MDXComponents } from "mdx/types";
 
 const components: MDXComponents = {
   ApiPlayground,

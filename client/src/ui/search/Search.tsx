@@ -10,6 +10,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  ReactNode,
 } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -241,7 +242,13 @@ function SearchHit({
   );
 }
 
-export function SearchProvider({ subdomain, children }: { subdomain?: string; children: any }) {
+export function SearchProvider({
+  subdomain,
+  children,
+}: {
+  subdomain?: string;
+  children: ReactNode;
+}) {
   const router = useRouter();
   const { mintConfig: config, navWithMetadata } = useContext(ConfigContext);
   const { selectedVersion } = useContext(VersionContext);
@@ -285,7 +292,7 @@ export function SearchProvider({ subdomain, children }: { subdomain?: string; ch
     setHits(filterHitsToCurrentVersion(hits as Hit[], selectedVersion, pathToVersion));
   };
 
-  const onSelectOption = (hit: any) => {
+  const onSelectOption = (hit: Hit) => {
     onClose();
 
     const section =
@@ -348,7 +355,10 @@ export function SearchProvider({ subdomain, children }: { subdomain?: string; ch
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="mx-auto max-w-3xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-md bg-white dark:bg-background-dark bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all">
-                  <Combobox onChange={(option) => onSelectOption(option)} value={query}>
+                  <Combobox
+                    onChange={(option) => onSelectOption(option as unknown as Hit)}
+                    value={query}
+                  >
                     <div className="relative flex items-center">
                       <Icon
                         icon="magnifying-glass"
@@ -421,15 +431,21 @@ export function SearchProvider({ subdomain, children }: { subdomain?: string; ch
   );
 }
 
-export function SearchButton({ children, ...props }: any) {
+export function SearchButton({
+  className,
+  children,
+}: {
+  className: string;
+  children: ReactNode | ((props: { actionKey: string[] | undefined }) => ReactNode);
+}) {
   const searchButtonRef = useRef();
   const actionKey = useActionKey();
   const { onOpen, onInput } = useContext(SearchContext);
 
   useEffect(() => {
-    function onKeyDown(event: any) {
+    function onKeyDown(event: KeyboardEvent) {
       if (searchButtonRef && searchButtonRef.current === document.activeElement && onInput) {
-        if (/[a-zA-Z0-9]/.test(String.fromCharCode(event.keyCode))) {
+        if (event.key.match(/[a-z0-9]/i)) {
           onInput(event);
         }
       }
@@ -441,7 +457,7 @@ export function SearchButton({ children, ...props }: any) {
   }, [onInput, searchButtonRef]);
 
   return (
-    <button type="button" ref={searchButtonRef} onClick={onOpen} {...props}>
+    <button type="button" ref={searchButtonRef.current} onClick={onOpen} className={className}>
       {typeof children === 'function' ? children({ actionKey }) : children}
     </button>
   );
@@ -450,7 +466,7 @@ export function SearchButton({ children, ...props }: any) {
 function filterHitsToCurrentVersion(
   hits: Hit[],
   selectedVersion: string,
-  pathToVersion: any
+  pathToVersion: Record<string, string>
 ): Hit[] {
   return hits.filter((hit) => {
     const version = pathToVersion[hit.slug];

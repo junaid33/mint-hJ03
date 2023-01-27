@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { ReactNode } from 'react';
 
 export function HitLocation({
   active,
@@ -7,9 +8,9 @@ export function HitLocation({
   bubbleHtml,
 }: {
   active: boolean;
-  breadcrumbComponents: any[];
-  hitHtml: any;
-  bubbleHtml?: any;
+  breadcrumbComponents: ReactNode[];
+  hitHtml: string;
+  bubbleHtml?: string;
 }) {
   const bubble = bubbleHtml && (
     <div className="mr-2 max-w-[50%]">
