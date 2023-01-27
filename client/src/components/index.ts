@@ -23,8 +23,9 @@ import { Param, ParamField } from '@/components/Param';
 import { ResponseField } from '@/components/ResponseField';
 import { RequestExample, ResponseExample } from '@/components/StickyCodeBlocks';
 import { MDXContentController } from '@/ui/MDXContentController/MDXContentController';
+import { MDXComponents } from "mdx/types";
 
-const components = {
+const components: MDXComponents = {
   ApiPlayground,
   Accordion,
   AccordionGroup,
