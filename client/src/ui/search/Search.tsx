@@ -406,7 +406,7 @@ export function SearchProvider({ subdomain, children }: { subdomain?: string; ch
                           className="mx-auto h-6 w-6 bg-slate-900 dark:bg-slate-400 opacity-40"
                         />
                         <p className="mt-4 text-sm text-slate-900 dark:text-slate-400">
-                          We couldn&apos;t find any projects with that term. Please try again.
+                          We couldn&apos;t find any results.
                         </p>
                       </div>
                     )}
