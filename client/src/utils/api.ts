@@ -162,6 +162,9 @@ export const extractBaseAndPath = (
     fullEndpoint = endpoint;
   } else if (baseUrl) {
     const selectedBase = Array.isArray(baseUrl) ? baseUrl[apiBaseIndex] : baseUrl;
+    if (selectedBase == null) {
+      throw new Error('Invalid selectedBase');
+    }
     fullEndpoint = `${selectedBase}${endpoint}`;
   } else {
     throw new Error('Invalid endpoint');
