@@ -6,7 +6,7 @@ The client is essentially a frontend template used to host documentation.
 
 ### Prerequisites
 
-- Node v16.13.2 (npm v8.1.2)
+- Node v18 (npm v8)
 - Yarn
 
 ### Dependencies
