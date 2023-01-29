@@ -37,6 +37,8 @@ export function useAnalytics(
   }, [initializedAnalyticsMediator, subdomain, analyticsConfig, internalAnalyticsWriteKey]);
 
   useEffect(() => {
+    analyticsMediator.onRouteChange(Router.asPath, { initialLoad: true });
+
     Router.events.on('routeChangeComplete', (url: string, routeProps: any) => {
       analyticsMediator.onRouteChange(url, routeProps);
     });
