@@ -4,6 +4,8 @@ import type { ParsedUrlQuery } from 'querystring';
 
 import { getPage } from '@/lib/page';
 import { getPaths } from '@/lib/paths';
+import createSnippetTreeMap from '@/mdx/createSnippetTreeMap';
+import getMdxSource from '@/mdx/getMdxSource';
 import type { Config } from '@/types/config';
 import { FaviconsProps } from '@/types/favicons';
 import { Groups, PageMetaTags } from '@/types/metadata';
@@ -11,8 +13,6 @@ import { OpenApiFile } from '@/types/openApi';
 import { PageProps } from '@/types/page';
 import { Snippet } from '@/types/snippet';
 import Page from '@/ui/Page';
-import createSnippetTreeMap from '@/utils/mdx/createSnippetTreeMap';
-import getMdxSource from '@/utils/mdx/getMdxSource';
 import { pickRedirect } from '@/utils/staticProps/pickRedirect';
 import { prepareToSerialize } from '@/utils/staticProps/prepareToSerialize';
 
