@@ -48,7 +48,6 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
   if (data == null) {
     throw 'Page data is missing at path: ' + path + ' for subdomain: ' + subdomain;
   }
-
   if (data.redirect) {
     const { navWithMetadata }: { navWithMetadata: Groups } = data;
     if (Array.isArray(navWithMetadata) && navWithMetadata.length > 0) {
