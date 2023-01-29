@@ -29,7 +29,7 @@ The package returns an object with the properties `status`, `warnings`, and `err
 
 `errors` is a string array of errors that will likely break the site.
 
-When `status === "error"` you should stop trying to build `mint`, your `mint.json` file is invalid and will the site will crash when building.
+When `status === "error"` you should stop trying to build `mint`, your `mint.json` file is invalid and the site will crash when building.
 
 ## Return Value Example
 
