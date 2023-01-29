@@ -44,6 +44,10 @@ export type PlausibleInterface = {
   domain?: string;
 };
 
+export type SegmentInterface = {
+  writeKey?: string;
+};
+
 // We can use & instead of | because all keys are optional
 export type ConfigInterface = AmplitudeConfigInterface &
   FathomConfigInterface &
@@ -55,7 +59,8 @@ export type ConfigInterface = AmplitudeConfigInterface &
   MixpanelConfigInterface &
   PirschConfigInterface &
   PostHogConfigInterface &
-  PlausibleInterface;
+  PlausibleInterface &
+  SegmentInterface;
 
 // TypeScript doesn't recommend setting interfaces on constructors.
 // How an object is constructed should not matter because an interface

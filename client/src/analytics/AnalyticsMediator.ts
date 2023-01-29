@@ -22,7 +22,7 @@ import HotjarAnalytics from './implementations/hotjar';
 import LogrocketAnalytics from './implementations/logrocket';
 import MixpanelAnalytics from './implementations/mixpanel';
 import PirschAnalytics from './implementations/pirsch';
-import { segmentPage, segmentTrack } from './internal/Segment';
+import internalTracking from './internal';
 
 export type AnalyticsMediatorConstructorInterface = {
   amplitude?: AmplitudeConfigInterface;
@@ -114,14 +114,18 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
     const subdomain = this.subdomain;
     return async function (eventProperties: object) {
       listeners.forEach((track) => track(eventProperties));
-
-      segmentTrack(subdomain, eventName, eventProperties);
+      internalTracking.createEventListener(eventName)({
+        ...eventProperties,
+        subdomain,
+      });
     };
   }
 
   onRouteChange(url: string, routeProps: any) {
     this.analyticsIntegrations.forEach((integration) => integration.onRouteChange(url, routeProps));
-
-    segmentPage(this.subdomain, undefined, undefined, routeProps);
+    internalTracking.onRouteChange(url, {
+      ...routeProps,
+      subdomain: this.subdomain,
+    });
   }
 }
