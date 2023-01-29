@@ -1,8 +1,8 @@
 import Script from 'next/script';
 
-import { KoalaInterface } from './AbstractAnalyticsImplementation';
+import { KoalaConfigInterface } from './AbstractAnalyticsImplementation';
 
-export default function KoalaScript({ koala }: { koala?: KoalaInterface }) {
+export default function KoalaScript({ koala }: { koala?: KoalaConfigInterface }) {
   if (!koala?.projectId || process.env.NODE_ENV !== 'production') {
     return null;
   }
