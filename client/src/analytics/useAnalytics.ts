@@ -14,7 +14,8 @@ import FakeAnalyticsMediator from '@/analytics/FakeAnalyticsMediator';
  */
 export function useAnalytics(
   analyticsConfig: AnalyticsMediatorConstructorInterface,
-  subdomain?: string
+  subdomain?: string,
+  internalAnalyticsWriteKey?: string
 ) {
   const [initializedAnalyticsMediator, setInitializedAnalyticsMediator] = useState(false);
   const [analyticsMediator, setAnalyticsMediator] = useState<AnalyticsMediatorInterface>(
@@ -25,11 +26,15 @@ export function useAnalytics(
   // We use useEffect because it only runs on render
   useEffect(() => {
     if (!initializedAnalyticsMediator && subdomain) {
-      const newMediator = new AnalyticsMediator(subdomain, analyticsConfig);
+      const newMediator = new AnalyticsMediator(
+        subdomain,
+        analyticsConfig,
+        internalAnalyticsWriteKey
+      );
       setAnalyticsMediator(newMediator);
       setInitializedAnalyticsMediator(true);
     }
-  }, [initializedAnalyticsMediator, subdomain, analyticsConfig]);
+  }, [initializedAnalyticsMediator, subdomain, analyticsConfig, internalAnalyticsWriteKey]);
 
   useEffect(() => {
     Router.events.on('routeChangeComplete', (url: string, routeProps: any) => {

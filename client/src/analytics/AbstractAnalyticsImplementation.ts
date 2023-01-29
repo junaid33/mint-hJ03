@@ -19,7 +19,7 @@ export type HotjarConfigInterface = {
   hjsv?: string;
 };
 
-export type KoalaInterface = {
+export type KoalaConfigInterface = {
   projectId?: string;
 };
 
@@ -40,8 +40,12 @@ export type PostHogConfigInterface = {
   apiHost?: string;
 };
 
-export type PlausibleInterface = {
+export type PlausibleConfigInterface = {
   domain?: string;
+};
+
+export type SegmentConfigInterface = {
+  writeKey?: string;
 };
 
 // We can use & instead of | because all keys are optional
@@ -50,19 +54,20 @@ export type ConfigInterface = AmplitudeConfigInterface &
   GoogleAnalyticsConfigInterface &
   GoogleTagManagerConfigInterface &
   HotjarConfigInterface &
-  KoalaInterface &
+  KoalaConfigInterface &
   LogrocketConfigInterface &
   MixpanelConfigInterface &
   PirschConfigInterface &
   PostHogConfigInterface &
-  PlausibleInterface;
+  PlausibleConfigInterface &
+  SegmentConfigInterface;
 
 // TypeScript doesn't recommend setting interfaces on constructors.
 // How an object is constructed should not matter because an interface
 // only cares about what it does.
 export abstract class AbstractAnalyticsImplementation {
   // New implementations need their own config interface.
-  abstract init(implementationConfig: ConfigInterface): void;
+  abstract init(implementationConfig: ConfigInterface, subdomain?: string): void;
   createEventListener(eventName: string): (eventProperties: object) => Promise<void> {
     return async function doNothing(_: object) {
       return;

@@ -5,7 +5,6 @@ import {
 
 export default class HotjarAnalytics extends AbstractAnalyticsImplementation {
   initialized = false;
-
   // Store events to submit after the library is loaded.
   waitTracking: string[] = [];
   hotjar = {

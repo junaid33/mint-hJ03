@@ -53,11 +53,14 @@ const constructAnalytics = (analytics: any): AnalyticsMediatorConstructorInterfa
   if (analytics?.pirsch?.id) {
     properlyTypedAnalytics.pirsch = { id: analytics.pirsch.id };
   }
+  if (analytics?.plausible?.domain) {
+    properlyTypedAnalytics.plausible = { domain: analytics.plausible.domain };
+  }
   if (analytics?.posthog?.apiKey) {
     properlyTypedAnalytics.posthog = { apiKey: analytics.posthog.apiKey };
   }
-  if (analytics?.plausible?.domain) {
-    properlyTypedAnalytics.plausible = { domain: analytics.plausible.domain };
+  if (analytics?.segment?.writeKey) {
+    properlyTypedAnalytics.segment = { writeKey: analytics.segment.writeKey };
   }
   return properlyTypedAnalytics;
 };
