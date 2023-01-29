@@ -165,6 +165,19 @@ const plausibleConfigInterfaceSchema = z.object(
   }
 );
 
+const segmentConfigInterfaceSchema = z.object(
+  {
+    writeKey: z.string({
+      required_error: "Write key is missing.",
+      invalid_type_error: "Write key must be a string.",
+    }),
+  },
+  {
+    invalid_type_error:
+      "Segment config must be an object with a writeKey property.",
+  }
+);
+
 export const analyticsSchema = z
   .object({
     amplitude: amplitudeConfigInterfaceSchema.optional(),
@@ -178,7 +191,8 @@ export const analyticsSchema = z
     pirsch: pirschConfigInterfaceSchema.optional(),
     posthog: postHogConfigInterfaceSchema.optional(),
     plausible: plausibleConfigInterfaceSchema.optional(),
+    segment: segmentConfigInterfaceSchema.optional(),
   })
   .strict(
-    "Mintlify only supports analytics integrations from: amplitude, fathom, ga4, gtm, hotjar, koala, logrocket, mixpanel, pirsch, posthog, and plausible."
+    "Mintlify only supports analytics integrations from: amplitude, fathom, ga4, gtm, hotjar, koala, logrocket, mixpanel, pirsch, posthog, plausible, and segment."
   );

@@ -3,7 +3,7 @@ import fse from "fs-extra";
 import pathUtil from "path";
 import Chalk from "chalk";
 import mintValidation from "@mintlify/validation";
-import { openApiCheck } from "./utils.js";
+import { isFileSizeValid, openApiCheck } from "./utils.js";
 import { updateGeneratedNav, updateOpenApiFiles } from "./update.js";
 import { CLIENT_PATH, CMD_EXEC_PATH } from "../../constants.js";
 import { promises as _promises } from "fs";
@@ -142,9 +142,11 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
     potentialCategory === "potentialJsonOpenApiSpec"
       ? "staticFile"
       : potentialCategory;
+
   switch (potentialCategory) {
     case "page":
       regenerateNav = true;
+
       const contentStr = (await readFile(filePath)).toString();
       const { pageContent } = await createPage(
         filename,
@@ -195,9 +197,7 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
     case "potentialYamlOpenApiSpec":
     case "potentialJsonOpenApiSpec":
       let isOpenApi = false;
-      const openApiInfo = await openApiCheck(
-        pathUtil.join(CMD_EXEC_PATH, filename)
-      );
+      const openApiInfo = await openApiCheck(filePath);
       isOpenApi = openApiInfo.isOpenApi;
       if (isOpenApi) {
         // TODO: Instead of re-generating all openApi files, optimize by just updating the specific file that changed.
@@ -207,6 +207,9 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
       }
       break;
     case "staticFile":
+      if (!isFileSizeValid(filePath)) {
+        break;
+      }
       await fse.copy(filePath, targetPath);
       break;
   }
@@ -216,5 +219,6 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
   }
   return category;
 };
+
 
 export default listener;

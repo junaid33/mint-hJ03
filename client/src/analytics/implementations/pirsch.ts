@@ -5,7 +5,6 @@ import {
 
 export default class PirschAnalytics extends AbstractAnalyticsImplementation {
   initialized = false;
-
   // Store events to submit after the library is loaded.
   waitTracking: any[][] = [];
   pirsch = {

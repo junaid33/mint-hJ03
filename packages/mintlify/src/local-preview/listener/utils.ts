@@ -1,5 +1,6 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { promises as _promises } from "fs";
+import Chalk from "chalk";
+import { promises as _promises, stat } from "fs";
 
 const { readdir } = _promises;
 
@@ -66,4 +67,29 @@ export const getFileList = async (dirName: string, og = dirName) => {
   }
 
   return files;
+};
+
+export const isFileSizeValid = (
+  path: string,
+  maxFileSize: number = 5
+): boolean => {
+  const maxFileSizeBytes = maxFileSize * 1000000;
+  let isValid = true;
+  stat(path, (error, stats) => {
+    if (error) {
+      console.error(error);
+      isValid = false;
+    }
+
+    if (stats.size >= maxFileSizeBytes) {
+      console.error(
+        Chalk.red(
+          `🚨 The file at ${path} is too big. The maximum file size is ${maxFileSize} mb.`
+        )
+      );
+      isValid = false;
+    }
+  });
+
+  return isValid;
 };

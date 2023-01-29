@@ -8,6 +8,7 @@ export interface PageProps {
   pageData: PageDataProps;
   favicons: FaviconsProps;
   subdomain?: string;
+  internalAnalyticsWriteKey?: string;
 }
 
 export interface PageDataProps {

@@ -6,12 +6,13 @@ import {
   GoogleAnalyticsConfigInterface,
   GoogleTagManagerConfigInterface,
   HotjarConfigInterface,
-  KoalaInterface,
+  KoalaConfigInterface,
   LogrocketConfigInterface,
   MixpanelConfigInterface,
   PostHogConfigInterface,
   PirschConfigInterface,
-  PlausibleInterface,
+  PlausibleConfigInterface,
+  SegmentConfigInterface,
 } from '@/analytics/AbstractAnalyticsImplementation';
 import PostHogAnalytics from '@/analytics/implementations/posthog';
 
@@ -22,7 +23,8 @@ import HotjarAnalytics from './implementations/hotjar';
 import LogrocketAnalytics from './implementations/logrocket';
 import MixpanelAnalytics from './implementations/mixpanel';
 import PirschAnalytics from './implementations/pirsch';
-import internalTracking from './internal';
+import SegmentAnalytics from './implementations/segment';
+import InternalAnalytics from './internal';
 
 export type AnalyticsMediatorConstructorInterface = {
   amplitude?: AmplitudeConfigInterface;
@@ -30,20 +32,31 @@ export type AnalyticsMediatorConstructorInterface = {
   ga4?: GoogleAnalyticsConfigInterface;
   gtm?: GoogleTagManagerConfigInterface;
   hotjar?: HotjarConfigInterface;
-  koala?: KoalaInterface;
+  koala?: KoalaConfigInterface;
   logrocket?: LogrocketConfigInterface;
   mixpanel?: MixpanelConfigInterface;
   pirsch?: PirschConfigInterface;
+  plausible?: PlausibleConfigInterface;
   posthog?: PostHogConfigInterface;
-  plausible?: PlausibleInterface;
+  segment?: SegmentConfigInterface;
 };
 
 export default class AnalyticsMediator implements AnalyticsMediatorInterface {
   subdomain: string;
   analyticsIntegrations: AbstractAnalyticsImplementation[] = [];
 
-  constructor(subdomain: string, analytics?: AnalyticsMediatorConstructorInterface) {
+  constructor(
+    subdomain: string,
+    analytics?: AnalyticsMediatorConstructorInterface,
+    internalAnalyticsWriteKey?: string
+  ) {
     this.subdomain = subdomain;
+
+    if (internalAnalyticsWriteKey) {
+      const internalAnalytics = new InternalAnalytics();
+      internalAnalytics.init({ writeKey: internalAnalyticsWriteKey }, subdomain);
+      this.analyticsIntegrations.push(internalAnalytics);
+    }
 
     const amplitudeEnabled = Boolean(analytics?.amplitude?.apiKey);
     const fathomEnabled = Boolean(analytics?.fathom?.siteId);
@@ -53,6 +66,7 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
     const mixpanelEnabled = Boolean(analytics?.mixpanel?.projectToken);
     const pirschEnabled = Boolean(analytics?.pirsch?.id);
     const posthogEnabled = Boolean(analytics?.posthog?.apiKey);
+    const segmentEnabled = Boolean(analytics?.segment?.writeKey);
 
     if (!analytics || Object.keys(analytics).length === 0) {
       return;
@@ -105,27 +119,24 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
       posthog.init(analytics.posthog!);
       this.analyticsIntegrations.push(posthog);
     }
+
+    if (segmentEnabled) {
+      const segment = new SegmentAnalytics();
+      segment.init(analytics.segment!);
+      this.analyticsIntegrations.push(segment);
+    }
   }
 
   createEventListener(eventName: string) {
     const listeners = this.analyticsIntegrations.map((integration) =>
       integration.createEventListener(eventName)
     );
-    const subdomain = this.subdomain;
     return async function (eventProperties: object) {
       listeners.forEach((track) => track(eventProperties));
-      internalTracking.createEventListener(eventName)({
-        ...eventProperties,
-        subdomain,
-      });
     };
   }
 
   onRouteChange(url: string, routeProps: any) {
     this.analyticsIntegrations.forEach((integration) => integration.onRouteChange(url, routeProps));
-    internalTracking.onRouteChange(url, {
-      ...routeProps,
-      subdomain: this.subdomain,
-    });
   }
 }

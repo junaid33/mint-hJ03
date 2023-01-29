@@ -117,6 +117,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
         },
         favicons,
         subdomain,
+        internalAnalyticsWriteKey: process.env.INTERNAL_ANALYTICS_WRITE_KEY,
       }),
     };
   }

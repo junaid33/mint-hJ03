@@ -16,8 +16,7 @@ import { VersionContextController } from '@/context/VersionContext';
 import useProgressBar from '@/hooks/useProgressBar';
 import Intercom from '@/integrations/Intercom';
 import { DocumentationLayout } from '@/layouts/DocumentationLayout';
-import { FaviconsProps } from '@/types/favicons';
-import { PageDataProps } from '@/types/page';
+import { PageProps } from '@/types/page';
 import { ColorVariables } from '@/ui/ColorVariables';
 import { FeedbackProvider } from '@/ui/Feedback';
 import { SearchProvider } from '@/ui/search/Search';
@@ -30,18 +29,14 @@ export default function SupremePageLayout({
   pageData,
   favicons,
   subdomain,
-}: {
-  mdxSource: any;
-  pageData: PageDataProps;
-  favicons?: FaviconsProps;
-  subdomain?: string;
-}) {
+  internalAnalyticsWriteKey,
+}: PageProps) {
   const { mintConfig, navWithMetadata, pageMetadata, openApiFiles } = pageData;
 
   useProgressBar(mintConfig?.colors?.primary);
   const [navIsOpen, setNavIsOpen] = useState(false);
   const analyticsConfig = getAnalyticsConfig(mintConfig);
-  const analyticsMediator = useAnalytics(analyticsConfig, subdomain);
+  const analyticsMediator = useAnalytics(analyticsConfig, subdomain, internalAnalyticsWriteKey);
 
   useEffect(() => {
     if (!navIsOpen) return;
@@ -136,7 +131,7 @@ export default function SupremePageLayout({
                     setNavIsOpen={setNavIsOpen}
                     pageMetadata={pageMetadata}
                   >
-                    <MDXRemote components={components} {...mdxSource} />
+                    <MDXRemote components={components} {...(mdxSource as any)} />
                   </DocumentationLayout>
                 </div>
               </SearchProvider>
