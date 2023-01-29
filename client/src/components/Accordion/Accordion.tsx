@@ -20,14 +20,14 @@ function Accordion({
   children: ReactNode;
 }) {
   const analyticsMediator = useContext(AnalyticsContext);
-  const openAnalyticsListener = analyticsMediator.createEventListener('accordion_open');
-  const closeAnalyticsListener = analyticsMediator.createEventListener('accordion_close');
+  const trackOpen = analyticsMediator.createEventListener('accordion_open');
+  const trackClose = analyticsMediator.createEventListener('accordion_close');
 
   const onChange = (open: boolean) => {
     if (open) {
-      openAnalyticsListener({ title });
+      trackOpen({ title });
     } else {
-      closeAnalyticsListener({ title });
+      trackClose({ title });
     }
   };
 

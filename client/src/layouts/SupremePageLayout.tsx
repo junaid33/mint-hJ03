@@ -41,7 +41,7 @@ export default function SupremePageLayout({
   useProgressBar(mintConfig?.colors?.primary);
   const [navIsOpen, setNavIsOpen] = useState(false);
   const analyticsConfig = getAnalyticsConfig(mintConfig);
-  const analyticsMediator = useAnalytics(analyticsConfig);
+  const analyticsMediator = useAnalytics(analyticsConfig, subdomain);
 
   useEffect(() => {
     if (!navIsOpen) return;

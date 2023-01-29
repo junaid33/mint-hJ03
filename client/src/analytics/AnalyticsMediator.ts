@@ -22,6 +22,7 @@ import HotjarAnalytics from './implementations/hotjar';
 import LogrocketAnalytics from './implementations/logrocket';
 import MixpanelAnalytics from './implementations/mixpanel';
 import PirschAnalytics from './implementations/pirsch';
+import { segmentPage, segmentTrack } from './internal/Segment';
 
 export type AnalyticsMediatorConstructorInterface = {
   amplitude?: AmplitudeConfigInterface;
@@ -38,9 +39,12 @@ export type AnalyticsMediatorConstructorInterface = {
 };
 
 export default class AnalyticsMediator implements AnalyticsMediatorInterface {
+  subdomain: string;
   analyticsIntegrations: AbstractAnalyticsImplementation[] = [];
 
-  constructor(analytics?: AnalyticsMediatorConstructorInterface) {
+  constructor(subdomain: string, analytics?: AnalyticsMediatorConstructorInterface) {
+    this.subdomain = subdomain;
+
     const amplitudeEnabled = Boolean(analytics?.amplitude?.apiKey);
     const fathomEnabled = Boolean(analytics?.fathom?.siteId);
     const ga4Enabled = Boolean(analytics?.ga4?.measurementId);
@@ -107,12 +111,17 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
     const listeners = this.analyticsIntegrations.map((integration) =>
       integration.createEventListener(eventName)
     );
-    return async function (eventConfig: object) {
-      listeners.forEach((listener) => listener(eventConfig));
+    const subdomain = this.subdomain;
+    return async function (eventProperties: object) {
+      listeners.forEach((track) => track(eventProperties));
+
+      segmentTrack(subdomain, eventName, eventProperties);
     };
   }
 
   onRouteChange(url: string, routeProps: any) {
     this.analyticsIntegrations.forEach((integration) => integration.onRouteChange(url, routeProps));
+
+    segmentPage(this.subdomain, undefined, undefined, routeProps);
   }
 }
