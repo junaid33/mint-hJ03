@@ -207,10 +207,15 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
       }
       break;
     case "staticFile":
-      if (!isFileSizeValid(filePath)) {
-        break;
+      if (await isFileSizeValid(filePath, 5)) {
+        await fse.copy(filePath, targetPath);
+      } else {
+        console.error(
+          Chalk.red(
+            `🚨 The file at ${filename} is too big. The maximum file size is 5 mb.`
+          )
+        );
       }
-      await fse.copy(filePath, targetPath);
       break;
   }
   if (regenerateNav) {
@@ -219,6 +224,5 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
   }
   return category;
 };
-
 
 export default listener;
