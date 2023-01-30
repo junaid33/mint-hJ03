@@ -37,7 +37,10 @@ async function writeImageToFile(
   });
 }
 
-export function isValidImageSrc(src: string) {
+export function isValidImageSrc(
+  src: string,
+  skipValidateImageExtension?: boolean
+) {
   if (!src) {
     return false;
   }
@@ -47,8 +50,13 @@ export function isValidImageSrc(src: string) {
     return false;
   }
 
+  if (skipValidateImageExtension) {
+    return true;
+  }
+
   const imageHref = removeMetadataFromImageSrc(src);
   const ext = getFileExtension(imageHref);
+
   if (!SUPPORTED_MEDIA_EXTENSIONS.includes(ext)) {
     console.error("🚨 We do not support the file extension: " + ext);
     return false;

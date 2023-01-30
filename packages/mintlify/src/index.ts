@@ -16,6 +16,8 @@ import {
 import { scrapeReadMeSection } from "./scraping/site-scrapers/scrapeReadMeSection.js";
 import dev from "./local-preview/index.js";
 import installDepsCommand from "./local-preview/helper-commands/installDepsCommand.js";
+import { scrapeIntercomPage } from "./scraping/site-scrapers/Intercom/scrapeIntercomPage.js";
+import { scrapeIntercomSection } from "./scraping/site-scrapers/Intercom/scrapeIntercomSection.js";
 
 yargs(hideBin(process.argv))
   .command(
@@ -57,6 +59,14 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
+    "scrape-intercom-page [url]",
+    "Scrapes a Intercom page",
+    () => {},
+    async (argv) => {
+      await scrapePageWrapper(argv, scrapeIntercomPage);
+    }
+  )
+  .command(
     "scrape-section [url]",
     "Scrapes the docs in the section",
     () => {},
@@ -80,7 +90,14 @@ yargs(hideBin(process.argv))
       await scrapeSectionAxiosWrapper(argv, scrapeReadMeSection);
     }
   )
-
+  .command(
+    "scrape-intercom-section [url]",
+    "Scrapes the Intercom section",
+    () => {},
+    async (argv) => {
+      await scrapeSectionAxiosWrapper(argv, scrapeIntercomSection);
+    }
+  )
   // Print the help menu when the user enters an invalid command.
   .strictCommands()
   .demandCommand(

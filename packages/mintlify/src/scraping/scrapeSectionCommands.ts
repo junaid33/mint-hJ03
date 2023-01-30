@@ -9,6 +9,7 @@ import openNestedGitbookMenus from "./site-scrapers/openNestedGitbookMenus.js";
 import { scrapeReadMeSection } from "./site-scrapers/scrapeReadMeSection.js";
 import { startBrowser } from "../browser.js";
 import { ArgumentsCamelCase } from "yargs";
+import { scrapeIntercomSection } from "./site-scrapers/Intercom/scrapeIntercomSection.js";
 
 export async function scrapeSectionAxiosWrapper(
   argv: ArgumentsCamelCase,
@@ -83,12 +84,19 @@ export async function scrapeSectionAutomatically(argv: any) {
 
   console.log("Detected framework: " + framework);
 
-  if (framework === Frameworks.DOCUSAURUS) {
-    await scrapeDocusaurusSectionCommand(argv, version);
-  } else if (framework === Frameworks.GITBOOK) {
-    await scrapeGitbookSectionCommand(argv);
-  } else if (framework === Frameworks.README) {
-    await scrapeSectionAxiosWrapper(argv, scrapeReadMeSection);
+  switch (framework) {
+    case Frameworks.DOCUSAURUS:
+      await scrapeDocusaurusSectionCommand(argv, version);
+      break;
+    case Frameworks.GITBOOK:
+      await scrapeGitbookSectionCommand(argv);
+      break;
+    case Frameworks.README:
+      await scrapeSectionAxiosWrapper(argv, scrapeReadMeSection);
+      break;
+    case Frameworks.INTERCOM:
+      await scrapeSectionAxiosWrapper(argv, scrapeIntercomSection);
+      break;
   }
 }
 

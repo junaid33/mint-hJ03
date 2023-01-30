@@ -7,6 +7,7 @@ import { detectFramework, Frameworks } from "./detectFramework.js";
 import { getHrefFromArgs } from "../util.js";
 import { getHtmlWithPuppeteer } from "../browser.js";
 import { ArgumentsCamelCase } from "yargs";
+import { scrapeIntercomPage } from "./site-scrapers/Intercom/scrapeIntercomPage.js";
 
 function validateFramework(framework) {
   if (!framework) {
@@ -16,6 +17,7 @@ function validateFramework(framework) {
     console.log("scrape-page-docusaurus");
     console.log("scrape-page-gitbook");
     console.log("scrape-page-readme");
+    console.log("scrape-page-intercom");
     return process.exit(1);
   }
 }
@@ -47,11 +49,18 @@ export async function scrapePageAutomatically(argv: any) {
 
   console.log("Detected framework: " + framework);
 
-  if (framework === Frameworks.DOCUSAURUS) {
-    await scrapePageWrapper(argv, scrapeDocusaurusPage, { version });
-  } else if (framework === Frameworks.GITBOOK) {
-    await scrapePageWrapper(argv, scrapeGitBookPage, { puppeteer: true });
-  } else if (framework === Frameworks.README) {
-    await scrapePageWrapper(argv, scrapeReadMePage);
+  switch (framework) {
+    case Frameworks.DOCUSAURUS:
+      await scrapePageWrapper(argv, scrapeDocusaurusPage, { version });
+      break;
+    case Frameworks.GITBOOK:
+      await scrapePageWrapper(argv, scrapeGitBookPage, { puppeteer: true });
+      break;
+    case Frameworks.README:
+      await scrapePageWrapper(argv, scrapeReadMePage);
+      break;
+    case Frameworks.INTERCOM:
+      await scrapePageWrapper(argv, scrapeIntercomPage);
+      break;
   }
 }

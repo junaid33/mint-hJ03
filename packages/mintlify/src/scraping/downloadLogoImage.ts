@@ -11,9 +11,10 @@ export default async function downloadLogoImage(
   imageSrc: string,
   imageBaseDir: string,
   origin: string,
-  overwrite: boolean
+  overwrite: boolean,
+  skipValidateImageExtension?: boolean
 ) {
-  if (!isValidImageSrc(imageSrc)) return;
+  if (!isValidImageSrc(imageSrc, skipValidateImageExtension)) return;
 
   const imageHref = cleanImageSrc(imageSrc, origin);
 

@@ -4,6 +4,7 @@ export enum Frameworks {
   DOCUSAURUS = "DOCUSAURUS",
   GITBOOK = "GITBOOK",
   README = "README",
+  INTERCOM = "INTERCOM",
 }
 
 export function detectFramework(html) {
@@ -35,6 +36,11 @@ export function detectFramework(html) {
   const isReadMe = $('meta[name="readme-deploy"]').length > 0;
   if (isReadMe) {
     return { framework: Frameworks.README };
+  }
+
+  const isIntercom = $("meta[name='intercom:trackingEvent']").length > 0;
+  if (isIntercom) {
+    return { framework: Frameworks.INTERCOM };
   }
 
   return undefined;
