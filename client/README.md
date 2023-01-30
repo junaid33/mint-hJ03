@@ -17,11 +17,11 @@ From a terminal, where you have cloned the repository, execute the following com
 yarn
 ```
 
-### Local Testing
+### Local Development
 
-```
-yarn dev
-```
+- Log in to Infiscal for the .env variables. The project is `Mintlify Client`. Save those env vars to `client/.env`.
+- Run `yarn dev`
+- Navigate to `http://mintlify.localhost:3000/`
 
 ### Debugging in VS Code
 
