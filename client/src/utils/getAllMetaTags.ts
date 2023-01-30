@@ -3,12 +3,12 @@ import { PageMetaTags } from '@/types/metadata';
 import { slugToTitle } from './titleText/slugToTitle';
 
 // Everything here gets injected as metatags when available.
+// og:url is a special case handled in SupremePageLayout
 const SEO_META_TAGS = [
   'description',
   'og:site_name',
   'og:title',
   'og:description',
-  'og:url',
   'og:image',
   'og:locale',
   'og:logo',
@@ -22,17 +22,24 @@ const SEO_META_TAGS = [
   'og:image:height',
 ];
 
-export function getAllMetaTags(pageMeta: PageMetaTags, config: { [key: string]: any }) {
+export function getAllMetaTags(
+  pageMeta: PageMetaTags,
+  config: { name: string; metadata?: Record<string, string> }
+) {
   const configMetadata = config.metadata || {};
 
   const allMeta = {
     charset: 'utf-8',
     'og:type': 'website',
     'og:site_name': config.name,
-    'og:description': pageMeta.description,
     'og:title': defaultTitle(pageMeta, config.name),
     'twitter:title': defaultTitle(pageMeta, config.name),
-  } as { [key: string]: any };
+  } as { [key: string]: string };
+
+  if (pageMeta.description) {
+    // Default value, overriden in the loop below if og:description is set
+    allMeta['og:description'] = pageMeta.description;
+  }
 
   SEO_META_TAGS.forEach((tagName) => {
     const metaValue = pageMeta[tagName] ?? configMetadata[tagName];

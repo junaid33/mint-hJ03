@@ -13,6 +13,7 @@ import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContextController } from '@/context/VersionContext';
+import { useCurrentPath } from '@/hooks/useCurrentPath';
 import useProgressBar from '@/hooks/useProgressBar';
 import Intercom from '@/integrations/Intercom';
 import { DocumentationLayout } from '@/layouts/DocumentationLayout';
@@ -35,6 +36,7 @@ export default function SupremePageLayout({
 
   useProgressBar(mintConfig?.colors?.primary);
   const [navIsOpen, setNavIsOpen] = useState(false);
+  const [origin, setOrigin] = useState('');
   const analyticsConfig = getAnalyticsConfig(mintConfig);
   const analyticsMediator = useAnalytics(analyticsConfig, subdomain, internalAnalyticsWriteKey);
 
@@ -49,7 +51,12 @@ export default function SupremePageLayout({
     };
   }, [navIsOpen]);
 
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
+
   const metaTagsDict = getAllMetaTags(pageMetadata, mintConfig);
+  const currentUrl = origin + useCurrentPath();
 
   return (
     <Intercom appId={mintConfig.integrations?.intercom} autoBoot>
@@ -75,21 +82,15 @@ export default function SupremePageLayout({
               <meta name="theme-color" content="#ffffff" />
               <meta name="msapplication-TileColor" content={mintConfig.colors?.primary} />
               <meta name="theme-color" content="#ffffff" />
-              {mintConfig?.metadata &&
-                Object.entries(mintConfig?.metadata).map(([key, value]) => {
-                  if (!value) {
-                    return null;
-                  }
-                  return <meta key={key} name={key} content={value as any} />;
-                })}
-              <title>{metaTagsDict['og:title']}</title>
               {Object.entries(metaTagsDict).map(([key, value]) => (
-                <meta key={key} name={key} content={value as any} />
+                <meta key={key} name={key} content={value} />
               ))}
+              <title>{metaTagsDict['og:title']}</title>
+              <meta key="og:url" name="og:url" content={currentUrl} />
+              <link rel="canonical" href={currentUrl} />
             </Head>
             <Script
               id="dark-mode-toggle"
-              strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                 try {
