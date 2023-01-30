@@ -14,16 +14,10 @@ import { isEqualIgnoringLeadingSlash } from '@/utils/paths/leadingSlashHelpers';
 import { slugToTitle } from '@/utils/titleText/slugToTitle';
 
 const getPaddingByLevel = (level: number) => {
-  switch (level) {
-    case 0:
-      return 'pl-4';
-    case 1:
-      return 'pl-7';
-    case 2:
-      return 'pl-10';
-    default:
-      return 'pl-[3.25rem]';
-  }
+  // level 0 -> 1rem
+  // level 1 -> 1.75rem
+  // level 2 -> 2.50rem and so on.
+  return `${1 + level * 0.75}rem`;
 };
 
 const NavItem = forwardRef(function NavItemWithRef(
@@ -59,9 +53,11 @@ const NavItem = forwardRef(function NavItemWithRef(
           'flex border-l -ml-px',
           isActive
             ? 'text-primary border-current font-semibold dark:text-primary-light'
-            : 'border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300',
-          getPaddingByLevel(level)
+            : 'border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300'
         )}
+        style={{
+          paddingLeft: getPaddingByLevel(level),
+        }}
       >
         {endpointStr && groupPage?.hideApiMarker !== true && (
           <div
@@ -127,10 +123,12 @@ const GroupDropdown = ({
     <>
       <li className="border-l -ml-px border-transparent">
         <div
-          className={clsx(
-            'group flex items-center space-x-3 cursor-pointer hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300',
-            getPaddingByLevel(level)
-          )}
+          className={
+            'group flex items-center space-x-3 cursor-pointer hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300'
+          }
+          style={{
+            paddingLeft: getPaddingByLevel(level),
+          }}
           onClick={onClick}
         >
           <p>{name}</p>
