@@ -68,7 +68,7 @@ export function SidebarLayout({
         as="div"
         open={navIsOpen}
         onClose={() => setNavIsOpen(false)}
-        className="fixed z-50 inset-0 overflow-y-auto lg:hidden"
+        className="fixed z-30 inset-0 overflow-y-auto lg:hidden"
       >
         <Dialog.Overlay className="fixed inset-0 bg-black/20 backdrop-blur-sm dark:bg-background-dark/80" />
         <div className="relative bg-white w-80 min-h-full max-w-[calc(100%-3rem)] p-6 dark:bg-background-dark">

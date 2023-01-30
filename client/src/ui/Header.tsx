@@ -59,7 +59,7 @@ export function NavPopover({
       </button>
       <Dialog
         as="div"
-        className={clsx('fixed z-50 inset-0', display)}
+        className={clsx('fixed z-30 inset-0', display)}
         open={isOpen}
         onClose={setIsOpen}
       >
@@ -276,7 +276,7 @@ export function Header({
 
   return (
     <>
-      <div className="sticky top-0 w-full backdrop-blur flex-none z-40 lg:border-b lg:border-slate-900/5 dark:border-slate-50/[0.06] lg:z-50">
+      <div className="sticky top-0 w-full backdrop-blur flex-none z-30 lg:border-b lg:border-slate-900/5 dark:border-slate-50/[0.06]">
         <div
           className={clsx(
             'absolute top-0 right-0 left-0 bottom-0 bg-background-light dark:bg-background-dark',
