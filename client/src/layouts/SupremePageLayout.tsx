@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
 import Router from 'next/router';
@@ -91,6 +92,7 @@ export default function SupremePageLayout({
             </Head>
             <Script
               id="dark-mode-toggle"
+              strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                 try {
