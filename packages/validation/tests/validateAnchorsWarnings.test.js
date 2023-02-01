@@ -71,6 +71,10 @@ describe("validateAnchorsWarnings", () => {
           name: "Anchor",
           url: "folder",
         },
+        {
+          name: "Email Us",
+          url: "mailto:test@example.org",
+        },
       ],
       [
         {

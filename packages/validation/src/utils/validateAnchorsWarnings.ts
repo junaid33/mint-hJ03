@@ -18,6 +18,7 @@ export function validateAnchorsWarnings(
   ) {
     anchors.forEach((anchor) => {
       if (
+        !anchor.url.startsWith("mailto:") &&
         !anchor.url.startsWith("http") &&
         !anchor.url.startsWith("https") &&
         !navigation.some((nav) => pageStartsWith(nav, anchor.url))
