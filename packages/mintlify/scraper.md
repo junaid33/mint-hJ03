@@ -37,6 +37,7 @@ We currently support:
 - Docusaurus
 - GitBook
 - ReadMe
+- Intercom
 
 ## Terminal Output
 
