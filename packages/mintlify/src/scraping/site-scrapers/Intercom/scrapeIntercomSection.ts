@@ -46,8 +46,7 @@ export async function scrapeIntercomSection(
         overwrite,
         scrapeIntercomPage,
         false,
-        version,
-        "/docs"
+        version
       );
     })
   );

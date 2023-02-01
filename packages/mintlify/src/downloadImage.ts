@@ -21,20 +21,25 @@ async function writeImageToFile(
 
   const writer = createWriteStream(writePath);
 
-  const response = await axios.get(imageSrc, {
-    responseType: "stream",
-  });
+  try {
+    const response = await axios.get(imageSrc, {
+      responseType: "stream",
+    });
+    // wx prevents overwriting an image with the exact same name
+    // being created in the time we were downloading
+    response.data.pipe(writer, {
+      flag: "wx",
+    });
 
-  // wx prevents overwriting an image with the exact same name
-  // being created in the time we were downloading
-  response.data.pipe(writer, {
-    flag: "wx",
-  });
-
-  return new Promise((resolve, reject) => {
-    writer.on("finish", resolve);
-    writer.on("error", reject);
-  });
+    return new Promise((resolve, reject) => {
+      writer.on("finish", resolve);
+      writer.on("error", reject);
+    });
+  } catch (e) {
+    return Promise.reject({
+      code: "ENOTFOUND",
+    });
+  }
 }
 
 export function isValidImageSrc(
@@ -94,6 +99,10 @@ export default async function downloadImage(
     .catch((e) => {
       if (e.code === "EEXIST") {
         console.log(`❌ Skipping existing image ${writePath}`);
+      } else if (e.code === "ENOTFOUND") {
+        console.error(
+          `🚨 Cannot download the image, address not found ${imageSrc}`
+        );
       } else {
         console.error(e);
       }
