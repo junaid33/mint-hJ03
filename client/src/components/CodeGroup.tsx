@@ -1,8 +1,11 @@
-import { CodeGroup as GenericCodeGroup, CodeBlockProps, CodeGroupProps } from '@mintlify/components';
+import {
+  CodeGroup as GenericCodeGroup,
+  CodeBlockProps,
+  CodeGroupProps,
+} from '@mintlify/components';
 import { ReactElement } from 'react';
 
 import { useColors } from '@/hooks/useColors';
-
 
 export function CodeGroup({
   children,
