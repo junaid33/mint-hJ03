@@ -57,7 +57,10 @@ const constructAnalytics = (analytics: any): AnalyticsMediatorConstructorInterfa
     properlyTypedAnalytics.plausible = { domain: analytics.plausible.domain };
   }
   if (analytics?.posthog?.apiKey) {
-    properlyTypedAnalytics.posthog = { apiKey: analytics.posthog.apiKey };
+    properlyTypedAnalytics.posthog = {
+      apiKey: analytics.posthog.apiKey,
+      apiHost: analytics.posthog.apiHost,
+    };
   }
   if (analytics?.segment?.writeKey) {
     properlyTypedAnalytics.segment = { writeKey: analytics.segment.writeKey };
