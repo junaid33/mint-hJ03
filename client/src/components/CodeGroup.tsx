@@ -1,14 +1,14 @@
-import { CodeGroup as GenericCodeGroup } from '@mintlify/components';
-import { CodeGroupProps } from '@mintlify/components/dist/Code/CodeGroup';
-import { ReactNode } from 'react';
+import { CodeGroup as GenericCodeGroup, CodeBlockProps, CodeGroupProps } from '@mintlify/components';
+import { ReactElement } from 'react';
 
 import { useColors } from '@/hooks/useColors';
+
 
 export function CodeGroup({
   children,
   isSmallText,
 }: {
-  children: ReactNode;
+  children?: ReactElement<CodeBlockProps>[] | ReactElement<CodeBlockProps>;
   isSmallText?: boolean;
 }) {
   const colors = useColors();

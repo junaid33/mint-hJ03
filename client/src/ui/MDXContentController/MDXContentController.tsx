@@ -132,7 +132,7 @@ export function MDXContentController({
         ) : null}
 
         {/* The MDXProvider here renders the MDX for the page */}
-        <div className="relative z-20 prose prose-slate mt-8 dark:prose-dark">
+        <div className="relative prose prose-slate mt-8 dark:prose-dark">
           <ContentsContext.Provider value={{ registerHeading, unregisterHeading } as any}>
             <MDXProvider components={{ a: DynamicLink, Heading }}>{children}</MDXProvider>
           </ContentsContext.Provider>

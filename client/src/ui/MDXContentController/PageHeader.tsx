@@ -16,7 +16,7 @@ export function BlogHeader({ pageMetadata }: { pageMetadata: PageMetaTags }) {
   if (!title && !description) return null;
 
   return (
-    <header id="header" className="relative z-20">
+    <header id="header" className="relative">
       <div>
         <div className="flex">
           <div className="flex-1">
@@ -58,7 +58,7 @@ export function PageHeader({ section, pageMetadata }: PageHeaderProps) {
   if (!title && !description) return null;
 
   return (
-    <header id="header" className="relative z-20">
+    <header id="header" className="relative">
       <div>
         <div className="flex">
           <div className="flex-1">
