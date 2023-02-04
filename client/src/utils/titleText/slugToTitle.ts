@@ -8,3 +8,5 @@ export const slugToTitle = (slug: string) => {
   defaultTitle = defaultTitle.charAt(0).toUpperCase() + defaultTitle.slice(1); //capitalize first letter
   return defaultTitle;
 };
+
+export const getDefaultTitle = () => {};

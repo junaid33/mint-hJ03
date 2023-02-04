@@ -7,11 +7,11 @@ import { ConfigContext } from '@/context/ConfigContext';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { Group, GroupPage, isGroup, PageMetaTags } from '@/types/metadata';
 import { extractMethodAndEndpoint } from '@/utils/api';
+import { getTitle } from '@/utils/getAllMetaTags';
 import { isPathInGroupPages } from '@/utils/nav';
 import { getMethodDotsColor } from '@/utils/openApiColors';
 import { isPathInGroup } from '@/utils/paths/isPathInGroup';
 import { isEqualIgnoringLeadingSlash } from '@/utils/paths/leadingSlashHelpers';
-import { slugToTitle } from '@/utils/titleText/slugToTitle';
 
 const getPaddingByLevel = (level: number) => {
   // level 0 -> 1rem
@@ -40,10 +40,9 @@ const NavItem = forwardRef(function NavItemWithRef(
 
   const { href, api: pageApi, openapi } = groupPage;
 
-  const isActive = isEqualIgnoringLeadingSlash(groupPage.href, currentPath);
-
+  const isActive = isEqualIgnoringLeadingSlash(href, currentPath);
   const endpointStr = pageApi || openapi;
-  const title = groupPage.sidebarTitle || groupPage.title || slugToTitle(href || '');
+  const title = getTitle(groupPage);
 
   return (
     <li ref={ref}>

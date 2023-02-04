@@ -51,8 +51,12 @@ export function getAllMetaTags(
   return allMeta;
 }
 
+export function getTitle(pageMeta: PageMetaTags): string {
+  return pageMeta.title || pageMeta.sidebarTitle || slugToTitle(pageMeta.href || '');
+}
+
 function defaultTitle(pageMeta: PageMetaTags, siteName: string) {
-  const title = pageMeta.title || pageMeta.sidebarTitle || slugToTitle(pageMeta.href || '');
+  const title = getTitle(pageMeta);
   if (title && siteName) {
     return title + ' - ' + siteName;
   } else if (siteName) {
