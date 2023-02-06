@@ -37,12 +37,11 @@ export default function SupremePageLayout({
 }: PageProps) {
   const { mintConfig, navWithMetadata, pageMetadata, openApiFiles } = pageData;
 
-  const colors = useColors();
   const [navIsOpen, setNavIsOpen] = useState(false);
   const [origin, setOrigin] = useState('');
   const analyticsConfig = getAnalyticsConfig(mintConfig);
   const analyticsMediator = useAnalytics(analyticsConfig, subdomain, internalAnalyticsWriteKey);
-  useProgressBar(colors.primary);
+  useProgressBar(mintConfig?.colors?.primary);
 
   useEffect(() => {
     if (!navIsOpen) return;
@@ -62,7 +61,7 @@ export default function SupremePageLayout({
   const metaTagsDict = getAllMetaTags(
     pageMetadata,
     mintConfig,
-    getOGImageEndpoint(origin, pageMetadata, mintConfig, colors)
+    getOGImageEndpoint(origin, pageMetadata, mintConfig)
   );
   const currentUrl = origin + useCurrentPath();
 
@@ -88,7 +87,7 @@ export default function SupremePageLayout({
               <meta name="apple-mobile-web-app-title" content={mintConfig.name} />
               <meta name="application-name" content={mintConfig.name} />
               <meta name="theme-color" content="#ffffff" />
-              <meta name="msapplication-TileColor" content={colors.primary} />
+              <meta name="msapplication-TileColor" content={mintConfig?.colors?.primary} />
               <meta name="theme-color" content="#ffffff" />
               {Object.entries(metaTagsDict).map(([key, value]) => (
                 <meta key={key} name={key} content={value} />

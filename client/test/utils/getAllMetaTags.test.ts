@@ -58,14 +58,6 @@ describe('getAllMetaTags', () => {
         },
         {
           name: 'Site Name',
-        },
-        {
-          primary: '#4ADE80',
-          primaryLight: '#4ADE80',
-          primaryDark: '#166534',
-          backgroundLight: '#ffffff',
-          backgroundDark: '#0f1117',
-          anchors: [],
         }
       )
     ).toContain(
