@@ -21,7 +21,6 @@ import Intercom from '@/integrations/Intercom';
 import { DocumentationLayout } from '@/layouts/DocumentationLayout';
 import { PageProps } from '@/types/page';
 import { ColorVariables } from '@/ui/ColorVariables';
-import { FeedbackProvider } from '@/ui/Feedback';
 import { SearchProvider } from '@/ui/search/Search';
 import { getAllMetaTags } from '@/utils/getAllMetaTags';
 import { getAnalyticsConfig } from '@/utils/getAnalyticsConfig';
@@ -119,32 +118,30 @@ export default function SupremePageLayout({
             <GTMScript gtm={analyticsConfig.gtm} />
             <KoalaScript koala={analyticsConfig.koala} />
             <PlausibleScript plausible={analyticsConfig.plausible} />
-            <FeedbackProvider subdomain={subdomain}>
-              <SearchProvider subdomain={subdomain}>
-                <div className="relative antialiased text-slate-500 dark:text-slate-400">
-                  <span className="fixed inset-0 bg-background-light dark:bg-background-dark" />
-                  <span
-                    className="z-0 fixed inset-0"
-                    {...(mintConfig.backgroundImage && {
-                      style: {
-                        backgroundImage: `url('${mintConfig.backgroundImage}')`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'top right',
-                        backgroundAttachment: 'fixed',
-                      },
-                    })}
-                  />
-                  <DocumentationLayout
-                    navWithMetadata={navWithMetadata}
-                    navIsOpen={navIsOpen}
-                    setNavIsOpen={setNavIsOpen}
-                    pageMetadata={pageMetadata}
-                  >
-                    <MDXRemote components={components} {...(mdxSource as any)} />
-                  </DocumentationLayout>
-                </div>
-              </SearchProvider>
-            </FeedbackProvider>
+            <SearchProvider subdomain={subdomain}>
+              <div className="relative antialiased text-slate-500 dark:text-slate-400">
+                <span className="fixed inset-0 bg-background-light dark:bg-background-dark" />
+                <span
+                  className="z-0 fixed inset-0"
+                  {...(mintConfig.backgroundImage && {
+                    style: {
+                      backgroundImage: `url('${mintConfig.backgroundImage}')`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'top right',
+                      backgroundAttachment: 'fixed',
+                    },
+                  })}
+                />
+                <DocumentationLayout
+                  navWithMetadata={navWithMetadata}
+                  navIsOpen={navIsOpen}
+                  setNavIsOpen={setNavIsOpen}
+                  pageMetadata={pageMetadata}
+                >
+                  <MDXRemote components={components} {...(mdxSource as any)} />
+                </DocumentationLayout>
+              </div>
+            </SearchProvider>
           </AnalyticsContext.Provider>
         </ConfigContext.Provider>
       </VersionContextController>

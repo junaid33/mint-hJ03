@@ -88,6 +88,15 @@ export type Config = {
     icon?: string;
     color?: string;
   };
+  repo?: {
+    github?: {
+      owner: string;
+      repo: string;
+      deployBranch: string;
+      contentDirectory: string;
+      isPrivate?: boolean;
+    };
+  };
   anchors?: Anchor[];
   footerSocials?: FooterSocial[] | FooterSocials;
   backgroundImage?: string;
