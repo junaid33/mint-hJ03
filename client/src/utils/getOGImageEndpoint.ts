@@ -19,7 +19,10 @@ export function getOGImageEndpoint(
   };
 
   setQueryParamIfExists('title', titleParam);
-  setQueryParamIfExists('description', pageMetadata.description);
+  setQueryParamIfExists(
+    'description',
+    pageMetadata.description || `${mintConfig.name} documentation`
+  );
 
   if (typeof mintConfig.logo === 'string') {
     setQueryParamIfExists('logo', mintConfig.logo);
