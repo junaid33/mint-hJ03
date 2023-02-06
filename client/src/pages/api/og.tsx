@@ -47,7 +47,7 @@ export default async function handler(req: NextRequest) {
             fontFamily: 'Inter var',
           }}
         >
-          <div tw="relative flex flex-col w-full px-26 pt-26 pb-28 h-full">
+          <div tw="relative flex flex-col w-full px-26 py-24 h-full">
             <svg
               width="862"
               height="450"
@@ -56,7 +56,7 @@ export default async function handler(req: NextRequest) {
               xmlns="http://www.w3.org/2000/svg"
               style={{
                 position: 'absolute',
-                bottom: '3rem',
+                bottom: '3.5rem',
                 left: '6.5rem',
                 width: '68rem',
                 height: '35rem',
@@ -98,22 +98,23 @@ export default async function handler(req: NextRequest) {
               </defs>
             </svg>
 
-            <div tw="flex flex-1">{logo && <img tw="h-10" src={logo} alt="Logo" />}</div>
+            <div tw="flex flex-1">{logo && <img tw="h-12" src={logo} alt="Logo" />}</div>
             <div tw="flex flex-col tracking-tight text-base text-left">
               <span
-                tw="w-24 h-1"
+                tw="w-24 h-2"
                 style={{
                   backgroundImage: `linear-gradient(to right, ${leftGradientColor}, ${rightGradientColor})`,
                 }}
               ></span>
               <span
-                tw={clsx('mt-14 text-7xl font-bold', isDark ? 'text-slate-100' : 'text-slate-800')}
+                tw={clsx('mt-11 font-bold', isDark ? 'text-slate-100' : 'text-slate-900')}
+                style={{ fontSize: '86px', lineHeight: '90px' }}
               >
                 {title}
               </span>
               <span
                 tw={clsx(
-                  'mt-8 text-4xl font-medium leading-normal',
+                  'mt-5 text-4xl font-medium leading-normal',
                   isDark ? 'text-slate-400' : 'text-slate-500'
                 )}
               >
