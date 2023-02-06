@@ -222,6 +222,37 @@ Example: `mintlify`
   top of every page. Defaults to `false`
 </ResponseField>
 
+<ResponseField name="modeToggle" type="ModeToggle">
+  Customize the dark mode toggle.
+  <Expandable title="ModeToggle">
+    <ResponseField name="default" type={'"light" or "dark"'}>
+      Set if you always want to show light or dark mode for new users. When not
+      set, we default to the same mode as the user's operating system.
+    </ResponseField>
+    <ResponseField name="isHidden" type="boolean" default="false">
+      Set to true to hide the dark/light mode toggle. You can combine `isHidden` with `default` to force your docs to only use light or dark mode. For example:
+      
+      <CodeGroup>
+      ```json Only Dark Mode
+      "modeToggle": {
+        "default": "dark",
+        "isHidden": true
+      }
+      ```
+
+      ```json Only Light Mode
+      "modeToggle": {
+        "default": "light",
+        "isHidden": true
+      }
+      ```
+      </CodeGroup>
+
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
 <ResponseField name="backgroundImage" type="string">
   A background image to be displayed behind every page. See example with
   [Infisical](https://infisical.com/docs) and [FRPC](https://frpc.io).
@@ -233,7 +264,7 @@ Click on the following dropdown to view a sample configuration file
 
 <Accordion title="View Example Configuration">
 
-```json
+```json Example mint.json
 {
   "name": "Mintlify",
   "logo": {
