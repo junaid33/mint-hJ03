@@ -1,3 +1,4 @@
+import { Config } from '@/types/config';
 import { PageMetaTags } from '@/types/metadata';
 
 import { slugToTitle } from './titleText/slugToTitle';
@@ -22,18 +23,18 @@ const SEO_META_TAGS = [
   'og:image:height',
 ];
 
-export function getAllMetaTags(
-  pageMeta: PageMetaTags,
-  config: { name: string; metadata?: Record<string, string> }
-) {
+export function getAllMetaTags(pageMeta: PageMetaTags, config: Config, imageEndpoint: string) {
   const configMetadata = config.metadata || {};
 
   const allMeta = {
     charset: 'utf-8',
     'og:type': 'website',
     'og:site_name': config.name,
+    'twitter:card': 'summary_large_image',
     'og:title': defaultTitle(pageMeta, config.name),
     'twitter:title': defaultTitle(pageMeta, config.name),
+    'og:image': imageEndpoint,
+    'twitter:image': imageEndpoint,
   } as { [key: string]: string };
 
   if (pageMeta.description) {

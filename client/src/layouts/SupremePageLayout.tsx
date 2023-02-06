@@ -14,6 +14,7 @@ import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContextController } from '@/context/VersionContext';
+import { useColors } from '@/hooks/useColors';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import useProgressBar from '@/hooks/useProgressBar';
 import Intercom from '@/integrations/Intercom';
@@ -24,6 +25,7 @@ import { FeedbackProvider } from '@/ui/Feedback';
 import { SearchProvider } from '@/ui/search/Search';
 import { getAllMetaTags } from '@/utils/getAllMetaTags';
 import { getAnalyticsConfig } from '@/utils/getAnalyticsConfig';
+import { getOGImageEndpoint } from '@/utils/getOGImageEndpoint';
 
 // First Layout used by every page inside [[..slug]]
 export default function SupremePageLayout({
@@ -35,11 +37,12 @@ export default function SupremePageLayout({
 }: PageProps) {
   const { mintConfig, navWithMetadata, pageMetadata, openApiFiles } = pageData;
 
-  useProgressBar(mintConfig?.colors?.primary);
+  const colors = useColors();
   const [navIsOpen, setNavIsOpen] = useState(false);
   const [origin, setOrigin] = useState('');
   const analyticsConfig = getAnalyticsConfig(mintConfig);
   const analyticsMediator = useAnalytics(analyticsConfig, subdomain, internalAnalyticsWriteKey);
+  useProgressBar(colors.primary);
 
   useEffect(() => {
     if (!navIsOpen) return;
@@ -56,7 +59,11 @@ export default function SupremePageLayout({
     setOrigin(window.location.origin);
   }, []);
 
-  const metaTagsDict = getAllMetaTags(pageMetadata, mintConfig);
+  const metaTagsDict = getAllMetaTags(
+    pageMetadata,
+    mintConfig,
+    getOGImageEndpoint(origin, pageMetadata, mintConfig, colors)
+  );
   const currentUrl = origin + useCurrentPath();
 
   return (
@@ -81,7 +88,7 @@ export default function SupremePageLayout({
               <meta name="apple-mobile-web-app-title" content={mintConfig.name} />
               <meta name="application-name" content={mintConfig.name} />
               <meta name="theme-color" content="#ffffff" />
-              <meta name="msapplication-TileColor" content={mintConfig.colors?.primary} />
+              <meta name="msapplication-TileColor" content={colors.primary} />
               <meta name="theme-color" content="#ffffff" />
               {Object.entries(metaTagsDict).map(([key, value]) => (
                 <meta key={key} name={key} content={value} />
