@@ -74,7 +74,7 @@
         "writing-content/code",
         "writing-content/embed",
         "writing-content/table",
-        "writing-content/custom-snippets"
+        "writing-content/reusable-snippets"
       ]
     },
     {
@@ -134,7 +134,13 @@
     },
     {
       "group": "Context Components",
-      "pages": ["components/callouts", "components/frame", "components/tooltip"]
+      "pages": [
+        "components/callouts",
+        "components/code",
+        "components/code-group",
+        "components/frame",
+        "components/tooltip"
+      ]
     },
     {
       "group": "API Components",

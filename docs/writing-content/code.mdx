@@ -1,5 +1,5 @@
 ---
-title: "Code Blocks"
+title: "Code"
 description: "Display inline code and code blocks"
 ---
 
@@ -15,9 +15,7 @@ To denote a `word` or `phrase` as code, enclose it in backticks (`).
 
 ### Code Block
 
-Use [fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) by enclosing code by three backticks and follow the leading ticks with the programming language of your snippet to get syntax highlighting.
-
-Optionally follow the programming language with the name of the tab.
+Use [fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) by enclosing code in three backticks and follow the leading ticks with the programming language of your snippet to get syntax highlighting. Optionally, you can also write the name of your code after the programming language.
 
 ```java HelloWorld.java
 class HelloWorld {
@@ -37,90 +35,4 @@ class HelloWorld {
 ```
 ````
 
-### Syntax Highlighting
-
-````md Add Syntax Highlighting by Writing the Language
-```your-programming-language-goes-here
-
-```
-````
-
-We use [Prism](https://prismjs.com/#supported-languages) for syntax highlighting. [Test Drive Prism](https://prismjs.com/test.html#language=markup) lists all the languages supported.
-
-Code snippets without a language will use one color for everything.
-
-## Advanced
-
-### Code group
-
-The `CodeGroup` component lets you create [code blocks](#code-block) in a display separated by tabs.
-
-<Frame>
-
-<CodeGroup>
-
-```javascript helloWorld.js
-console.log("Hello World");
-```
-
-```python hello_world.py
-print('Hello World!')
-```
-
-```java HelloWorld.java
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
-
-</CodeGroup>
-
-</Frame>
-
-````md
-<CodeGroup>
-
-```javascript helloWorld.js
-console.log("Hello World");
-```
-
-```python hello_world.py
-print('Hello World!')
-```
-
-```java HelloWorld.java
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
-
-</CodeGroup>
-````
-
-### Importing from another file
-
-If you want to show the same code snippet in multiple pages you can create it in a separate file and import it where you need it. Importing works for all MDX files, not just code blocks.
-
-For example, you could make `code-snippet.mdx` with the following content:
-
-````md code-snippet.mdx
-```java HelloWorld.java
-class HelloWorld { }
-```
-````
-
-To import and use the snippet, you would write:
-
-```md other-file.mdx
-import CodeSnippet from "../../snippets/code-snippet.mdx";
-
-Here is my code snippet:
-
-<CodeSnippet />
-```
-
-Where `../../snippets/code-snippet.mdx` is the path to your code snippet.
+Visit the [Code Block page](/components/code) for more detailed docs.
