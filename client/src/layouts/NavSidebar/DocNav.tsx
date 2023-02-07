@@ -12,6 +12,7 @@ import { isPathInGroupPages } from '@/utils/nav';
 import { getMethodDotsColor } from '@/utils/openApiColors';
 import { isPathInGroup } from '@/utils/paths/isPathInGroup';
 import { isEqualIgnoringLeadingSlash } from '@/utils/paths/leadingSlashHelpers';
+import { slugToTitle } from '@/utils/titleText/slugToTitle';
 
 const getPaddingByLevel = (level: number) => {
   // level 0 -> 1rem
@@ -42,7 +43,7 @@ const NavItem = forwardRef(function NavItemWithRef(
 
   const isActive = isEqualIgnoringLeadingSlash(href, currentPath);
   const endpointStr = pageApi || openapi;
-  const title = getTitle(groupPage);
+  const title = groupPage.sidebarTitle || groupPage.title || slugToTitle(href || '');
 
   return (
     <li ref={ref}>
