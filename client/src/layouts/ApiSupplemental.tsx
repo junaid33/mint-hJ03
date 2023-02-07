@@ -9,18 +9,17 @@ import { Param } from '@/utils/api';
 import { generateRequestExamples } from '@/utils/apiExampleGeneration/generateApiRequestExamples';
 import { getOpenApiOperationMethodAndEndpoint } from '@/utils/openApi/getOpenApiContext';
 
-const responseHasSimpleExample = (response: any): boolean => {
+const getSimpleExample = (response: any): string | void => {
   if (response?.content == null) {
-    return false;
+    return;
   }
 
-  return Boolean(
-    response.content &&
-      response.content.hasOwnProperty('application/json') &&
-      response.content['application/json']?.examples &&
-      response.content['application/json']?.examples.hasOwnProperty(['example-1']) &&
-      response.content['application/json']?.examples['example-1']?.value
-  );
+  const examples = response.content['application/json']?.examples;
+  if (!examples) {
+    return;
+  }
+
+  return examples['example-1']?.value || examples['Example1']?.value;
 };
 
 const recursivelyConstructExample = (schema: any, result = {}): any => {
@@ -127,8 +126,9 @@ export function OpenApiResponseExample({ openapi }: { openapi?: string }) {
     if (operation?.responses != null) {
       const responseExamplesOpenApi = Object.values(operation?.responses)
         .map((res: any) => {
-          if (responseHasSimpleExample(res)) {
-            return res?.content['application/json']?.examples['example-1']?.value;
+          const simpleExample = getSimpleExample(res);
+          if (simpleExample) {
+            return simpleExample;
           }
           return generatedNestedExample(res);
         })
