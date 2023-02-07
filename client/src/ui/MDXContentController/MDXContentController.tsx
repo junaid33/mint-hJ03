@@ -30,7 +30,10 @@ import { getSectionTitle } from '@/utils/paths/getSectionTitle';
 import { BlogContext } from '../Blog';
 import { createUserDefinedExamples } from './createUserDefinedExamples';
 
-type ContentsContextType = { unregisterHeading: (id: string) => void; registerHeading: (id: string, top: string) => void }
+type ContentsContextType = {
+  unregisterHeading: (id: string) => void;
+  registerHeading: (id: string, top: string) => void;
+};
 
 export const ContentsContext = createContext<ContentsContextType | undefined>(undefined);
 
