@@ -18,6 +18,7 @@ export function CodeGroup({
   return (
     <GenericCodeGroup
       selectedColor={colors.primaryLight}
+      tooltipColor={colors.primaryDark}
       copiedTooltipColor={colors.primaryDark}
       isSmallText={isSmallText}
     >
