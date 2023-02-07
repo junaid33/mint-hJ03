@@ -1,6 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
-import { createContext, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 import { DynamicLink } from '@/components/DynamicLink';
 import { Heading } from '@/components/Heading';
@@ -9,10 +9,14 @@ import { Component } from '@/enums/components';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { usePrevNext } from '@/hooks/usePrevNext';
 import { useTableOfContents } from '@/hooks/useTableOfContents';
+import { GeneratedRequestExamples, OpenApiResponseExample } from '@/layouts/ApiSupplemental';
 import { ContentSideLayout } from '@/layouts/ContentSideLayout';
+import { getAllOpenApiParameters, OpenApiParameters } from '@/layouts/OpenApiParameters';
+import { ApiComponent as ApiComponentType } from '@/types/apiComponent';
 import { Config } from '@/types/config';
 import { PageMetaTags } from '@/types/metadata';
 import { OpenApiFile } from '@/types/openApi';
+import { TableOfContentsSection } from '@/types/tableOfContentsSection';
 import { ApiComponent, ApiPlayground } from '@/ui/ApiPlayground';
 import { Footer } from '@/ui/MDXContentController/Footer';
 import { BlogHeader, PageHeader } from '@/ui/MDXContentController/PageHeader';
@@ -23,18 +27,18 @@ import { getParameterType } from '@/utils/openApi/getParameterType';
 import { createExpandable, createParamField, getProperties } from '@/utils/openapi';
 import { getSectionTitle } from '@/utils/paths/getSectionTitle';
 
-import { GeneratedRequestExamples, OpenApiResponseExample } from '../../layouts/ApiSupplemental';
-import { getAllOpenApiParameters, OpenApiParameters } from '../../layouts/OpenApiParameters';
 import { BlogContext } from '../Blog';
 import { createUserDefinedExamples } from './createUserDefinedExamples';
 
-export const ContentsContext = createContext(undefined);
+type ContentsContextType = { unregisterHeading: (id: string) => void; registerHeading: (id: string, top: string) => void }
+
+export const ContentsContext = createContext<ContentsContextType | undefined>(undefined);
 
 type MDXContentControllerProps = {
-  children: any;
+  children: ReactNode;
   pageMetadata: PageMetaTags;
-  tableOfContents: any;
-  apiComponents: any;
+  tableOfContents: TableOfContentsSection[];
+  apiComponents: ApiComponentType[];
 };
 
 export function MDXContentController({
@@ -133,7 +137,7 @@ export function MDXContentController({
 
         {/* The MDXProvider here renders the MDX for the page */}
         <div className="relative prose prose-slate mt-8 dark:prose-dark">
-          <ContentsContext.Provider value={{ registerHeading, unregisterHeading } as any}>
+          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
             <MDXProvider components={{ a: DynamicLink, Heading }}>{children}</MDXProvider>
           </ContentsContext.Provider>
           {pageMetadata.openapi && <OpenApiParameters endpointStr={pageMetadata.openapi} />}
@@ -194,7 +198,7 @@ function getOpenApiPlaygroundProps(
 
   // Get the api string with the correct baseUrl
   // endpoint in OpenAPI refers to the path
-  const openApiServers = openApiFiles?.reduce((acc: any, file: OpenApiFile) => {
+  const openApiServers = openApiFiles?.reduce((acc, file) => {
     return acc.concat(file.spec?.servers);
   }, []);
   const configBaseUrl =

@@ -9,11 +9,12 @@ import { useContext } from 'react';
 import { useEffect, useState } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
+import { zIndex } from '@/layouts/zIndex';
+import { TopbarCta } from '@/types/config';
 import { Logo } from '@/ui/Logo';
 import { SearchButton } from '@/ui/search/Search';
 import getLogoHref from '@/utils/getLogoHref';
 
-import { TopbarCta } from '../types/config';
 import Icon from './Icon';
 import { ThemeToggle } from './ThemeToggle';
 import { VersionSelect } from './VersionSelect';
@@ -59,7 +60,7 @@ export function NavPopover({
       </button>
       <Dialog
         as="div"
-        className={clsx('fixed z-30 inset-0', display)}
+        className={clsx(zIndex.Navbar, 'fixed inset-0', display)}
         open={isOpen}
         onClose={setIsOpen}
       >
@@ -181,8 +182,8 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
           target="_blank"
           className="group px-4 py-1.5 relative inline-flex items-center rounded-full shadow-sm text-sm font-medium"
         >
-          <span className="absolute z-0 inset-0 bg-primary-dark rounded-full group-hover:opacity-[0.9]"></span>
-          <span className="z-10 mr-2 text-white">{button.name}</span>
+          <span className="absolute inset-0 bg-primary-dark rounded-full group-hover:opacity-[0.9]" />
+          <span className={clsx(zIndex.Control, 'mr-2 text-white')}>{button.name}</span>
           <svg
             width="6"
             height="3"
@@ -276,7 +277,12 @@ export function Header({
 
   return (
     <>
-      <div className="sticky top-0 w-full backdrop-blur flex-none z-30 lg:border-b lg:border-slate-900/5 dark:border-slate-50/[0.06]">
+      <div
+        className={clsx(
+          zIndex.Navbar,
+          'sticky top-0 w-full backdrop-blur flex-none lg:border-b lg:border-slate-900/5 dark:border-slate-50/[0.06]'
+        )}
+      >
         <div
           className={clsx(
             'absolute top-0 right-0 left-0 bottom-0 bg-background-light dark:bg-background-dark',

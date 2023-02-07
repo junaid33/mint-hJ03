@@ -1,4 +1,7 @@
+import clsx from 'clsx';
 import Image from 'next/image';
+
+import { zIndex } from '@/layouts/zIndex';
 
 export function AuthorProfile({ image, name }: { image: string; name: string }) {
   return (
@@ -21,7 +24,7 @@ const SHARE_ICONS_CLASSNAMES =
 
 export function BlogContext() {
   return (
-    <div className="hidden xl:flex flex-col flex-none z-10 pl-10 w-[19rem]">
+    <div className={clsx(zIndex.Control, 'hidden xl:flex flex-col flex-none pl-10 w-[19rem]')}>
       <div className="fixed w-[16.5rem] space-y-6">
         <div>
           <span className="text-sm font-medium text-slate-400 dark:text-slate-500">Share</span>

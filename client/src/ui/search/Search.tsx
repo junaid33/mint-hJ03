@@ -17,6 +17,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContext } from '@/context/VersionContext';
 import { useActionKey } from '@/hooks/useActionKey';
+import { zIndex } from '@/layouts/zIndex';
 import { pathToBreadcrumbs } from '@/utils/paths/pathToBreadcrumbs';
 import { pathToVersionDict } from '@/utils/paths/pathToVersionDict';
 
@@ -331,7 +332,7 @@ export function SearchProvider({
           }}
           appear
         >
-          <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
+          <Dialog as="div" className={clsx(zIndex.Popup, 'relative')} onClose={setIsOpen}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

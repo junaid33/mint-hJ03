@@ -122,7 +122,7 @@ export default function SupremePageLayout({
               <div className="relative antialiased text-slate-500 dark:text-slate-400">
                 <span className="fixed inset-0 bg-background-light dark:bg-background-dark" />
                 <span
-                  className="z-0 fixed inset-0"
+                  className="fixed inset-0"
                   {...(mintConfig.backgroundImage && {
                     style: {
                       backgroundImage: `url('${mintConfig.backgroundImage}')`,
