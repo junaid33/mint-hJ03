@@ -115,6 +115,7 @@
         {
           "group": "Command Line Changelog",
           "pages": [
+            "changelog/command-line/2.1.0",
             "changelog/command-line/2.0.17",
             "changelog/command-line/2.0.16",
             "changelog/command-line/2.0.15"
