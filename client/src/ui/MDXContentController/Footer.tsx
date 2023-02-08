@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useContext } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
-import { getTitle } from '@/utils/getAllMetaTags';
+import { getSidebarTitle } from '@/utils/getAllMetaTags';
 
 import Icon from '../Icon';
 
@@ -74,7 +74,7 @@ export function Footer({ previous, next, hasBottomPadding = true }: FooterProps)
                   strokeLinejoin="round"
                 />
               </svg>
-              {getTitle(previous)}
+              {getSidebarTitle(previous)}
             </Link>
           )}
           {next && (
@@ -82,7 +82,7 @@ export function Footer({ previous, next, hasBottomPadding = true }: FooterProps)
               href={next.href}
               className="group ml-auto flex items-center hover:text-slate-900 dark:hover:text-white"
             >
-              {getTitle(next)}
+              {getSidebarTitle(next)}
               <svg
                 viewBox="0 0 3 6"
                 className="ml-3 w-auto h-1.5 text-slate-400 overflow-visible group-hover:text-slate-600 dark:group-hover:text-slate-300"

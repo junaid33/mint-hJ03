@@ -56,6 +56,10 @@ export function getTitle(pageMeta: PageMetaTags): string {
   return pageMeta.title || pageMeta.sidebarTitle || slugToTitle(pageMeta.href || '');
 }
 
+export function getSidebarTitle(pageMeta: PageMetaTags): string {
+  return pageMeta.sidebarTitle || pageMeta.title || slugToTitle(pageMeta.href || '');
+}
+
 function defaultTitle(pageMeta: PageMetaTags, siteName: string) {
   const title = getTitle(pageMeta);
   if (title && siteName) {
