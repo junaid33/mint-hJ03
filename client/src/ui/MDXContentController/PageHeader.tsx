@@ -1,7 +1,5 @@
 import date from 'date-and-time';
-import { useContext } from 'react';
 
-import { ConfigContext } from '@/context/ConfigContext';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { PageMetaTags } from '@/types/metadata';
 import { UserFeedback } from '@/ui/Feedback/Feedback';
@@ -51,7 +49,6 @@ type PageHeaderProps = {
 };
 
 export function PageHeader({ section, pageMetadata }: PageHeaderProps) {
-  const { subdomain } = useContext(ConfigContext);
   const currentPath = useCurrentPath();
   const title = pageMetadata.title || slugToTitle(currentPath);
   const { description } = pageMetadata;

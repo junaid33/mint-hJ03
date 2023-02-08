@@ -14,7 +14,6 @@ import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContextController } from '@/context/VersionContext';
-import { useColors } from '@/hooks/useColors';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import useProgressBar from '@/hooks/useProgressBar';
 import Intercom from '@/integrations/Intercom';

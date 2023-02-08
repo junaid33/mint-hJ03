@@ -1,7 +1,7 @@
 import { Card as GenericCard, CardProps } from '@mintlify/components';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { forwardRef, ReactNode, Ref } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import React from 'react';
 
 import { ComponentIcon, getIconType } from '@/ui/Icon';
