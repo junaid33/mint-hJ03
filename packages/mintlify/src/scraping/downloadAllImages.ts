@@ -12,8 +12,7 @@ export default async function downloadAllImages(
   origin: string,
   baseDir: string,
   overwrite: boolean,
-  modifyFileName?: any,
-  skipValidateImageExtension?: boolean
+  modifyFileName?: any
 ) {
   if (!baseDir) {
     console.debug("Skipping image downloading");
@@ -34,7 +33,7 @@ export default async function downloadAllImages(
   // Wait to all images to download before continuing
   const origToNewArray = await Promise.all(
     imageSrcs.map(async (imageSrc: string) => {
-      if (!isValidImageSrc(imageSrc, skipValidateImageExtension)) {
+      if (!imageSrc || !isValidImageSrc(imageSrc)) {
         return;
       }
 

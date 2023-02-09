@@ -3,14 +3,21 @@ import { promises as _promises } from "fs";
 
 const { readdir, stat } = _promises;
 
-export const getFileExtension = (filename) => {
+export const getFileExtension = (filename: string) => {
   return (
     filename.substring(filename.lastIndexOf(".") + 1, filename.length) ||
     filename
   );
 };
 
-export const openApiCheck = async (path) => {
+export type OpenApiCheckResult = {
+  spec: any;
+  isOpenApi: boolean;
+};
+
+export const openApiCheck = async (
+  path: string
+): Promise<OpenApiCheckResult> => {
   let spec;
   let isOpenApi = false;
   try {
@@ -22,7 +29,7 @@ export const openApiCheck = async (path) => {
   return { spec, isOpenApi };
 };
 
-export const filterOutNullInGroup = (group) => {
+export const filterOutNullInGroup = (group: MintNavigation) => {
   const newPages = filterOutNullInPages(group.pages);
   const newGroup = {
     ...group,
@@ -31,17 +38,15 @@ export const filterOutNullInGroup = (group) => {
   return newGroup;
 };
 
-const filterOutNullInPages = (pages) => {
-  if (!Array.isArray(pages)) {
-    return [];
-  }
-  const newPages = [];
+const filterOutNullInPages = (pages: (MintNavigationEntry | null)[]) => {
+  const newPages: MintNavigationEntry[] = [];
   pages.forEach((page) => {
     if (page == null) {
       return;
     }
     if (page.hasOwnProperty("pages")) {
-      const newGroup = filterOutNullInGroup(page);
+      const group = page as MintNavigation;
+      const newGroup = filterOutNullInGroup(group);
       newPages.push(newGroup);
     } else {
       newPages.push(page);
@@ -52,7 +57,7 @@ const filterOutNullInPages = (pages) => {
 };
 
 export const getFileList = async (dirName: string, og = dirName) => {
-  let files = [];
+  let files: string[] = [];
   const items = await readdir(dirName, { withFileTypes: true });
 
   for (const item of items) {
@@ -76,3 +81,7 @@ export const isFileSizeValid = async (
   const stats = await stat(path);
   return stats.size <= maxFileSizeBytes;
 };
+
+export function isError(obj: unknown) {
+  return Object.prototype.toString.call(obj) === "[object Error]";
+}

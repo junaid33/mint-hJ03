@@ -20,6 +20,7 @@ import { buildLogger, ensureYarn } from "../util.js";
 import listener from "./listener/index.js";
 import { ArgumentsCamelCase } from "yargs";
 import { getConfigPath } from "./listener/utils/mintConfigFile.js";
+import type { Ora as OraType } from "ora";
 
 const nodeModulesExists = async () => {
   return pathExists(path.join(DOT_MINTLIFY, "mint", "client", "node_modules"));
@@ -47,7 +48,7 @@ const promptForYarn = async () => {
   }
 };
 
-const downloadTargetMint = async (logger) => {
+const downloadTargetMint = async (logger: OraType) => {
   fse.emptyDirSync(MINT_PATH);
 
   logger.text = "Downloading Mintlify framework...";
@@ -89,7 +90,7 @@ const downloadTargetMint = async (logger) => {
   shell.exec("yarn", { silent: true });
 };
 
-const checkForMintJson = async (logger) => {
+const checkForMintJson = async (logger: OraType) => {
   const configPath = await getConfigPath(CMD_EXEC_PATH);
   if (configPath == null) {
     logger.fail("Must be ran in a directory where a mint.json file exists.");

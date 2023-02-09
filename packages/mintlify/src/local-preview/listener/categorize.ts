@@ -5,13 +5,15 @@ import { getFileExtension, openApiCheck, getFileList } from "./utils.js";
 import { PotentialFileCategory } from "./utils/types.js";
 
 export const categorizeFiles = async (contentDirectoryPath: string) => {
-  const allFilesInCmdExecutionPath = await getFileList(contentDirectoryPath);
-  const contentFilenames = [];
-  const staticFilenames = [];
-  const promises = [];
-  const openApiFiles = [];
-  const snippets = [];
-  allFilesInCmdExecutionPath.forEach((filename) => {
+  const allFilesInCmdExecutionPath: string[] = await getFileList(
+    contentDirectoryPath
+  );
+  const contentFilenames: string[] = [];
+  const staticFilenames: string[] = [];
+  const promises: Promise<void>[] = [];
+  const openApiFiles: OpenApiFile[] = [];
+  const snippets: string[] = [];
+  allFilesInCmdExecutionPath.forEach((filename: string) => {
     promises.push(
       (async () => {
         const extension = getFileExtension(filename);

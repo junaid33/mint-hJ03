@@ -3,64 +3,68 @@ import { promises as _promises } from "fs";
 import { outputFile } from "fs-extra";
 import path from "path";
 import createPage from "./utils/createPage.js";
-import { OpenApiFile } from "./utils/types.js";
 import { categorizeFiles } from "./categorize.js";
 import { CMD_EXEC_PATH } from "../../constants.js";
 import { getConfigObj } from "./utils/mintConfigFile.js";
+
 const { readFile } = _promises;
 
-// TODO: Put in prebuild package
-const generateNavFromPages = (pages, mintConfigNav) => {
-  const createNav = (nav) => {
+type DecoratedMintNavigation = DecoratedMintNavigationEntry[];
+
+type DecoratedMintNavigationEntry = {
+  group: string;
+  version?: string;
+  pages: DecoratedMintNavigationEntryChild[];
+};
+
+type DecoratedMintNavigationEntryChild =
+  | DecoratedMintNavigationEntry
+  | PageMetadata;
+
+type PageMetadata = Record<PageMetadataKeys, string>;
+
+const pageMetadataKeys = [
+  "title",
+  "description",
+  "sidebarTitle",
+  "href",
+  "api",
+  "openapi",
+  "contentType",
+  "auth",
+  "version",
+  "mode",
+  "hideFooterPagination",
+  "authors",
+  "lastUpdatedDate",
+  "createdDate",
+  "size",
+] as const;
+
+type PageMetadataKeys = typeof pageMetadataKeys[number];
+
+const generateDecoratedMintNavigationFromPages = (
+  filenamePageMetadataMap: Record<string, PageMetadata>,
+  mintConfigNav: MintNavigation[]
+): DecoratedMintNavigation => {
+  const filenames = Object.keys(filenamePageMetadataMap);
+  const createNav = (nav: MintNavigation): DecoratedMintNavigationEntry => {
     return {
       group: nav.group,
-      version: nav.version,
-      pages: nav.pages.map((page) => {
-        if (typeof page === "string") {
-          return pages[page];
+      version: nav?.version,
+      pages: nav.pages.map((page: MintNavigationEntry) => {
+        if (typeof page === "string" && filenames.includes(page)) {
+          return filenamePageMetadataMap[page];
         }
-        return createNav(page);
+        return createNav(page as MintNavigation);
       }),
     };
   };
 
-  if (mintConfigNav == null) {
-    return;
-  }
-
-  let navFile = mintConfigNav.map((nav) => createNav(nav));
-  const filterOutNullInPages = (pages) => {
-    const newPages = [];
-    pages.forEach((page) => {
-      if (page == null) {
-        return;
-      }
-      if (page?.pages) {
-        const newGroup = filterOutNullInGroup(page);
-        newPages.push(newGroup);
-      } else {
-        newPages.push(page);
-      }
-    });
-
-    return newPages;
-  };
-  const filterOutNullInGroup = (group) => {
-    const newPages = filterOutNullInPages(group.pages);
-    const newGroup = {
-      ...group,
-      pages: newPages,
-    };
-    return newGroup;
-  };
-  const newNavFile = navFile.map((group) => {
-    return filterOutNullInGroup(group);
-  });
-  return newNavFile;
+  return mintConfigNav.map((nav) => createNav(nav));
 };
 
-// TODO: Put in prebuild package
-const createPagesAcc = async (
+const createFilenamePageMetadataMap = async (
   contentDirectoryPath: string,
   contentFilenames: string[],
   openApiFiles: OpenApiFile[],
@@ -68,7 +72,7 @@ const createPagesAcc = async (
   writeFiles = false
 ) => {
   let pagesAcc = {};
-  const contentPromises = [];
+  const contentPromises: Promise<void>[] = [];
   contentFilenames.forEach((filename) => {
     contentPromises.push(
       (async () => {
@@ -102,9 +106,16 @@ export const generateNav = async () => {
   const { contentFilenames, openApiFiles } = await categorizeFiles(
     CMD_EXEC_PATH
   );
-  const [pageAcc, configObj] = await Promise.all([
-    createPagesAcc(CMD_EXEC_PATH, contentFilenames, openApiFiles),
+  const [filenamePageMetadataMap, configObj] = await Promise.all([
+    createFilenamePageMetadataMap(
+      CMD_EXEC_PATH,
+      contentFilenames,
+      openApiFiles
+    ),
     getConfigObj(CMD_EXEC_PATH),
   ]);
-  return generateNavFromPages(pageAcc, configObj?.navigation);
+  return generateDecoratedMintNavigationFromPages(
+    filenamePageMetadataMap,
+    configObj?.navigation
+  );
 };

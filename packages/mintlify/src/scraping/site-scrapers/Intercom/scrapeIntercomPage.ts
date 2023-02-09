@@ -26,8 +26,7 @@ export async function scrapeIntercomPage(
     origin,
     imageBaseDir,
     overwrite,
-    undefined,
-    true
+    undefined
   );
 
   const nhm = new NodeHtmlMarkdown({ useInlineLinks: false });
@@ -44,8 +43,9 @@ export async function scrapeIntercomPage(
 
   // Mintlify doesn't support bolded headers, remove the asterisks
   markdown = markdown.replace(/(\n#+) \*\*(.*)\*\*\n/g, "$1 $2\n");
-
-  markdown = replaceImagePaths(origToWritePath, cliDir, markdown);
+  if (origToWritePath) {
+    markdown = replaceImagePaths(origToWritePath, cliDir, markdown);
+  }
 
   return { title, description, markdown };
 }

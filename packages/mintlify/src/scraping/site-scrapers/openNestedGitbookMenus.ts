@@ -13,7 +13,9 @@ export default async function openNestedGitbookMenus(page: Page) {
 
       icons.forEach(async (icon: HTMLElement) => {
         const toClick = icon?.parentElement?.parentElement;
-        toClick.click();
+        if (toClick) {
+          toClick.click();
+        }
       });
 
       return icons.length > 0;

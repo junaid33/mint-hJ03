@@ -6,6 +6,7 @@ type MintPage = {
 
 type MintNavigation = {
   group: string;
+  version?: string;
   pages: MintNavigationEntry[];
 };
 type MintNavigationEntry = string | MintNavigation;
@@ -27,3 +28,8 @@ type ScrapeSectionFn = (
   overwrite: boolean,
   version: string | undefined
 ) => Promise<MintNavigationEntry[]>;
+
+type OpenApiFile = {
+  filename: string;
+  spec: any;
+};

@@ -38,7 +38,8 @@ export async function scrapeReadMeSection(
       // -- Second Page -> /second-page
       const linkSections = section.find(".rm-Sidebar-list").first().children();
       const pages = getLinksRecursively(linkSections, $).filter(
-        (value: string, index: number, self) => self.indexOf(value) === index
+        (value: string, index: number, self: any) =>
+          self.indexOf(value) === index
       );
 
       // Follows the same structure as mint.json

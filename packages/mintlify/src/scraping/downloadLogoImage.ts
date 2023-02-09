@@ -8,13 +8,12 @@ import { getFileExtension } from "../util.js";
 
 // To Do: Use CheerioElement instead of any when we bump the cheerio version
 export default async function downloadLogoImage(
-  imageSrc: string,
+  imageSrc: string | undefined,
   imageBaseDir: string,
   origin: string,
-  overwrite: boolean,
-  skipValidateImageExtension?: boolean
+  overwrite: boolean
 ) {
-  if (!isValidImageSrc(imageSrc, skipValidateImageExtension)) return;
+  if (!imageSrc || !isValidImageSrc(imageSrc)) return;
 
   const imageHref = cleanImageSrc(imageSrc, origin);
 

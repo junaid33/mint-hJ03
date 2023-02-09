@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "fs";
-import Ora from "ora";
+import Ora, { Ora as OraType } from "ora";
 import path from "path";
 import shell from "shelljs";
 import stopIfInvalidLink from "./validation/stopIfInvalidLink.js";
@@ -126,7 +126,7 @@ export function getHrefFromArgs(argv: any) {
   return href;
 }
 
-export const buildLogger = (startText: string = "") => {
+export const buildLogger = (startText: string = ""): OraType => {
   const logger = Ora().start(startText);
   return logger;
 };
@@ -148,7 +148,7 @@ export const fileBelongsInPagesFolder = (filename: string) => {
   );
 };
 
-export const ensureYarn = (logger: any) => {
+export const ensureYarn = (logger: OraType) => {
   const yarnInstalled = shell.which("yarn");
   if (!yarnInstalled) {
     logger.fail(`yarn must be installed, run

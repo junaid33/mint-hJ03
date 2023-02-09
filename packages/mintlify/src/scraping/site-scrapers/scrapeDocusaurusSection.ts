@@ -11,7 +11,7 @@ export async function scrapeDocusaurusSection(
   cliDir: string,
   imageBaseDir: string,
   overwrite: boolean,
-  version: string
+  version?: string
 ): Promise<MintNavigation[]> {
   const $ = cheerio.load(html);
 

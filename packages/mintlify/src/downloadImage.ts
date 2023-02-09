@@ -42,27 +42,19 @@ async function writeImageToFile(
   }
 }
 
-export function isValidImageSrc(
-  src: string,
-  skipValidateImageExtension?: boolean
-) {
+export function isValidImageSrc(src: string) {
   if (!src) {
     return false;
   }
-
   // We do not support downloading base64 in-line images.
   if (src.startsWith("data:")) {
     return false;
   }
 
-  if (skipValidateImageExtension) {
-    return true;
-  }
-
   const imageHref = removeMetadataFromImageSrc(src);
   const ext = getFileExtension(imageHref);
 
-  if (!SUPPORTED_MEDIA_EXTENSIONS.includes(ext)) {
+  if (ext && !SUPPORTED_MEDIA_EXTENSIONS.includes(ext)) {
     console.error("🚨 We do not support the file extension: " + ext);
     return false;
   }

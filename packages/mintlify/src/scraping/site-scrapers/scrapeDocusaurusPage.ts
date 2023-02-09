@@ -10,7 +10,11 @@ export async function scrapeDocusaurusPage(
   imageBaseDir: string,
   overwrite: boolean,
   version: string | undefined // expects "2", or "3". Have not written support for "1" yet
-) {
+): Promise<{
+  title?: string;
+  description?: string;
+  markdown?: string;
+}> {
   const $ = cheerio.load(html);
 
   const article =
@@ -41,20 +45,20 @@ export async function scrapeDocusaurusPage(
   const markdownHtml = markdownContent.html();
 
   const nhm = new NodeHtmlMarkdown({ useInlineLinks: false });
-  let markdown = nhm.translate(markdownHtml);
+  let markdown = markdownHtml ? nhm.translate(markdownHtml) : null;
 
   if (markdown == null) {
     console.error(
       "We do not support scraping this page. Content will be empty"
     );
-    return { title, description: null, markdown: "" };
+    return { title, description: undefined, markdown: "" };
   }
 
   // Description only exists in meta tags. The code is commented out because its prone to incorrectly
   // including a description if the first line of text had markdown annotations like `.
   // The commented out alternative is to ignore description if it's the first line of text,
   // this means it was not set in the metadata and Docusaurus defaulted to the text.
-  const description = null;
+  const description = undefined;
   // let description = $('meta[property="og:description"]').attr("content");
   // if (markdown.startsWith(description)) {
   //   description = null;
@@ -74,8 +78,9 @@ export async function scrapeDocusaurusPage(
 
   // Mintlify doesn't support bolded headers, remove the asterisks
   markdown = markdown.replace(/(\n#+) \*\*(.*)\*\*\n/g, "$1 $2\n");
-
-  markdown = replaceImagePaths(origToWritePath, cliDir, markdown);
+  if (origToWritePath) {
+    markdown = replaceImagePaths(origToWritePath, cliDir, markdown);
+  }
 
   return { title, description, markdown };
 }

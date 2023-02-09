@@ -5,7 +5,7 @@ export default function getLinksRecursivelyGitBook(linkSections: any, $: any) {
   }
 
   return linkSections
-    .map((i, s) => {
+    .map((_, s) => {
       let subsection = $(s);
 
       // GitBook has an extra div when more than one layer deep

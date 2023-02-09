@@ -1,4 +1,3 @@
-// TODO: Put in the prebuild package
 import matter from "gray-matter";
 import isAbsoluteUrl from "is-absolute-url";
 import { remark } from "remark";
@@ -6,7 +5,6 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
 import { visit } from "unist-util-visit";
-import type { OpenApiFile } from "./types.js";
 
 const createPage = async (
   pagePath: string,
@@ -49,11 +47,14 @@ const createPage = async (
   };
 };
 
-const preParseMdx = async (fileContent, contentDirectoryPath) => {
-  const removeContentDirectoryPath = (filePath) => {
+const preParseMdx = async (
+  fileContent: string,
+  contentDirectoryPath: string
+) => {
+  const removeContentDirectoryPath = (filePath: string) => {
     const pathArr = createPathArr(filePath);
     const contentDirectoryPathArr = createPathArr(contentDirectoryPath);
-    contentDirectoryPathArr.reverse().forEach((dir, index) => {
+    contentDirectoryPathArr.reverse().forEach((dir: string, index: number) => {
       if (pathArr[index] === dir) {
         pathArr.pop();
       }
@@ -104,22 +105,21 @@ const preParseMdx = async (fileContent, contentDirectoryPath) => {
   return String(file);
 };
 
-const removeLeadingSlash = (str) => {
+const removeLeadingSlash = (str: string) => {
   const path = createPathArr(str);
   return path.join("/");
 };
 
-const createPathArr = (path) => {
+const createPathArr = (path: string) => {
   return path.split("/").filter((dir) => dir !== "");
 };
 
-const isDataString = (str) => str.startsWith("data:");
+const isDataString = (str: string) => str.startsWith("data:");
 
-const getOpenApiTitleAndDescription = (openApiFiles, openApiMetaField) => {
-  if (openApiFiles == null || !openApiMetaField || openApiMetaField == null) {
-    return {};
-  }
-
+const getOpenApiTitleAndDescription = (
+  openApiFiles: OpenApiFile[],
+  openApiMetaField: string
+) => {
   const { operation } = getOpenApiOperationMethodAndEndpoint(
     openApiFiles,
     openApiMetaField
@@ -136,8 +136,8 @@ const getOpenApiTitleAndDescription = (openApiFiles, openApiMetaField) => {
 };
 
 const getOpenApiOperationMethodAndEndpoint = (
-  openApiFiles,
-  openApiMetaField
+  openApiFiles: OpenApiFile[],
+  openApiMetaField: string
 ) => {
   const { endpoint, method, filename } =
     extractMethodAndEndpoint(openApiMetaField);
@@ -172,7 +172,7 @@ const getOpenApiOperationMethodAndEndpoint = (
   };
 };
 
-const extractMethodAndEndpoint = (openApiMetaField) => {
+const extractMethodAndEndpoint = (openApiMetaField: string) => {
   const methodRegex = /(get|post|put|delete|patch)\s/i;
   const trimmed = openApiMetaField.trim();
   const foundMethod = trimmed.match(methodRegex);
@@ -193,14 +193,14 @@ const extractMethodAndEndpoint = (openApiMetaField) => {
   };
 };
 
-function optionallyAddLeadingSlash(path) {
-  if (!path || path.startsWith("/")) {
+function optionallyAddLeadingSlash(path: string) {
+  if (path.startsWith("/")) {
     return path;
   }
   return "/" + path;
 }
 
-export const slugToTitle = (slug) => {
+export const slugToTitle = (slug: string) => {
   const slugArr = slug.split("/");
   let defaultTitle = slugArr[slugArr.length - 1].split("-").join(" "); //replace all dashes
   defaultTitle = defaultTitle.split("_").join(" "); //replace all underscores

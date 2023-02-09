@@ -25,7 +25,7 @@ export async function scrapeGitBookSection(
   // Get all the navigation sections
   // Some variants of the GitBook UI show the logo and search base in the side navigation bar,
   // but the navigation sections are always the last value.
-  const navigationSections = $(
+  const navigationSections: cheerio.Cheerio = $(
     'div[data-testid="page.desktopTableOfContents"] > nav > div:first-child'
   )
     .children()
@@ -48,7 +48,7 @@ export async function scrapeGitBookSection(
       const firstLink = section.children().eq(0);
       const firstHref = firstLink.attr("href");
 
-      const linkSections = section.children().eq(1).children();
+      const linkSections: cheerio.Cheerio = section.children().eq(1).children();
       const pages = getLinksRecursivelyGitBook(linkSections, $);
 
       return {

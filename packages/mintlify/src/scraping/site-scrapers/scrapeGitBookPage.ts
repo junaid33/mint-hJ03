@@ -39,7 +39,7 @@ export async function scrapeGitBookPage(
 
   const contentHtml = $.html(content);
 
-  const modifyFileName = (fileName) =>
+  const modifyFileName = (fileName: string) =>
     // Remove GitBook metadata from the start
     // The first four %2F split metadata fields. Remaining ones are part of the file name.
     fileName.split("%2F").slice(4).join("%2F");
@@ -67,8 +67,9 @@ export async function scrapeGitBookPage(
 
   // Mintlify doesn't support bolded headers, remove the asterisks
   markdown = markdown.replace(/(\n#+) \*\*(.*)\*\*\n/g, "$1 $2\n");
-
-  markdown = replaceImagePaths(origToWritePath, cliDir, markdown);
+  if (origToWritePath) {
+    markdown = replaceImagePaths(origToWritePath, cliDir, markdown);
+  }
 
   return { title, description, markdown };
 }

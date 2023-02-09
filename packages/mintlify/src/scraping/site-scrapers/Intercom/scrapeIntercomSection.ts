@@ -28,7 +28,8 @@ export async function scrapeIntercomSection(
       const sectionTitle = $(".collection h1").first().text().trim();
       const sectionPages = $(".section .g__space a")
         .toArray()
-        .map((s: cheerio.Element) => $(s).attr("href"));
+        .map((s: cheerio.Element) => $(s).attr("href"))
+        .filter((page) => page !== undefined) as string[];
       return {
         group: sectionTitle,
         pages: sectionPages,

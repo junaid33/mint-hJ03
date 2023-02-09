@@ -1,5 +1,3 @@
-export type OpenApiFile = { name: string; spec: any };
-
 export type PotentialFileCategory =
   | "page"
   | "snippet"
