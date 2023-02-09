@@ -14,11 +14,11 @@ import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContextController } from '@/context/VersionContext';
-import { useCurrentPath } from '@/hooks/useCurrentPath';
 import useProgressBar from '@/hooks/useProgressBar';
 import Intercom from '@/integrations/Intercom';
 import { DocumentationLayout } from '@/layouts/DocumentationLayout';
 import { PageProps } from '@/types/page';
+import { CanonicalTags } from '@/ui/CanonicalTags';
 import { ColorVariables } from '@/ui/ColorVariables';
 import { SearchProvider } from '@/ui/search/Search';
 import { getAllMetaTags } from '@/utils/getAllMetaTags';
@@ -36,9 +36,10 @@ export default function SupremePageLayout({
   const { mintConfig, navWithMetadata, pageMetadata, openApiFiles } = pageData;
 
   const [navIsOpen, setNavIsOpen] = useState(false);
-  const [origin, setOrigin] = useState('');
   const analyticsConfig = getAnalyticsConfig(mintConfig);
   const analyticsMediator = useAnalytics(analyticsConfig, subdomain, internalAnalyticsWriteKey);
+  const [origin, setOrigin] = useState('');
+
   useProgressBar(mintConfig?.colors?.primary);
 
   useEffect(() => {
@@ -61,7 +62,6 @@ export default function SupremePageLayout({
     mintConfig,
     getOGImageEndpoint(origin, pageMetadata, mintConfig)
   );
-  const currentUrl = origin + useCurrentPath();
 
   return (
     <Intercom appId={mintConfig.integrations?.intercom} autoBoot>
@@ -91,9 +91,8 @@ export default function SupremePageLayout({
                 <meta key={key} name={key} content={value} />
               ))}
               <title>{metaTagsDict['og:title']}</title>
-              <meta key="og:url" name="og:url" content={currentUrl} />
-              <link rel="canonical" href={currentUrl} />
             </Head>
+            <CanonicalTags />
             <Script
               id="dark-mode-toggle"
               strategy="beforeInteractive"
