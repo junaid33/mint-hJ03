@@ -1,0 +1,7 @@
+addReviewers: true
+reviewers:
+  - hahnbeelee
+  - tobias-mintlify
+  # You can add more reviewers
+numberOfReviewers: 0
+runOnDraft: true
