@@ -1,8 +1,10 @@
 import clsx from 'clsx';
 
+import { IconType } from '@/types/config';
+
 type IconProps = {
   icon: string;
-  iconType?: 'brands' | 'duotone' | 'light' | 'regular' | 'sharp-solid' | 'solid' | 'thin';
+  iconType?: IconType;
   className?: string;
   color?: string;
   overrideColor?: boolean;

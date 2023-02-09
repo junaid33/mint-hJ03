@@ -26,10 +26,20 @@ type NavbarLink = {
 
 export type TopbarCta = NavbarLink;
 
+export type IconType =
+  | 'brands'
+  | 'duotone'
+  | 'light'
+  | 'regular'
+  | 'sharp-solid'
+  | 'solid'
+  | 'thin';
+
 export type Anchor = {
   name: string;
   url: string;
   icon?: string;
+  iconType?: IconType;
   color?: string | Gradient;
   isDefaultHidden?: boolean;
   version?: string;

@@ -39,5 +39,6 @@ export const anchorsSchema = z
         invalid_type_error: "Version must be a string in the versions array.",
       })
       .optional(),
+      iconType: z.enum(["brands", "duotone" , "light" , "sharp-solid" , "solid" , "thin"], { invalid_type_error: "anchor iconType must be one of brands, duotone, light, sharp-solid, solid, thin"}).optional(),
   })
   .array();

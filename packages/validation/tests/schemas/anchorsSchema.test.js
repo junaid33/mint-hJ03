@@ -41,4 +41,11 @@ describe("anchorsSchema", () => {
     ]);
     expect(data.success).toEqual(true);
   });
+
+  test("returns an error if iconType is invalid", () => {
+    const data = anchorsSchema.safeParse([
+      { name: "a1", url: "someRandomUrl", iconType: "invalid" },
+    ]);
+    expect(data.success).toEqual(false);
+  });
 });
