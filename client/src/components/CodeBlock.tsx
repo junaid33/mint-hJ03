@@ -10,7 +10,6 @@ export function CodeBlock({ filename, children }: { filename?: string; children?
       filename={filename}
       filenameColor={colors.primaryLight}
       tooltipColor={colors.primaryDark}
-      copiedTooltipColor={colors.primaryDark}
     >
       {children}
     </GenericCodeBlock>
