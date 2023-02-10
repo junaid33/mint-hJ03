@@ -46,6 +46,9 @@ describe("anchorsSchema", () => {
     const data = anchorsSchema.safeParse([
       { name: "a1", url: "someRandomUrl", iconType: "invalid" },
     ]);
+    expect(data.error.errors[0].message).toEqual(
+      "anchor iconType must be one of the following strings: brands, duotone, light, sharp-solid, solid, thin"
+    );
     expect(data.success).toEqual(false);
   });
 });

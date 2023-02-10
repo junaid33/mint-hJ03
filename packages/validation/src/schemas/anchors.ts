@@ -27,6 +27,16 @@ export const anchorsSchema = z
         'icon does not need to start with "fa-". Please delete "fa-" and keep the rest of the icon name.'
       )
       .optional(),
+    iconType: z
+      .enum(["brands", "duotone", "light", "sharp-solid", "solid", "thin"], {
+        errorMap: () => {
+          return {
+            message:
+              "anchor iconType must be one of the following strings: brands, duotone, light, sharp-solid, solid, thin",
+          };
+        },
+      })
+      .optional(),
     color: anchorColorSchema.optional(),
     isDefaultHidden: z
       .boolean({
@@ -39,6 +49,5 @@ export const anchorsSchema = z
         invalid_type_error: "Version must be a string in the versions array.",
       })
       .optional(),
-      iconType: z.enum(["brands", "duotone" , "light" , "sharp-solid" , "solid" , "thin"], { invalid_type_error: "anchor iconType must be one of brands, duotone, light, sharp-solid, solid, thin"}).optional(),
   })
   .array();
