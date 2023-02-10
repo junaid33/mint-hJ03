@@ -60,10 +60,10 @@
   resolved "https://registry.npmjs.org/@jsdevtools/ono/-/ono-7.1.3.tgz"
   integrity sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==
 
-"@mintlify/validation@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.5.tgz#7b8c9f7a15919e9ddbcb0ce6177ce49259646763"
-  integrity sha512-eXt/SVpoqrOb54HgsI4KVYlctJAAMtfU3iw0OvQBoO5EZiTXb9fsesFEPoWRgextpdEZua1Kw6tCUcgzuaBylg==
+"@mintlify/validation@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.8.tgz#3b1a86c0520b4570500aa8ec5bc48e276036479e"
+  integrity sha512-0rX8wCkAxwVX/4XNSHda2n+DYeXdwh7BH8doq704qYaS6LayC6OzPcsNpSIo3P1Aha7+nVVad7B6EnU24rf8nA==
   dependencies:
     zod "^3.19.1"
     zod-to-json-schema "^3.20.2"
@@ -2906,14 +2906,14 @@ yauzl@^2.10.0:
     fd-slicer "~1.1.0"
 
 zod-to-json-schema@^3.20.2:
-  version "3.20.2"
-  resolved "https://registry.npmjs.org/zod-to-json-schema/-/zod-to-json-schema-3.20.2.tgz"
-  integrity sha512-qka3UAXmVXD8z5SHkRU89UyHp8JHJW7zc8RQCpt7QloJOn6uijwkjUm8o+M/cF1IysmKc5gxac/QeDikaQMdzQ==
+  version "3.20.3"
+  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.20.3.tgz#8c95d8c20f20455ffa0b4b526c29703f35f6d787"
+  integrity sha512-/Q3wnyxAfCt94ZcrGiXXoiAfRqasxl9CX64LZ9fj+4dKH68zulUtU0uk1WMxQPfAxQ0ZI70dKzcoW7hHj+DwSQ==
 
 zod@^3.19.1:
-  version "3.20.2"
-  resolved "https://registry.npmjs.org/zod/-/zod-3.20.2.tgz"
-  integrity sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==
+  version "3.20.6"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.20.6.tgz#2f2f08ff81291d47d99e86140fedb4e0db08361a"
+  integrity sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==
 
 zwitch@^2.0.0:
   version "2.0.4"

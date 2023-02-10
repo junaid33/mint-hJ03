@@ -20,7 +20,7 @@
   "type": "module",
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
-    "@mintlify/validation": "^0.1.5",
+    "@mintlify/validation": "^0.1.8",
     "@octokit/rest": "^19.0.5",
     "axios": "^1.2.2",
     "chalk": "^5.1.0",
