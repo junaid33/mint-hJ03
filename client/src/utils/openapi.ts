@@ -44,3 +44,37 @@ export const getProperties = (properties: any[]): any[] => {
     );
   });
 };
+
+export const getAllOpenApiParameters = (path: any, operation: any) => {
+  return (path.parameters || []).concat(operation.parameters || []);
+};
+
+export const getTypeName = (type: string[] | string) => {
+  return Array.isArray(type) ? type.join(' | ') : type;
+};
+
+export const combineAllOfIntoObject = (allOf: any[]) => {
+  let combinedProperties = {};
+  let combinedRequired: string[] = [];
+  let combinedExample = {};
+  allOf.forEach((item) => {
+    if (item.properties) {
+      combinedProperties = { ...combinedProperties, ...item.properties };
+    }
+    if (item.required) {
+      combinedRequired = [...combinedRequired, ...item.required];
+    }
+    if (item.example) {
+      combinedExample = { ...combinedExample, ...item.example };
+    }
+  });
+
+  const combinedObject = {
+    type: 'object',
+    properties: combinedProperties,
+    required: combinedRequired,
+    example: combinedExample,
+  };
+
+  return combinedObject;
+};

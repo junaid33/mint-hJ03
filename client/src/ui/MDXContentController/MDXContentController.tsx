@@ -11,7 +11,6 @@ import { usePrevNext } from '@/hooks/usePrevNext';
 import { useTableOfContents } from '@/hooks/useTableOfContents';
 import { GeneratedRequestExamples, OpenApiResponseExample } from '@/layouts/ApiSupplemental';
 import { ContentSideLayout } from '@/layouts/ContentSideLayout';
-import { getAllOpenApiParameters, OpenApiParameters } from '@/layouts/OpenApiParameters';
 import { ApiComponent as ApiComponentType } from '@/types/apiComponent';
 import { Config } from '@/types/config';
 import { PageMetaTags } from '@/types/metadata';
@@ -24,9 +23,15 @@ import { TableOfContents } from '@/ui/MDXContentController/TableOfContents';
 import { getParamGroupsFromApiComponents } from '@/utils/api';
 import { getOpenApiOperationMethodAndEndpoint } from '@/utils/openApi/getOpenApiContext';
 import { getParameterType } from '@/utils/openApi/getParameterType';
-import { createExpandable, createParamField, getProperties } from '@/utils/openapi';
+import {
+  createExpandable,
+  createParamField,
+  getAllOpenApiParameters,
+  getProperties,
+} from '@/utils/openapi';
 import { getSectionTitle } from '@/utils/paths/getSectionTitle';
 
+import { OpenApiParameters } from '../../layouts/OpenApiParameters';
 import { BlogContext } from '../Blog';
 import { createUserDefinedExamples } from './createUserDefinedExamples';
 
