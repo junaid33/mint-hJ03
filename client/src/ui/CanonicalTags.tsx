@@ -12,8 +12,6 @@ export const CanonicalTags = () => {
     setOrigin(window.location.origin);
   }, []);
 
-  // useCurrentPath needs to be nested inside ConfigContext so we can't calculate the
-  // canonical url in SupremePageLayout.
   const currentUrl = origin + router.basePath + useCurrentPath();
 
   return (
