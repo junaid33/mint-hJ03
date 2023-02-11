@@ -15,9 +15,6 @@ export function useCurrentPath() {
 
   const toRemove = router.basePath + basePathMiddlewareRemoves;
 
-  console.log({ toRemove });
-  console.log({ routerIsReady: router.isReady });
-
   // Mimic the middleware's rewriting the route to prevent hydration errors
   // from the server not knowing the link is supposed to be active by comparing
   // the original path.
