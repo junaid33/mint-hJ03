@@ -24,6 +24,7 @@ import { getParamGroupsFromApiComponents } from '@/utils/api';
 import { getOpenApiOperationMethodAndEndpoint } from '@/utils/openApi/getOpenApiContext';
 import { getParameterType } from '@/utils/openApi/getParameterType';
 import {
+  combineAllOfIntoObject,
   createExpandable,
   createParamField,
   getAllOpenApiParameters,
@@ -236,7 +237,10 @@ function getOpenApiPlaygroundProps(
 
   const bodyContent = operation.requestBody?.content;
   const contentType = bodyContent && Object.keys(bodyContent)[0];
-  const bodySchema = bodyContent && bodyContent[contentType]?.schema;
+  let bodySchema = bodyContent && bodyContent[contentType]?.schema;
+  if (bodySchema?.allOf) {
+    bodySchema = combineAllOfIntoObject(bodySchema.allOf);
+  }
 
   // Get the Body ApiComponents
   if (bodySchema?.properties) {
