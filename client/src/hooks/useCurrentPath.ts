@@ -18,7 +18,7 @@ export function useCurrentPath() {
   // Mimic the middleware's rewriting the route to prevent hydration errors
   // from the server not knowing the link is supposed to be active by comparing
   // the original path.
-  if (!router.isReady && router.asPath.startsWith(toRemove)) {
+  if (router.asPath.startsWith(toRemove)) {
     return router.asPath.substring(toRemove.length).split('#')[0];
   }
 
