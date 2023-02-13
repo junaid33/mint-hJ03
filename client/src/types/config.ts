@@ -96,6 +96,7 @@ export type Config = {
   topAnchor?: {
     name: string;
     icon?: string;
+    iconType?: IconType;
     color?: string;
   };
   repo?: {

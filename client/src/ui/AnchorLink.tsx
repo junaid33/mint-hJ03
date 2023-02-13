@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { ForwardedRef, forwardRef, useState } from 'react';
 
 import { DynamicLink } from '@/components/DynamicLink';
+import { IconType } from '@/types/config';
 
 import Icon from './Icon';
 
@@ -13,6 +14,7 @@ type TopLevelProps = {
   color?: string;
   onClick?: (el: any) => void;
   icon?: any;
+  iconType?: IconType;
   shadow?: string;
   mobile?: boolean;
   name?: string;
@@ -69,6 +71,7 @@ export function StyledAnchorLink({
   as,
   name,
   icon,
+  iconType,
   color,
   isActive,
   ...props
@@ -79,7 +82,7 @@ export function StyledAnchorLink({
     ) : (
       <Icon
         icon={icon.toLowerCase()}
-        iconType="duotone"
+        iconType={iconType || 'duotone'}
         className={clsx(
           `h-4 w-4 secondary-opacity group-hover:fill-primary-dark group-hover:bg-white`,
           isActive ? 'bg-white' : 'bg-zinc-400 dark:bg-zinc-500'
@@ -93,6 +96,7 @@ export function StyledAnchorLink({
         as={as}
         href={href ?? '/'}
         icon={AnchorIcon}
+        iconType={iconType}
         isActive={isActive}
         color={color}
       >

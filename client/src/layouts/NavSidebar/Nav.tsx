@@ -55,6 +55,7 @@ function TopLevelNav({ mobile }: { mobile: boolean }) {
         className="mb-4"
         color={colors.anchors[0]}
         icon={config?.topAnchor?.icon || 'book-open'}
+        iconType={config?.topAnchor?.iconType || 'duotone'}
         name={config?.topAnchor?.name ?? 'Documentation'}
       ></StyledAnchorLink>
       {config?.anchors &&
@@ -86,6 +87,7 @@ function TopLevelNav({ mobile }: { mobile: boolean }) {
                 href={href || '/'}
                 name={anchor?.name}
                 icon={anchor?.icon}
+                iconType={anchor?.iconType || 'duotone'}
                 color={colors.anchors[i + 1]}
                 isActive={currentPath.startsWith(`/${anchor.url}`)}
               />

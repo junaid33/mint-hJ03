@@ -216,13 +216,26 @@ export const configSchema = z.object({
             invalid_type_error: "topAnchor.icon must be a string",
           })
           .optional(),
+        iconType: z
+          .enum(
+            ["brands", "duotone", "light", "sharp-solid", "solid", "thin"],
+            {
+              errorMap: () => {
+                return {
+                  message:
+                    "topAnchor.iconType must be one of the following strings: brands, duotone, light, sharp-solid, solid, thin",
+                };
+              },
+            }
+          )
+          .optional(),
       },
       {
         invalid_type_error:
           "topAnchor must be an object with a name property. Delete the topAnchor if you don't want to customize the values.",
       }
     )
-    .strict("topAnchor can only have name and icon properties.")
+    .strict("topAnchor can only have name, icon, and iconType properties.")
     .optional(),
   anchors: anchorsSchema.optional(),
   footerSocials: footerSocialsSchema.optional(),

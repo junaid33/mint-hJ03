@@ -17,6 +17,11 @@ describe("configSchema", () => {
       favicon: "favicon.svg",
       colors: { primary: "#ff0000" },
       navigation: [{ group: "Group", pages: ["page"] }],
+      topAnchor: {
+        name: "Anchor",
+        icon: "icon",
+        iconType: "solid",
+      },
       topbarCtaButton: {
         name: "Button",
         url: "/internal/link",
