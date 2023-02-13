@@ -1,4 +1,5 @@
 {
+  // "extends": "@mintlify/ts-config",
   "compilerOptions": {
     "module": "ES2020",
     "moduleResolution": "node",

@@ -1707,6 +1707,11 @@
   resolved "https://registry.yarnpkg.com/@mintlify/prettier-config/-/prettier-config-1.0.1.tgz#d1c4b2b3d5078e4a2872f96cfa4ed1b60b332f6c"
   integrity sha512-43rARzj4Xc5ZOuLS3VqgUv3QZVSSSrNaOhFgLWNUyliihj4U7oMk7ZwzriNsa5q02GGgyD84R2cI4OY/6ytAuQ==
 
+"@mintlify/ts-config@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@mintlify/ts-config/-/ts-config-1.0.7.tgz#872b14d30013cf3a68e6aed8362e916b0c3b9261"
+  integrity sha512-VXfLy9+TeNXmOJY/4WgnpQfYBEH1nXwj5iYMqe8xEwCcrOX3xhVF/J+cBpIbGXzlp7ZnnVmCxx7fkeHJub1zzQ==
+
 "@next/bundle-analyzer@12.3.4":
   version "12.3.4"
   resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-12.3.4.tgz#37c587525288a3dea64213c991590532246e8bb8"
@@ -3033,6 +3038,11 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
+
+"@tsconfig/recommended@1.x":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@tsconfig/recommended/-/recommended-1.0.2.tgz#1e198237225933e319718f082e78366e9f159d71"
+  integrity sha512-dbHBtbWBOjq0/otpopAE02NT2Cm05Qe2JsEKeCf/wjSYbI2hz8nCqnpnOJWHATgjDz4fd3dchs3Wy1gQGjfN6w==
 
 "@types/acorn@^4.0.0":
   version "4.0.6"

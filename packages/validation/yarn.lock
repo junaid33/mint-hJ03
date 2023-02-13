@@ -1215,6 +1215,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@mintlify/ts-config@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@mintlify/ts-config/-/ts-config-1.0.7.tgz#872b14d30013cf3a68e6aed8362e916b0c3b9261"
+  integrity sha512-VXfLy9+TeNXmOJY/4WgnpQfYBEH1nXwj5iYMqe8xEwCcrOX3xhVF/J+cBpIbGXzlp7ZnnVmCxx7fkeHJub1zzQ==
+
 "@sinclair/typebox@^0.24.1":
   version "0.24.51"
   resolved "https://registry.npmjs.org/@sinclair/typebox/-/typebox-0.24.51.tgz"
@@ -1233,6 +1238,11 @@
   integrity sha512-BPS4ynJW/o92PUR4wgriz2Ud5gpST5vz6GQfMixEDK0Z8ZCUv2M7SkBLykH56T++Xs+8ln9zTGbOvNGIe02/jw==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@tsconfig/recommended@1.x":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@tsconfig/recommended/-/recommended-1.0.2.tgz#1e198237225933e319718f082e78366e9f159d71"
+  integrity sha512-dbHBtbWBOjq0/otpopAE02NT2Cm05Qe2JsEKeCf/wjSYbI2hz8nCqnpnOJWHATgjDz4fd3dchs3Wy1gQGjfN6w==
 
 "@types/babel__core@^7.1.14":
   version "7.1.20"
