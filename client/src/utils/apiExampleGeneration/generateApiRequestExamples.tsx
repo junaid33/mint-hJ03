@@ -121,7 +121,6 @@ export function generateRequestExamples(
     );
   } catch (e) {
     // Invalid endpoint. extractBaseAndpath will throw an error when the base URL is invalid.
-    console.log(e);
     return null;
   }
 }
