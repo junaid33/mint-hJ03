@@ -1,6 +1,6 @@
 {
   "name": "@mintlify/validation",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Validates mint.json files",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -48,7 +48,7 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "zod": "^3.19.1",
-    "zod-to-json-schema": "^3.20.2"
+    "zod": "^3.20.6",
+    "zod-to-json-schema": "^3.20.3"
   }
 }
