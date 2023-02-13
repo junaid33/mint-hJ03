@@ -65,13 +65,13 @@
   resolved "https://registry.yarnpkg.com/@mintlify/ts-config/-/ts-config-1.0.7.tgz#872b14d30013cf3a68e6aed8362e916b0c3b9261"
   integrity sha512-VXfLy9+TeNXmOJY/4WgnpQfYBEH1nXwj5iYMqe8xEwCcrOX3xhVF/J+cBpIbGXzlp7ZnnVmCxx7fkeHJub1zzQ==
 
-"@mintlify/validation@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.8.tgz#3b1a86c0520b4570500aa8ec5bc48e276036479e"
-  integrity sha512-0rX8wCkAxwVX/4XNSHda2n+DYeXdwh7BH8doq704qYaS6LayC6OzPcsNpSIo3P1Aha7+nVVad7B6EnU24rf8nA==
+"@mintlify/validation@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.9.tgz#c0bf616ba2437607db06b0d98af04b60eb008d42"
+  integrity sha512-ACRxy+BM0Y6KUZaJ8GfPbkD/JFjX256f6k0abUfWdk7Vv90OOq2MEhHNDOXD8HImojEgw5I+GSvSS19XQd0kQA==
   dependencies:
-    zod "^3.19.1"
-    zod-to-json-schema "^3.20.2"
+    zod "^3.20.6"
+    zod-to-json-schema "^3.20.3"
 
 "@octokit/auth-token@^3.0.0":
   version "3.0.2"
@@ -2915,12 +2915,12 @@ yauzl@^2.10.0:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-zod-to-json-schema@^3.20.2:
+zod-to-json-schema@^3.20.3:
   version "3.20.3"
   resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.20.3.tgz#8c95d8c20f20455ffa0b4b526c29703f35f6d787"
   integrity sha512-/Q3wnyxAfCt94ZcrGiXXoiAfRqasxl9CX64LZ9fj+4dKH68zulUtU0uk1WMxQPfAxQ0ZI70dKzcoW7hHj+DwSQ==
 
-zod@^3.19.1:
+zod@^3.20.6:
   version "3.20.6"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.20.6.tgz#2f2f08ff81291d47d99e86140fedb4e0db08361a"
   integrity sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==
