@@ -1,0 +1,19 @@
+name: Sanity Check
+
+on: push
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  sanity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install modules
+        run: yarn
+      - name: Preconfigure pages
+        run: yarn preconfigure
+      - name: Check build
+        run: yarn build
