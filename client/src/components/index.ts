@@ -108,6 +108,12 @@ export const allowedComponents = [
   'sub',
   'sup',
   'svg',
+  'table',
+  'tbody',
+  'td',
+  'th',
+  'thead',
+  'tr',
   'ul',
   'video',
   // Custom tags
