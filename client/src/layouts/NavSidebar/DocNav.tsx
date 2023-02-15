@@ -5,7 +5,7 @@ import { forwardRef, useContext, useEffect, useState } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
-import { Group, GroupPage, isGroup, PageMetaTags } from '@/types/metadata';
+import { Group, GroupPage, Groups, isGroup } from '@/types/metadata';
 import { extractMethodAndEndpoint } from '@/utils/api';
 import { getSidebarTitle } from '@/utils/getAllMetaTags';
 import { isPathInGroupPages } from '@/utils/nav';
@@ -162,12 +162,12 @@ const GroupDropdown = ({
   );
 };
 
-export function DocNav({ nav, mobile }: { nav: any; mobile: boolean }) {
+export function DocNav({ nav, mobile }: { nav: Groups; mobile: boolean }) {
   const { mintConfig } = useContext(ConfigContext);
 
   let numPages = 0;
   if (nav) {
-    nav.forEach((group: { group: string; pages: string[] }) => {
+    nav.forEach((group: Group) => {
       numPages += group.pages.length;
     });
   }
@@ -177,7 +177,7 @@ export function DocNav({ nav, mobile }: { nav: any; mobile: boolean }) {
       {nav &&
         numPages > 0 &&
         nav
-          .map(({ group, pages }: { group: string; pages: PageMetaTags[] }, i: number) => {
+          .map(({ group, pages }: Group, i: number) => {
             return (
               <li
                 key={i}

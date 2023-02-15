@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { IconType } from '@/types/config';
+import { IconType, iconTypes } from '@/types/config';
 
 type IconProps = {
   icon: string;
@@ -27,6 +27,18 @@ export default function Icon({ icon, iconType, className, color }: IconProps) {
 }
 
 export function ComponentIcon({ icon, iconType, className, color, overrideColor }: IconProps) {
+  if (!iconType) {
+    return null;
+  }
+
+  // Validate the types
+  if (!iconTypes.includes(iconType)) {
+    console.log(
+      `Invalid iconType ${iconType} expected a string equal to one of: brands, duotone, light, regular, sharp-solid, solid, thin`
+    );
+    return null;
+  }
+
   return (
     <Icon
       icon={icon}
@@ -527,22 +539,3 @@ function isBrandsIcon(icon?: string): boolean {
   ];
   return brands.includes(icon.toLowerCase());
 }
-
-export const getIconType = (str: string | undefined) => {
-  if (
-    ['brands', 'duotone', 'light', 'regular', 'sharp-solid', 'solid', 'thin', undefined].includes(
-      str
-    )
-  ) {
-    return str as
-      | 'brands'
-      | 'duotone'
-      | 'light'
-      | 'regular'
-      | 'sharp-solid'
-      | 'solid'
-      | 'thin'
-      | undefined;
-  }
-  return undefined;
-};

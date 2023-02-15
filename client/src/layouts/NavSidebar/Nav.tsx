@@ -7,7 +7,7 @@ import { VersionContext } from '@/context/VersionContext';
 import { useColors } from '@/hooks/useColors';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
-import { PageMetaTags } from '@/types/metadata';
+import { Groups, PageMetaTags } from '@/types/metadata';
 import { getAnchorsToDisplay } from '@/utils/getAnchorsToDisplay';
 
 import { Anchor, findFirstNavigationEntry, Navigation } from '../../types/config';
@@ -103,15 +103,15 @@ export function Nav({
   pageMetadata,
   mobile = false,
 }: {
-  nav: any;
+  nav: Groups;
   pageMetadata: PageMetaTags;
   mobile?: boolean;
 }) {
   const currentPath = useCurrentPath();
   const { mintConfig: config } = useContext(ConfigContext);
-  const activeItemRef: any = useRef();
-  const previousActiveItemRef: any = useRef();
-  const scrollRef: any = useRef();
+  const activeItemRef = useRef<HTMLDivElement>();
+  const previousActiveItemRef = useRef<HTMLDivElement>();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isBlogMode = pageMetadata.mode === 'blog';
 

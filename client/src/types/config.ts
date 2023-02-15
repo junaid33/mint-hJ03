@@ -26,14 +26,17 @@ type NavbarLink = {
 
 export type TopbarCta = NavbarLink;
 
-export type IconType =
-  | 'brands'
-  | 'duotone'
-  | 'light'
-  | 'regular'
-  | 'sharp-solid'
-  | 'solid'
-  | 'thin';
+export const iconTypes = [
+  'brands',
+  'duotone',
+  'light',
+  'regular',
+  'sharp-solid',
+  'solid',
+  'thin',
+] as const;
+
+export type IconType = (typeof iconTypes)[number];
 
 export type Anchor = {
   name: string;
@@ -79,7 +82,7 @@ export type Config = {
     isHidden?: boolean;
   };
   versions?: string[];
-  metadata?: any;
+  metadata?: Record<string, string>;
   colors?: {
     primary: string;
     light?: string;

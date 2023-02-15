@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
-import IconButton, { IconType } from '@/ui/Feedback/IconButton';
+import IconButton, { FeedbackButtonIconType } from '@/ui/Feedback/IconButton';
 
 const removeFirstSlash = (str: string): string => {
   if (str[0] === '/') {
@@ -58,7 +58,7 @@ export function UserFeedback() {
     <div className="flex items-center space-x-2">
       {createSuggestHref && (
         <IconButton
-          type={IconType.Edit}
+          type={FeedbackButtonIconType.Edit}
           tooltip="Edit this page"
           href={createSuggestHref}
           className="relative w-fit flex items-center p-1.5 group"
@@ -66,7 +66,7 @@ export function UserFeedback() {
       )}
       {createIssueHref && (
         <IconButton
-          type={IconType.Alert}
+          type={FeedbackButtonIconType.Alert}
           href={createIssueHref}
           tooltip="Raise an issue"
           className="relative w-fit flex items-center p-1.5 group fill-slate-500 dark:fill-slate-400 hover:fill-slate-700 dark:hover:fill-slate-200 dark:hover:text-slate-300"

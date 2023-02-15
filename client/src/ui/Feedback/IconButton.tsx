@@ -3,7 +3,7 @@ import Link from 'next/link';
 import AlertIcon from './Alert';
 import EditIcon from './Edit';
 
-export enum IconType {
+export enum FeedbackButtonIconType {
   Edit,
   Alert,
 }
@@ -43,13 +43,13 @@ const IconButton = ({
 }: {
   href: string;
   tooltip?: string;
-  type: IconType;
+  type: FeedbackButtonIconType;
   className?: string;
 }) => {
   return (
     <Link href={href} className={className} target="_blank" rel="noopener noreferrer">
-      {type === IconType.Alert && <AlertIcon />}
-      {type === IconType.Edit && <EditIcon />}
+      {type === FeedbackButtonIconType.Alert && <AlertIcon />}
+      {type === FeedbackButtonIconType.Edit && <EditIcon />}
       {tooltip && <Tooltip message={tooltip} />}
     </Link>
   );
