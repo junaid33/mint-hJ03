@@ -27,12 +27,8 @@ export default function Icon({ icon, iconType, className, color }: IconProps) {
 }
 
 export function ComponentIcon({ icon, iconType, className, color, overrideColor }: IconProps) {
-  if (!iconType) {
-    return null;
-  }
-
   // Validate the types
-  if (!iconTypes.includes(iconType)) {
+  if (iconType && !iconTypes.includes(iconType)) {
     console.log(
       `Invalid iconType ${iconType} expected a string equal to one of: brands, duotone, light, regular, sharp-solid, solid, thin`
     );
