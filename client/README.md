@@ -4,6 +4,8 @@ The client is essentially a frontend template used to host documentation.
 
 ## Your First Code Contribution
 
+Read the [Contributing guide](https://mintlify.com/docs/contributing) to learn about our development process, the standards and tools used, and how to propose fixes, bugs or open issues.
+
 ### Prerequisites
 
 - Node v18 (npm v8)
@@ -34,18 +36,11 @@ Use the debugger to place breakpoints in your code to see your variable values. 
 
 ### Code Quality
 
+Check out the [Contribution Tools](https://mintlify.com/docs/contributing#contribution-tools) section in our [Contributing guide](https://mintlify.com/docs/contributing).
+
 #### Formatting
 
 This project uses [prettier](https://prettier.io/) for code formatting. You can auto-format across the codebase by running `yarn format`.
-
-To format the code as you make changes you can install the [Prettier - Code formatter](https://marketplace.visualstudio.com/items/esbenp.prettier-vscode) extension.
-
-Add the following to your User Settings to run prettier on save:
-
-```
-"editor.formatOnSave": true,
-"editor.defaultFormatter": "esbenp.prettier-vscode"
-```
 
 #### Linting
 

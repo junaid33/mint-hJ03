@@ -54,6 +54,17 @@ It is possible and sometimes helpful to run the contribution tools manually.
 - install git hooks (triggered automatically on `yarn install`): `yarn prepare`
 - run `lint-staged` to check before committing and triggering the `pre-commit` git hook: `yarn lint-staged`
 
+### Visual Studio Code
+
+To format the code as you make changes you can install the [Prettier - Code formatter](https://marketplace.visualstudio.com/items/esbenp.prettier-vscode) extension.
+
+<Tip>Add the following to your User Settings to run prettier on save.</Tip>
+
+```
+"editor.formatOnSave": true,
+"editor.defaultFormatter": "esbenp.prettier-vscode"
+```
+
 ### Troubleshooting
 
 If you encounter issues when trying to commit,
@@ -81,7 +92,7 @@ git commit --no-verify
 const x: any = {};
 ```
 
-- Fix the warning with casts, [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) and [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html).
+- Fix the warning with [type assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions), [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html) and [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html).
 - Discuss the issue or ask for help in an [issue](https://github.com/mintlify/mint/issues) or [PR](https://github.com/mintlify/mint/pulls).
 
 <Tip>
