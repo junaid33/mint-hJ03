@@ -7,7 +7,7 @@ import { validateAnchorsWarnings } from "./utils/validateAnchorsWarnings";
 import { validateVersionsInNavigation } from "./utils/validateVersionsInNavigation";
 
 export function validateMintConfig(config: ConfigType): MintValidationResults {
-  let results = new MintValidationResults();
+  const results = new MintValidationResults();
   if (
     config == null ||
     config == undefined ||
@@ -66,7 +66,7 @@ export function validateMintConfig(config: ConfigType): MintValidationResults {
 }
 
 export const mintConfigSchema = (() => {
-  var schema = zodToJsonSchema(configSchema, "Schema") as any;
+  const schema = zodToJsonSchema(configSchema, "Schema") as any;
   delete schema.definitions?.Schema?.properties.__injected;
   delete schema.definitions?.Schema?.properties.colors.properties.ultraDark;
   delete schema.definitions?.Schema?.properties.colors.properties.ultraLight;

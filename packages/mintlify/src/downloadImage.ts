@@ -82,7 +82,7 @@ export function cleanImageSrc(src: string, origin: string) {
 export default async function downloadImage(
   imageSrc: string,
   writePath: string,
-  overwrite: boolean = false
+  overwrite = false
 ) {
   await writeImageToFile(imageSrc, writePath, overwrite)
     .then(() => {

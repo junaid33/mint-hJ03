@@ -26,7 +26,7 @@ export async function scrapeReadMePage(
   }
 
   // API Pages don't have a markdown body in the same position so there's no HTML
-  let contentHtml = content.html() || "";
+  const contentHtml = content.html() || "";
 
   const origToWritePath = await downloadAllImages(
     $,

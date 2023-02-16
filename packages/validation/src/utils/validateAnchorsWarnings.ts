@@ -7,7 +7,7 @@ export function validateAnchorsWarnings(
   anchors: AnchorsType | undefined,
   navigation: NavigationType[] | undefined
 ) {
-  let results = new MintValidationResults();
+  const results = new MintValidationResults();
   if (anchors == undefined || !Array.isArray(anchors) || anchors.length === 0) {
     results.warnings.push(
       "Mintlify runs without anchors but most sites look better with at least one."

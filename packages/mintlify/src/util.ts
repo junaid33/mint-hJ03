@@ -89,8 +89,8 @@ export const createPage = (
   title: string,
   description?: string,
   markdown?: string,
-  overwrite: boolean = false,
-  rootDir: string = "",
+  overwrite = false,
+  rootDir = "",
   fileName?: string
 ) => {
   const writePath = path.join(rootDir, addMdx(fileName || toFilename(title)));
@@ -126,7 +126,7 @@ export function getHrefFromArgs(argv: any) {
   return href;
 }
 
-export const buildLogger = (startText: string = ""): OraType => {
+export const buildLogger = (startText = ""): OraType => {
   const logger = Ora().start(startText);
   return logger;
 };

@@ -1,7 +1,7 @@
 export default function combineNavWithEmptyGroupTitles(
   navArray: MintNavigation[]
 ): MintNavigation[] {
-  let newNavArray = [];
+  const newNavArray = [];
 
   navArray.forEach((nav: MintNavigation) => {
     // The first run through the loop will always have -1 as the index.

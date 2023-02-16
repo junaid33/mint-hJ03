@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-empty-function */
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";

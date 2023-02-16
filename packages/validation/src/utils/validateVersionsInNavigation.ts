@@ -30,7 +30,7 @@ export function validateVersionsInNavigation(
   navigation: NavigationType[] | undefined,
   versions: VersionsType | undefined = []
 ) {
-  let results = new MintValidationResults();
+  const results = new MintValidationResults();
   if (
     navigation == null ||
     navigationConfigSchema.safeParse(navigation).success === false
@@ -68,7 +68,7 @@ function warnVersionNesting(
     return [];
   }
 
-  let warnings = [];
+  const warnings = [];
 
   if (
     navigation.version &&

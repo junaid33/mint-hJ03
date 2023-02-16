@@ -10,7 +10,8 @@
     "prepare": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch",
-    "local": "tsc && npm uninstall -g mintlify && npm i -g ."
+    "local": "tsc && npm uninstall -g mintlify && npm i -g .",
+    "lint": "eslint . --cache"
   },
   "author": "Mintlify, Inc.",
   "exports": "./bin/index.js",
@@ -47,6 +48,8 @@
     "yargs": "^17.6.0"
   },
   "devDependencies": {
+    "@mintlify/eslint-config": "1.0.3",
+    "@mintlify/eslint-config-typescript": "1.0.7",
     "@mintlify/ts-config": "1.0.7",
     "@tsconfig/recommended": "1.x",
     "@types/cheerio": "^0.22.31",
@@ -55,6 +58,12 @@
     "@types/node": "^18.7.13",
     "@types/shelljs": "^0.8.11",
     "@types/yargs": "^17.0.13",
+    "@typescript-eslint/eslint-plugin": "5.x",
+    "@typescript-eslint/parser": "5.x",
+    "eslint": "8.x",
+    "eslint-config-prettier": "8.x",
+    "eslint-plugin-unused-imports": "2.x",
+    "prettier": "2.x",
     "typescript": "^4.8.2"
   }
 }

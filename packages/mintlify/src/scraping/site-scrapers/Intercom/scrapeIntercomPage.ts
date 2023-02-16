@@ -15,9 +15,9 @@ export async function scrapeIntercomPage(
 
   const titleComponent = $(".t__h1").first();
   const title = titleComponent.text().trim();
-  let description = $(".article__desc", titleComponent.parent()).text().trim();
+  const description = $(".article__desc", titleComponent.parent()).text().trim();
 
-  let content = $("article").first();
+  const content = $("article").first();
   const contentHtml = $.html(content);
 
   const origToWritePath = await downloadAllImages(

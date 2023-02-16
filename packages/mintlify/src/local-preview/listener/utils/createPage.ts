@@ -12,7 +12,7 @@ const createPage = async (
   contentDirectoryPath: string,
   openApiFiles: OpenApiFile[]
 ) => {
-  let { data: metadata } = matter(pageContent);
+  const { data: metadata } = matter(pageContent);
   try {
     const parsedContent = await preParseMdx(pageContent, contentDirectoryPath);
     pageContent = parsedContent;
