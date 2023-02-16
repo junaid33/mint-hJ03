@@ -1,12 +1,17 @@
-import { useState, useCallback, useEffect } from 'react';
+import { Dispatch, useCallback, useEffect, useState } from 'react';
 
+import { MDXContentAction } from '@/context/MDXContentContext';
+import { MDXContentActionEnum } from '@/enums/MDXContentActionEnum';
 import { TableOfContentsSection } from '@/types/tableOfContentsSection';
 
-export function useTableOfContents(tableOfContents: TableOfContentsSection[]) {
+export const useTableOfContents = (
+  tableOfContents: TableOfContentsSection[],
+  dispatch: Dispatch<MDXContentAction>
+) => {
   const [currentTableOfContentsSection, setCurrentSection] = useState(tableOfContents[0]?.slug);
   const [headings, setHeadings] = useState<any[]>([]);
 
-  const registerHeading = useCallback((id: string, top: string) => {
+  const registerHeading = useCallback((id: string, top: number) => {
     setHeadings((headings: any) => [
       ...headings.filter((h: { id: string }) => id !== h.id),
       { id, top },
@@ -48,5 +53,21 @@ export function useTableOfContents(tableOfContents: TableOfContentsSection[]) {
     };
   }, [headings, tableOfContents]);
 
-  return { currentTableOfContentsSection, registerHeading, unregisterHeading };
-}
+  useEffect(() => {
+    dispatch({
+      type: MDXContentActionEnum.SET_TABLE_OF_CONTENTS,
+      payload: {
+        currentTableOfContentsSection,
+        registerHeading,
+        unregisterHeading,
+        tableOfContents,
+      },
+    });
+  }, [
+    currentTableOfContentsSection,
+    dispatch,
+    registerHeading,
+    tableOfContents,
+    unregisterHeading,
+  ]);
+};

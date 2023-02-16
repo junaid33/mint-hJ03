@@ -1,0 +1,16 @@
+/**
+ * Enumeration of action types that can be dispatched in MDXContentReducer.
+ */
+export enum MDXContentActionEnum {
+  SET_STATE,
+  SET_API_BASE_INDEX,
+  SET_IS_API,
+  SET_API_PLAYGROUND_INPUTS,
+  SET_OPEN_API_PLAYGROUND_PROPS,
+  SET_IS_BLOG_MODE,
+  SET_USER_DEFINED_EXAMPLES,
+  SET_TABLE_OF_CONTENTS,
+  SET_CONTENT_WIDTH,
+  SET_PARAM_GROUPS,
+  SET_API_PLAYGROUND,
+}

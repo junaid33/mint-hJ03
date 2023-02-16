@@ -5,18 +5,15 @@ import { useRouter } from 'next/router';
 import { useEffect, useState, useContext } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
-import {
-  extractBaseAndPath,
-  extractMethodAndEndpoint,
-  getApiContext,
-  ParamGroup,
-} from '@/utils/api';
+import { useMDXContent } from '@/hooks/useMDXContent';
+import { useSetApiBaseIndexCallback } from '@/hooks/useSetApiBaseIndexCallback';
+import { useSetApiPlaygroundInputsCallback } from '@/hooks/useSetApiPlaygroundInputsCallback';
+import { ApiComponent as ApiComponentType } from '@/types/apiComponent';
+import { extractBaseAndPath, extractMethodAndEndpoint, getApiContext } from '@/utils/api';
 import { getAuthParamName } from '@/utils/apiExampleGeneration/getAuthParamName';
 
-export type ApiComponent = {
-  type: string;
+export type ApiComponent = ApiComponentType & {
   name?: string;
-  children?: any;
   attributes?: {
     type: string;
     name: string;
@@ -28,22 +25,18 @@ export const APIBASE_CONFIG_STORAGE = 'apiBaseIndex';
 
 // Be careful changing the prop types. The parameter is exported. In those cases,
 // users set api and paramGroups but not the other fields.
-export function ApiPlayground({
-  api,
-  paramGroups,
-  contentType = 'application/json',
-  onInputDataChange,
-  onApiBaseIndexChange,
-}: {
-  api: string;
-  paramGroups: ParamGroup[];
-  contentType?: string;
-  onInputDataChange?: (newInputData: Record<string, Record<string, any>>) => void;
-  onApiBaseIndexChange?: (apiBaseIndex: number) => void;
-}) {
+export function ApiPlayground() {
   const { basePath } = useRouter();
   const { mintConfig, openApiFiles } = useContext(ConfigContext);
   const [apiBaseIndex, setApiBaseIndex] = useState(0);
+
+  const [{ openApiPlaygroundProps, pageMetadata, api, paramGroups }] = useMDXContent();
+
+  const contentType = openApiPlaygroundProps.contentType ?? pageMetadata.contentType;
+
+  const onApiBaseIndexChange = useSetApiBaseIndexCallback();
+  const onInputDataChange = useSetApiPlaygroundInputsCallback();
+
   const { method, endpoint } = extractMethodAndEndpoint(api);
 
   let base = '';
@@ -68,7 +61,7 @@ export function ApiPlayground({
     mintConfig?.api?.auth?.method
   );
   const setAuthPrefix = mintConfig?.api?.auth?.inputPrefix && authParamName;
-  const [inputData, setInputData] = useState<Record<string, any>>(
+  const [inputData, setInputData] = useState<Record<string, object>>(
     setAuthPrefix
       ? {
           Authorization: {
@@ -114,8 +107,14 @@ export function ApiPlayground({
         ...apiContext,
       });
       setApiResponse(data.highlightedJson);
-    } catch (error: any) {
-      setApiResponse(error.highlightedJson);
+    } catch (error: unknown) {
+      setApiResponse(
+        (
+          error as {
+            highlightedJson: string;
+          }
+        ).highlightedJson
+      );
     } finally {
       setIsSendingResponse(false);
     }

@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Rect, useRect } from 'react-use-rect';
 
+import { useMDXContent } from '@/hooks/useMDXContent';
 import { useTop } from '@/hooks/useTop';
-import { ContentsContext } from '@/ui/MDXContentController/MDXContentController';
 
 type HeadingProps = {
   level: string;
@@ -27,7 +27,7 @@ export function Heading({
   ...props
 }: HeadingProps | any) {
   const Component = `h${level}`;
-  const context: any = useContext(ContentsContext);
+  const [context] = useMDXContent();
   const [rect, setRect] = useState<Rect | null>(null);
   const [rectRef] = useRect(setRect);
   const top = useTop(rect);
@@ -39,10 +39,10 @@ export function Heading({
   useEffect(() => {
     if (!hasContext) return;
     if (typeof top !== 'undefined') {
-      registerHeading(id, top);
+      registerHeading?.(id, top);
     }
     return () => {
-      unregisterHeading(id);
+      unregisterHeading?.(id);
     };
   }, [top, id, registerHeading, unregisterHeading, hasContext]);
   return (

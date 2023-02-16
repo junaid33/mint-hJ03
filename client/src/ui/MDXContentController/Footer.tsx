@@ -3,16 +3,10 @@ import Link from 'next/link';
 import React, { useContext } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
+import { useMDXContent } from '@/hooks/useMDXContent';
 import { getSidebarTitle } from '@/utils/getAllMetaTags';
 
 import Icon from '../Icon';
-
-type FooterProps = {
-  children?: React.ReactChild;
-  previous?: any;
-  next?: any;
-  hasBottomPadding?: boolean;
-};
 
 type SocialProps = {
   type?: string;
@@ -50,15 +44,19 @@ const Social = ({ type, url }: SocialProps) => {
   );
 };
 
-export function Footer({ previous, next, hasBottomPadding = true }: FooterProps) {
+export function Footer() {
   const { mintConfig } = useContext(ConfigContext);
+  const [{ next: n, prev, pageMetadata }] = useMDXContent();
+
+  const previous = pageMetadata.hideFooterPagination ? null : prev;
+  const next = pageMetadata.hideFooterPagination ? null : n;
   return (
     <footer className={clsx('text-sm leading-6', previous || next ? 'mt-12' : 'mt-16')}>
       {(previous || next) && (
         <div className="mb-10 text-slate-700 font-semibold flex items-center dark:text-slate-200">
           {previous && (
             <Link
-              href={previous.href}
+              href={previous?.href as never}
               className="group flex items-center hover:text-slate-900 dark:hover:text-white"
             >
               <svg
@@ -79,7 +77,7 @@ export function Footer({ previous, next, hasBottomPadding = true }: FooterProps)
           )}
           {next && (
             <Link
-              href={next.href}
+              href={next?.href as never}
               className="group ml-auto flex items-center hover:text-slate-900 dark:hover:text-white"
             >
               {getSidebarTitle(next)}
@@ -100,12 +98,7 @@ export function Footer({ previous, next, hasBottomPadding = true }: FooterProps)
           )}
         </div>
       )}
-      <div
-        className={clsx(
-          'pt-10 border-t border-zinc-200 sm:flex justify-between text-zinc-500 dark:border-zinc-200/5',
-          { 'pb-28': hasBottomPadding }
-        )}
-      >
+      <div className="pt-10 border-t border-zinc-200 sm:flex justify-between text-zinc-500 dark:border-zinc-200/5 pb-28">
         <div className="mb-6 sm:mb-0 sm:flex">
           <a
             href="https://mintlify.com"

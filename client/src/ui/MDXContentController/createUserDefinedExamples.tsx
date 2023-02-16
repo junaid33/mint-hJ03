@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { CodeBlock } from '@/components/CodeBlock';
 import { CodeGroup } from '@/components/CodeGroup';
 import { Component } from '@/enums/components';
@@ -14,16 +16,16 @@ export function createUserDefinedExamples(apiComponents: ApiComponent[]) {
     return apiComponent.type === Component.ResponseExample;
   });
 
-  let requestExample: React.ReactNode | undefined = undefined;
-  let responseExample: React.ReactNode | undefined = undefined;
+  let requestExample: ReactNode | undefined = undefined;
+  let responseExample: ReactNode | undefined = undefined;
   // Create Request Example
   if (requestComponentSkeleton) {
     requestExample = (
       <CodeGroup isSmallText>
-        {requestComponentSkeleton.children.map((child, i) => {
+        {requestComponentSkeleton.children?.map((child, i) => {
           return (
-            <CodeBlock filename={child.filename} key={child.filename + i}>
-              {htmlToReactComponent(child.html)}
+            <CodeBlock filename={child.filename} key={(child.filename ?? '') + i}>
+              {htmlToReactComponent(child.html ?? '')}
             </CodeBlock>
           );
         })}
@@ -35,10 +37,10 @@ export function createUserDefinedExamples(apiComponents: ApiComponent[]) {
   if (responseComponentSkeleton) {
     responseExample = (
       <CodeGroup isSmallText>
-        {responseComponentSkeleton.children.map((child, i) => {
+        {responseComponentSkeleton.children?.map((child, i) => {
           return (
-            <CodeBlock filename={child.filename} key={child.filename + i}>
-              {htmlToReactComponent(child.html)}
+            <CodeBlock filename={child.filename} key={(child.filename ?? '') + i}>
+              {htmlToReactComponent(child.html ?? '')}
             </CodeBlock>
           );
         })}
