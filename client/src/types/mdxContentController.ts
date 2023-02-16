@@ -9,13 +9,6 @@ import { Param } from '@/utils/api';
 
 export type ContentWidthType = { contentWidth: string; isWideSize: boolean };
 
-export type TableOfContentsType = {
-  unregisterHeading?: (id: string) => void;
-  registerHeading?: (id: string, top: number) => void;
-  currentTableOfContentsSection: string | undefined;
-  tableOfContents: TableOfContentsSection[];
-};
-
 export type ApiPlaygroundType = {
   showApiPlayground: boolean;
   generatedRequestExamples: any;
@@ -25,6 +18,11 @@ export type ApiPlaygroundType = {
 export type ParamGroupsType = {
   paramGroupDict: Record<string, Param[]>;
   paramGroups: { name: string; params: Param[] }[];
+};
+
+export type HeadingType = {
+  id?: string;
+  top?: number;
 };
 
 export type MDXContentControllerState = {
@@ -41,10 +39,12 @@ export type MDXContentControllerState = {
   requestExample?: ReactNode;
   responseExample?: ReactNode;
   apiPlaygroundInputs: Record<string, any>;
+  tableOfContents: TableOfContentsSection[];
+  headings: HeadingType[];
+  currentTableOfContentsSection: string | undefined;
 };
 
 export type MDXContentState = MDXContentControllerState &
   ApiPlaygroundType &
   ParamGroupsType &
-  ContentWidthType &
-  TableOfContentsType;
+  ContentWidthType;

@@ -5,7 +5,7 @@ import { MDXContentActionEnum } from '@/enums/MDXContentActionEnum';
 import { getParamGroupsFromApiComponents } from '@/utils/api';
 
 /**
- * Gets param groups from api components and updates MDXContent state.
+ * Gets param groups from api components and dispatches state update.
  */
 export const useParamGroups = (ctx: MDXContentContextType) => {
   const [state, dispatch] = ctx;

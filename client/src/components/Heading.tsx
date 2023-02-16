@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Rect, useRect } from 'react-use-rect';
 
+import { MDXContentActionEnum } from '@/enums/MDXContentActionEnum';
 import { useMDXContent } from '@/hooks/useMDXContent';
 import { useTop } from '@/hooks/useTop';
 
@@ -27,24 +28,28 @@ export function Heading({
   ...props
 }: HeadingProps | any) {
   const Component = `h${level}`;
-  const [context] = useMDXContent();
+  const [context, dispatch] = useMDXContent();
   const [rect, setRect] = useState<Rect | null>(null);
   const [rectRef] = useRect(setRect);
   const top = useTop(rect);
 
   // We cannot include context in the dependency array because it changes every render.
   const hasContext = Boolean(context);
-  const registerHeading = context?.registerHeading;
-  const unregisterHeading = context?.unregisterHeading;
   useEffect(() => {
     if (!hasContext) return;
     if (typeof top !== 'undefined') {
-      registerHeading?.(id, top);
+      dispatch({
+        type: MDXContentActionEnum.REGISTER_HEADING,
+        payload: { id, top },
+      });
     }
     return () => {
-      unregisterHeading?.(id);
+      dispatch({
+        type: MDXContentActionEnum.UNREGISTER_HEADING,
+        payload: id,
+      });
     };
-  }, [top, id, registerHeading, unregisterHeading, hasContext]);
+  }, [top, id, hasContext, dispatch]);
   return (
     <Component
       className={clsx('group flex whitespace-pre-wrap', className, {

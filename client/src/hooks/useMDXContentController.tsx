@@ -6,9 +6,9 @@ import { MDXContentActionEnum } from '@/enums/MDXContentActionEnum';
 import { useApiPlayground } from '@/hooks/useApiPlayground';
 import { useContentWidth } from '@/hooks/useContentWidth';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
+import { useCurrentTableOfContentsSection } from '@/hooks/useCurrentTableOfContentsSection';
 import { useParamGroups } from '@/hooks/useParamGroups';
 import { usePrevNext } from '@/hooks/usePrevNext';
-import { useTableOfContents } from '@/hooks/useTableOfContents';
 import { MDXContentControllerProps } from '@/ui/MDXContentController/MDXContentController';
 import { createUserDefinedExamples } from '@/ui/MDXContentController/createUserDefinedExamples';
 import { getOpenApiPlaygroundProps } from '@/ui/MDXContentController/getOpenApiPlaygroundProps';
@@ -21,7 +21,11 @@ export const useMDXContentController = ({
   pageMetadata,
   apiComponents,
 }: Omit<MDXContentControllerProps, 'children'>) => {
-  const ctx = useMDXContentReducer();
+  const ctx = useMDXContentReducer({
+    tableOfContents,
+    pageMetadata,
+    apiComponents,
+  });
   const [state, dispatch] = ctx;
   const { mintConfig, openApiFiles } = useContext(ConfigContext);
 
@@ -33,15 +37,13 @@ export const useMDXContentController = ({
     dispatch({
       type: MDXContentActionEnum.SET_STATE,
       payload: {
-        apiComponents,
         currentPath,
         mintConfig,
-        pageMetadata,
         prev,
         next,
       },
     });
-  }, [apiComponents, currentPath, dispatch, mintConfig, next, pageMetadata, prev]);
+  }, [currentPath, dispatch, mintConfig, next, prev]);
 
   // Gets OpenApiPlaygroundProps and dispatches state update.
   useEffect(() => {
@@ -88,9 +90,7 @@ export const useMDXContentController = ({
     });
   }, [apiComponents, dispatch]);
 
-  // Gets tableOfContents, registers events, callbacks and dispatches state update.
-  useTableOfContents(tableOfContents, dispatch);
-
+  useCurrentTableOfContentsSection(ctx);
   useContentWidth(ctx);
   useParamGroups(ctx);
   useApiPlayground(ctx);

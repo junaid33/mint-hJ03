@@ -4,13 +4,14 @@ import { MDXContentActionEnum } from '@/enums/MDXContentActionEnum';
 import {
   ApiPlaygroundType,
   ContentWidthType,
+  HeadingType,
   MDXContentState,
   ParamGroupsType,
-  TableOfContentsType,
 } from '@/types/mdxContentController';
 import { OpenApiPlaygroundProps } from '@/ui/MDXContentController/getOpenApiPlaygroundProps';
 
 const initialState: MDXContentState = {
+  headings: [],
   api: '',
   apiBaseIndex: 0,
   apiComponents: [],
@@ -49,8 +50,16 @@ export type MDXContentAction =
       payload: Pick<MDXContentState, 'requestExample' | 'responseExample'>;
     }
   | {
-      type: MDXContentActionEnum.SET_TABLE_OF_CONTENTS;
-      payload: TableOfContentsType;
+      type: MDXContentActionEnum.SET_CURRENT_TABLE_OF_CONTENTS_SECTION;
+      payload: string | undefined;
+    }
+  | {
+      type: MDXContentActionEnum.REGISTER_HEADING;
+      payload: HeadingType;
+    }
+  | {
+      type: MDXContentActionEnum.UNREGISTER_HEADING;
+      payload: string;
     }
   | {
       type: MDXContentActionEnum.SET_CONTENT_WIDTH;
@@ -89,15 +98,21 @@ export const MDXContentReducer: Reducer<MDXContentState, MDXContentAction> = (
         requestExample,
         responseExample,
       };
-    case MDXContentActionEnum.SET_TABLE_OF_CONTENTS:
-      const { currentTableOfContentsSection, registerHeading, unregisterHeading, tableOfContents } =
-        action.payload;
+    case MDXContentActionEnum.SET_CURRENT_TABLE_OF_CONTENTS_SECTION:
       return {
         ...state,
-        currentTableOfContentsSection,
-        registerHeading,
-        unregisterHeading,
-        tableOfContents,
+        currentTableOfContentsSection: action.payload,
+      };
+    case MDXContentActionEnum.REGISTER_HEADING:
+      const { id, top } = action.payload;
+      return {
+        ...state,
+        headings: [...state.headings.filter((h) => id !== h.id), { id, top }],
+      };
+    case MDXContentActionEnum.UNREGISTER_HEADING:
+      return {
+        ...state,
+        headings: state.headings.filter((h) => action.payload !== h.id),
       };
     case MDXContentActionEnum.SET_CONTENT_WIDTH:
       const { contentWidth, isWideSize } = action.payload;
@@ -149,7 +164,8 @@ export const MDXContentReducer: Reducer<MDXContentState, MDXContentAction> = (
   }
 };
 
-export const useMDXContentReducer = () => useReducer(MDXContentReducer, initialState);
+export const useMDXContentReducer = (state?: Partial<MDXContentState>) =>
+  useReducer(MDXContentReducer, { ...initialState, ...state });
 
 export type MDXContentContextType = ReturnType<typeof useMDXContentReducer>;
 
