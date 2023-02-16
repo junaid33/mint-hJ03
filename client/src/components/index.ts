@@ -101,6 +101,7 @@ export const allowedComponents = [
   'ol',
   'p',
   'path',
+  'picture',
   'script',
   'section',
   'source',
