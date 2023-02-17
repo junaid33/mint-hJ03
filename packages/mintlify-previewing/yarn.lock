@@ -83,6 +83,13 @@
   resolved "https://registry.yarnpkg.com/@mintlify/eslint-config/-/eslint-config-1.0.3.tgz#7a971afadb38d9a1795551d9d1b4f51f9c0264c6"
   integrity sha512-/VS6LQBG8KoO+RP5RuUXd1EMdXHhBp98Teq+e/0cTokg4/cI7hsryMXWN+MIvXFvub3GV7AIqMxs8HMZsxCS/g==
 
+"@mintlify/prebuild@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@mintlify/prebuild/-/prebuild-1.0.0.tgz#0dc596e75d621dacb60e933be1a6fc33fc86ea0b"
+  integrity sha512-L+2WgrJ0Le1tOYFPib0CuVAirSysm4sFhNiO9r5dSK5X+aERiPu28+0jeg00/VH8PZqILK54Ef874u+2f98G5Q==
+  dependencies:
+    fs-extra "^11.1.0"
+
 "@mintlify/ts-config@1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@mintlify/ts-config/-/ts-config-1.0.7.tgz#872b14d30013cf3a68e6aed8362e916b0c3b9261"

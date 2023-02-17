@@ -1,14 +1,15 @@
-# @mintlify/previewing
+# @mintlify/prebuild
 
-Preview Mintlify docs locally.
+Helpful functions for Mintlify's prebuild step.
 
-## 🚀 Installation
+# Installation
 
 ```
-npm install @mintlify/previewing
+npm install @mintlify/prebuild
 ```
 
-## Community
+# Community
+
 
 Join our Discord community if you have questions or just want to chat:
 

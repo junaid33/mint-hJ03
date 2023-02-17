@@ -1,13 +1,13 @@
 // TODO - put in prebuild package
 import path from "path";
 
-import { getFileExtension, openApiCheck, getFileList } from "./utils.js";
+import { getFileList } from "@mintlify/prebuild";
+import { getFileExtension, openApiCheck } from "./utils.js";
 import { PotentialFileCategory } from "./utils/types.js";
 
 export const categorizeFiles = async (contentDirectoryPath: string) => {
-  const allFilesInCmdExecutionPath: string[] = await getFileList(
-    contentDirectoryPath
-  );
+  const allFilesInCmdExecutionPath: string[] =
+    getFileList(contentDirectoryPath);
   const contentFilenames: string[] = [];
   const staticFilenames: string[] = [];
   const promises: Promise<void>[] = [];

@@ -600,7 +600,7 @@
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.20.5.tgz"
   integrity sha512-r27t/cy/m9uKLXQNWWebeCUHgnAZq0CpG1OwKRxzJMP1vpSU4bSIK2hq+/cp0bQxetkXx38n09rNu8jVkcK/zA==
 
-"@babel/parser@^7.20.13", "@babel/parser@^7.20.7":
+"@babel/parser@^7.20.13", "@babel/parser@^7.20.7", "@babel/parser@^7.7.0":
   version "7.20.15"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.15.tgz#eec9f36d8eaf0948bb88c87a46784b5ee9fd0c89"
   integrity sha512-DI4a1oZuf8wC+oAJA9RW6ga3Zbe8RZFt7kD9i4qAspz3I/yHet1VvC3DiSy/fsUvv5pvJuNPh0LPOdCcqinDPg==
@@ -1421,7 +1421,7 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-"@babel/traverse@^7.20.10", "@babel/traverse@^7.20.12", "@babel/traverse@^7.20.13", "@babel/traverse@^7.20.7":
+"@babel/traverse@^7.20.10", "@babel/traverse@^7.20.12", "@babel/traverse@^7.20.13", "@babel/traverse@^7.20.7", "@babel/traverse@^7.7.0":
   version "7.20.13"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.20.13.tgz#817c1ba13d11accca89478bd5481b2d168d07473"
   integrity sha512-kMJXfF0T6DIS9E8cgdLCSAL+cuCK+YEZHWiLK0SXpTo8YRj5lpJu3CDNKiIBCne4m9hhTIqUg6SYTAI39tAiVQ==
@@ -1454,7 +1454,7 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@babel/types@^7.20.7":
+"@babel/types@^7.20.7", "@babel/types@^7.7.0":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.20.7.tgz#54ec75e252318423fc07fb644dc6a58a64c09b7f"
   integrity sha512-69OnhBxSSgK0OzTJai4kyPDiKTIe3j+ctaHdIGVbRahTLAT7L3R9oeXHC2aVSuGYt3cVnoAMDmOCgJ2yaiLMvg==
@@ -1859,20 +1859,27 @@
     is-absolute-url "^4.0.1"
     lodash.set "^4.3.2"
 
-"@mintlify/eslint-config-next@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@mintlify/eslint-config-next/-/eslint-config-next-1.0.8.tgz#b3be0ccf325e4146623071e1c62409c4ab46f611"
-  integrity sha512-pgj/r7LDpccHlrxnZYK2+X5oRWWJqY/ZDebboz3KItesogQ0eFIntLkzY3bPg5vvqtlhJxvMv590of7SKBiB3Q==
+"@mintlify/eslint-config-next@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@mintlify/eslint-config-next/-/eslint-config-next-1.0.11.tgz#e9903f1681f448669a34666aa9d10e8fed6b641d"
+  integrity sha512-gCDigzIbNkDvRqSwhxqxU3sb6sHqW15L2s44iyBJITevjYoLvOUhjoXt3Rf72x5Il0anumLCNLhbJHsS3Zlpbw==
 
-"@mintlify/eslint-config-typescript@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@mintlify/eslint-config-typescript/-/eslint-config-typescript-1.0.6.tgz#54ca68e79a4ae5da8f30580bb7938f94c255bb26"
-  integrity sha512-PORGkbuCu9iOXqHErXP3QlzZwoMkukZcCC7q1TaZNQOsGoENBWs2gTdBWEQvuULY6vulGuAQjYTNzg6FhnojZg==
+"@mintlify/eslint-config-typescript@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@mintlify/eslint-config-typescript/-/eslint-config-typescript-1.0.7.tgz#a6da20179b21df85d3e08fed39e8be2c9a527692"
+  integrity sha512-gUtChM6VWXjHk6BlAuSlLJ9e1Q/WqIKqvf6sK3yE5hWfHt9vx5I9/5dhkl9YenNPscJ+DdoIr3z7EMawUJYOtA==
 
 "@mintlify/eslint-config@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@mintlify/eslint-config/-/eslint-config-1.0.3.tgz#7a971afadb38d9a1795551d9d1b4f51f9c0264c6"
   integrity sha512-/VS6LQBG8KoO+RP5RuUXd1EMdXHhBp98Teq+e/0cTokg4/cI7hsryMXWN+MIvXFvub3GV7AIqMxs8HMZsxCS/g==
+
+"@mintlify/prebuild@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@mintlify/prebuild/-/prebuild-1.0.0.tgz#0dc596e75d621dacb60e933be1a6fc33fc86ea0b"
+  integrity sha512-L+2WgrJ0Le1tOYFPib0CuVAirSysm4sFhNiO9r5dSK5X+aERiPu28+0jeg00/VH8PZqILK54Ef874u+2f98G5Q==
+  dependencies:
+    fs-extra "^11.1.0"
 
 "@mintlify/prettier-config@1.0.1":
   version "1.0.1"
@@ -4225,6 +4232,18 @@ axobject-query@^3.1.1:
   dependencies:
     deep-equal "^2.0.5"
 
+babel-eslint@10.x:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-10.1.0.tgz#6968e568a910b78fb3779cdd8b6ac2f479943232"
+  integrity sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
+    "@babel/parser" "^7.7.0"
+    "@babel/traverse" "^7.7.0"
+    "@babel/types" "^7.7.0"
+    eslint-visitor-keys "^1.0.0"
+    resolve "^1.12.0"
+
 babel-jest@^29.3.1:
   version "29.3.1"
   resolved "https://registry.npmjs.org/babel-jest/-/babel-jest-29.3.1.tgz"
@@ -5641,6 +5660,11 @@ eslint-utils@^3.0.0:
   dependencies:
     eslint-visitor-keys "^2.0.0"
 
+eslint-visitor-keys@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.3.0.tgz#30ebd1ef7c2fdff01c3a4f151044af25fab0523e"
+  integrity sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==
+
 eslint-visitor-keys@^2.0.0, eslint-visitor-keys@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz"
@@ -6087,6 +6111,15 @@ fs-extra@^10.1.0:
   version "10.1.0"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-10.1.0.tgz"
   integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
+fs-extra@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.1.0.tgz#5784b102104433bb0e090f48bfc4a30742c357ed"
+  integrity sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==
   dependencies:
     graceful-fs "^4.2.0"
     jsonfile "^6.0.1"
@@ -9440,7 +9473,7 @@ resolve.exports@^1.1.0:
   resolved "https://registry.npmjs.org/resolve.exports/-/resolve.exports-1.1.0.tgz"
   integrity sha512-J1l+Zxxp4XK3LUDZ9m60LRJF/mAe4z6a4xyabPHk7pvK5t35dACV32iIjJDFeWZFfZlO29w6SZ67knR0tHzJtQ==
 
-resolve@^1.1.7, resolve@^1.14.2, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.22.0, resolve@^1.22.1:
+resolve@^1.1.7, resolve@^1.12.0, resolve@^1.14.2, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.22.0, resolve@^1.22.1:
   version "1.22.1"
   resolved "https://registry.npmjs.org/resolve/-/resolve-1.22.1.tgz"
   integrity sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==

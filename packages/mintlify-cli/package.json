@@ -1,6 +1,6 @@
 {
   "name": "@mintlify/cli",
-  "version": "3.0.4",
+  "version": "3.0.7",
   "description": "The Mintlify CLI",
   "engines": {
     "node": ">=18.0.0"
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
-    "@mintlify/previewing": "3.1.0",
+    "@mintlify/previewing": "3.1.1",
     "@mintlify/validation": "^0.1.9",
     "@octokit/rest": "^19.0.5",
     "axios": "^1.2.2",

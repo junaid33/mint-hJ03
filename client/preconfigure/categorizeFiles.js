@@ -1,29 +1,10 @@
-import { promises as _promises } from 'fs';
+import { getFileList } from '@mintlify/prebuild';
 import path from 'path';
 
 import { getFileExtension, openApiCheck } from './utils.js';
 
-const { readdir } = _promises;
-
-const getFileList = async (dirName, og = dirName) => {
-  let files = [];
-  const items = await readdir(dirName, { withFileTypes: true });
-
-  for (const item of items) {
-    if (item.isDirectory()) {
-      files = [...files, ...(await getFileList(`${dirName}/${item.name}`, og))];
-    } else {
-      const path = `${dirName}/${item.name}`;
-      const name = path.replace(og, '');
-      files.push(name);
-    }
-  }
-
-  return files;
-};
-
 const categorizeFiles = async (contentDirectoryPath) => {
-  const allFilesInCmdExecutionPath = await getFileList(contentDirectoryPath);
+  const allFilesInCmdExecutionPath = getFileList(contentDirectoryPath);
   const contentFilenames = [];
   const staticFilenames = [];
   const promises = [];

@@ -4,8 +4,9 @@
 
 # Installation
 
-`npm install @mintlify/validation
-`
+```
+npm install @mintlify/validation
+```
 
 # Usage
 
@@ -50,9 +51,5 @@ Additional documentation on `mint.json` is available on [Mintlify's website](htt
 Join our Discord community if you have questions or just want to chat:
 
 [![](https://dcbadge.vercel.app/api/server/ACREKdwjG5)](https://discord.gg/ACREKdwjG5)
-
-# License
-
-[MIT](https://tldrlegal.com/license/mit-license)
 
 _Built with 💚 by the Mintlify community._

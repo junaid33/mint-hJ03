@@ -1,6 +1,4 @@
-import { mkdirSync, writeFileSync } from "fs";
 import Ora, { Ora as OraType } from "ora";
-import path from "path";
 import shell from "shelljs";
 
 export const MintConfig = (
