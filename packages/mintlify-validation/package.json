@@ -2,21 +2,31 @@
   "name": "@mintlify/validation",
   "version": "0.1.9",
   "description": "Validates mint.json files",
+  "author": "Mintlify, Inc.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mintlify/mint",
+    "directory": "packages/mintlify-validation"
+  },
+  "bugs": {
+    "url": "https://github.com/mintlify/mint/issues"
+  },
+  "license": "Elastic-2.0",
+  "keywords": [
+    "mintlify",
+    "mint",
+    "validation"
+  ],
+  "type": "commonjs",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "keywords": [
-    "mintlify",
-    "mint"
-  ],
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "webpack",
-    "test": "jest",
-    "lint": "eslint . --cache"
-  },
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
@@ -25,16 +35,16 @@
       "@/types/(.*)": "<rootDir>/src/types/$1"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mintlify/mint/tree/main/packages/validation"
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "webpack",
+    "test": "jest",
+    "lint": "eslint . --cache"
   },
-  "bugs": {
-    "url": "https://github.com/mintlify/mint/issues"
+  "dependencies": {
+    "zod": "^3.20.6",
+    "zod-to-json-schema": "^3.20.3"
   },
-  "author": "Mintlify, Inc.",
-  "license": "Elastic-2.0",
-  "type": "commonjs",
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/preset-env": "^7.20.2",
@@ -55,9 +65,5 @@
     "typescript": "^4.8.2",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
-  },
-  "dependencies": {
-    "zod": "^3.20.6",
-    "zod-to-json-schema": "^3.20.3"
   }
 }

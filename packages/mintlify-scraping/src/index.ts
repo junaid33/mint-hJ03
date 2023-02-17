@@ -15,28 +15,12 @@ import {
   scrapeGitbookSectionCommand,
 } from "./scraping/scrapeSectionCommands.js";
 import { scrapeReadMeSection } from "./scraping/site-scrapers/scrapeReadMeSection.js";
-import dev from "./local-preview/index.js";
-import installDepsCommand from "./local-preview/helper-commands/installDepsCommand.js";
 import { scrapeIntercomPage } from "./scraping/site-scrapers/Intercom/scrapeIntercomPage.js";
 import { scrapeIntercomSection } from "./scraping/site-scrapers/Intercom/scrapeIntercomSection.js";
 
 yargs(hideBin(process.argv))
   .command(
-    "dev",
-    "Runs Mintlify locally (Must run in directory with mint.json)",
-    () => {},
-    async (argv) => {
-      await dev(argv);
-    }
-  )
-  .command(
-    "install",
-    "Install dependencies for local Mintlify",
-    () => {},
-    installDepsCommand
-  )
-  .command(
-    "scrape-page [url]",
+    "page [url]",
     "Scrapes a page",
     () => {},
     async (argv) => {
@@ -44,7 +28,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-gitbook-page [url]",
+    "gitbook-page [url]",
     "Scrapes a GitBook page",
     () => {},
     async (argv) => {
@@ -52,7 +36,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-readme-page [url]",
+    "readme-page [url]",
     "Scrapes a ReadMe page",
     () => {},
     async (argv) => {
@@ -60,7 +44,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-intercom-page [url]",
+    "intercom-page [url]",
     "Scrapes a Intercom page",
     () => {},
     async (argv) => {
@@ -68,7 +52,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-section [url]",
+    "section [url]",
     "Scrapes the docs in the section",
     () => {},
     async (argv) => {
@@ -76,7 +60,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-gitbook-section [url]",
+    "gitbook-section [url]",
     "Scrapes the Gitbook section",
     () => {},
     async (argv) => {
@@ -84,7 +68,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-readme-section [url]",
+    "readme-section [url]",
     "Scrapes the ReadMe section",
     () => {},
     async (argv) => {
@@ -92,7 +76,7 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    "scrape-intercom-section [url]",
+    "intercom-section [url]",
     "Scrapes the Intercom section",
     () => {},
     async (argv) => {

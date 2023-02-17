@@ -23,14 +23,18 @@ const createPage = async (
   // Replace .mdx so we can pass file paths into this function
   const slug = pagePath.replace(/\.mdx?$/, "");
   let defaultTitle = slugToTitle(slug);
+  let description: string;
   // Append data from OpenAPI if it exists
-  const { title, description } = getOpenApiTitleAndDescription(
-    openApiFiles,
-    metadata?.openapi
-  );
+  if (metadata?.openapi) {
+    const { title, description: openApiDescription } =
+      getOpenApiTitleAndDescription(openApiFiles, metadata?.openapi);
 
-  if (title) {
-    defaultTitle = title;
+    if (title) {
+      defaultTitle = title;
+    }
+    if (openApiDescription) {
+      description = openApiDescription;
+    }
   }
 
   const pageMetadata = {

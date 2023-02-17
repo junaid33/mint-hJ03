@@ -1,5 +1,18 @@
+# Editor
 .idea/
-.DS_Store
+.vscode/
+
+# NPM
 node_modules/
-mint-version.txt
 .eslintcache
+
+# Mint
+mint-version.txt
+
+# Output
+lib/
+bin/
+dist/
+
+# Misc
+.DS_Store

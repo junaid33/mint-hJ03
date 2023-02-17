@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install modules
         run: yarn
-        working-directory: packages/validation
+        working-directory: packages/mintlify-validation
       - name: Run tests
         run: yarn test
-        working-directory: packages/validation
+        working-directory: packages/mintlify-validation

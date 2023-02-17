@@ -1,3 +1,13 @@
+# Running CLI Locally
+
+Note - contributing requires `yarn` and it's recommended you install it as a global installation. If you don't have yarn installed already run `npm install -g yarn` in your terminal.
+
+Run `yarn` or `yarn install` to install dependencies. Then, run `npm link` once to link to your local version of the CLI in the npm global namespace (`npm list -g`).
+
+Build the CLI using `yarn build` or `yarn watch` to see your local changes reflected. Keep `yarn watch` running in a terminal for changes to be quickly and continuously reflected while developing.
+
+To uninstall locally, run `npm uninstall @mintlify/scraping -g`.
+
 # CLI Scraping
 
 The CLI has many commands. This doc focuses on how we coded scraping websites.
@@ -6,11 +16,11 @@ The CLI has many commands. This doc focuses on how we coded scraping websites.
 
 There are two main commands:
 
-`mintlify scrape-page [url]`
+`mintlify-scrape page [url]`
 
 and
 
-`mintlify scrape-section [url]`
+`mintlify-scrape section [url]`
 
 Scraping a page downloads a single page’s content. Scraping a section goes through the navigation and scrapes each page. The code for downloading a page’s content is shared between the two commands.
 
