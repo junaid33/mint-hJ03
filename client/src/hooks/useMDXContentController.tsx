@@ -21,29 +21,37 @@ export const useMDXContentController = ({
   pageMetadata,
   apiComponents,
 }: Omit<MDXContentControllerProps, 'children'>) => {
+  const currentPath = useCurrentPath();
+  const { prev, next } = usePrevNext();
+  const { mintConfig, openApiFiles } = useContext(ConfigContext);
+
+  // Set initial values.
   const ctx = useMDXContentReducer({
+    mintConfig,
     tableOfContents,
     pageMetadata,
     apiComponents,
+    currentPath,
+    prev,
+    next,
   });
   const [state, dispatch] = ctx;
-  const { mintConfig, openApiFiles } = useContext(ConfigContext);
 
-  const currentPath = useCurrentPath();
-  const { prev, next } = usePrevNext();
-
-  // Populates state with values from params/hooks.
+  // Populates state with values from props/hooks, when dependencies change.
   useEffect(() => {
     dispatch({
       type: MDXContentActionEnum.SET_STATE,
       payload: {
-        currentPath,
         mintConfig,
+        tableOfContents,
+        pageMetadata,
+        apiComponents,
+        currentPath,
         prev,
         next,
       },
     });
-  }, [currentPath, dispatch, mintConfig, next, prev]);
+  }, [apiComponents, currentPath, dispatch, mintConfig, next, pageMetadata, prev, tableOfContents]);
 
   // Gets OpenApiPlaygroundProps and dispatches state update.
   useEffect(() => {
