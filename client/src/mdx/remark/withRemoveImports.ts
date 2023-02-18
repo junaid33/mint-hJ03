@@ -1,7 +1,6 @@
 import type { Root } from 'mdast';
 import { remove } from 'unist-util-remove';
 
-// TODO - remove this once we migrate to mdx-bundler
 const withRemoveImports = () => {
   return (tree: Root) => {
     remove(
