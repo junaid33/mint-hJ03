@@ -5,7 +5,7 @@ import { NextRequest } from 'next/server';
 import { truncateThumbnailDescription } from '@/utils/getOGImageEndpoint';
 
 export const config = {
-  runtime: 'experimental-edge', // Can likely switch to "edge" in Next 14
+  runtime: 'edge',
 };
 
 const interFontExtraBoldImport = fetch(
