@@ -35,6 +35,9 @@ export default async function handler(req: NextRequest) {
       throw 'No background color provided';
     }
 
+    const shouldHideLogo =
+      title?.length && title.length > 20 && description?.length && description.length > 60;
+
     return new ImageResponse(
       (
         <div
@@ -48,7 +51,10 @@ export default async function handler(req: NextRequest) {
           }}
         >
           <div tw="relative flex flex-col w-full px-26 py-24 h-full">
-            <div tw="flex flex-1">{logo && <img tw="h-12" src={logo} alt="Logo" />}</div>
+            <div tw="flex flex-1">
+              {/* eslint-disable-next-line */}
+              {logo && !shouldHideLogo && <img tw="h-12" src={logo} alt="Logo" />}
+            </div>
             <div tw="flex flex-col text-left">
               <span
                 tw="w-24 h-2"
@@ -58,7 +64,7 @@ export default async function handler(req: NextRequest) {
               ></span>
               <span
                 tw={clsx(
-                  'mt-10 font-bold tracking-tight text-base',
+                  'mt-12 font-bold tracking-tight text-base',
                   isDark ? 'text-slate-100' : 'text-slate-900'
                 )}
                 style={{ fontSize: '86px', lineHeight: '90px' }}
