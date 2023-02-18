@@ -5,6 +5,7 @@
 # NPM
 node_modules/
 .eslintcache
+yarn-error.log
 
 # Mint
 mint-version.txt
