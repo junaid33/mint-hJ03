@@ -30,16 +30,14 @@ export const useCurrentTableOfContentsSection = (ctx: MDXContentContextType) => 
         payload: current,
       });
     }
-    window.addEventListener('scroll', onScroll, {
+    const options: AddEventListenerOptions = {
       capture: true,
       passive: true,
-    });
+    };
+    window.addEventListener('scroll', onScroll, options);
     onScroll();
     return () => {
-      window.removeEventListener('scroll', onScroll, {
-        capture: true,
-        passive: true,
-      } as any);
+      window.removeEventListener('scroll', onScroll, options);
     };
   }, [dispatch, headings, tableOfContents]);
 
