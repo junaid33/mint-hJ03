@@ -38,7 +38,7 @@ const Social = ({ type, url }: SocialProps) => {
       <Icon
         icon={icon}
         iconType="solid"
-        className="h-5 w-5 bg-zinc-400 dark:bg-zinc-500 hover:bg-zinc-500 dark:hover:bg-zinc-400"
+        className="h-5 w-5 bg-slate-400 dark:bg-slate-500 hover:bg-slate-500 dark:hover:bg-slate-400"
       />
     </a>
   );
@@ -98,13 +98,13 @@ export function Footer() {
           )}
         </div>
       )}
-      <div className="pt-10 border-t border-zinc-200 sm:flex justify-between text-zinc-500 dark:border-zinc-200/5 pb-28">
+      <div className="pt-10 border-t border-slate-200 sm:flex justify-between dark:border-slate-800 pb-28">
         <div className="mb-6 sm:mb-0 sm:flex">
           <a
             href="https://mintlify.com"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-zinc-900 dark:hover:text-zinc-400"
+            className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300"
           >
             Powered by Mintlify
           </a>
