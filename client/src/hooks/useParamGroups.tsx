@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { MDXContentContextType } from '@/context/MDXContentContext';
 import { MDXContentActionEnum } from '@/enums/MDXContentActionEnum';
-import { getParamGroupsFromApiComponents } from '@/utils/api';
+import { useParamGroupsCallback } from '@/hooks/useParamGroupsCallback';
 
 /**
  * Gets param groups from api components and dispatches state update.
@@ -10,32 +10,17 @@ import { getParamGroupsFromApiComponents } from '@/utils/api';
 export const useParamGroups = (ctx: MDXContentContextType) => {
   const [state, dispatch] = ctx;
   const { pageMetadata, openApiPlaygroundProps, apiComponents, mintConfig } = state;
+  const getParamGroups = useParamGroupsCallback();
   useEffect(() => {
-    const paramGroupDict = getParamGroupsFromApiComponents(
-      openApiPlaygroundProps?.apiComponents ?? apiComponents,
-      pageMetadata.authMethod || mintConfig?.api?.auth?.method,
-      mintConfig?.api?.auth?.name
-    );
-    const paramGroups = Object.entries(paramGroupDict).map(([groupName, params]) => {
-      return {
-        name: groupName,
-        params,
-      };
-    });
     dispatch({
       type: MDXContentActionEnum.SET_PARAM_GROUPS,
-      payload: {
-        paramGroups,
-        paramGroupDict,
-      },
+      payload: getParamGroups({
+        pageMetadata,
+        openApiPlaygroundProps,
+        apiComponents,
+        mintConfig,
+      }),
     });
-  }, [
-    apiComponents,
-    dispatch,
-    mintConfig?.api?.auth?.method,
-    mintConfig?.api?.auth?.name,
-    openApiPlaygroundProps?.apiComponents,
-    pageMetadata.authMethod,
-  ]);
+  }, [apiComponents, dispatch, getParamGroups, mintConfig, openApiPlaygroundProps, pageMetadata]);
   return [state, dispatch] as MDXContentContextType;
 };
