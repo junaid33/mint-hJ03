@@ -6,12 +6,13 @@ import {
   ConfigInterface,
 } from '@/analytics/AbstractAnalyticsImplementation';
 
+import { RouteProps } from '../useAnalytics';
+
 export default class SegmentAnalytics extends AbstractAnalyticsImplementation {
   initialized = false;
-  analytics: any;
-  subdomain?: string; // Use for internal analytics from InternalAnalytics
+  analytics?: AnalyticsBrowser;
 
-  init(implementationConfig: ConfigInterface, subdomain?: string) {
+  init(implementationConfig: ConfigInterface) {
     if (!implementationConfig?.writeKey || process.env.NODE_ENV !== 'production') {
       return;
     }
@@ -21,18 +22,13 @@ export default class SegmentAnalytics extends AbstractAnalyticsImplementation {
         writeKey: implementationConfig.writeKey,
       });
       this.initialized = true;
-      this.subdomain = subdomain;
     }
   }
 
   createEventListener(eventName: string) {
     if (this.initialized && this.analytics) {
-      const subdomain = this.subdomain;
       const func = async function capture(this: SegmentAnalytics, eventProperties: object) {
-        this.analytics.track(eventName, {
-          ...eventProperties,
-          subdomain,
-        });
+        this.analytics?.track(eventName, eventProperties);
       };
       return func.bind(this);
     }
@@ -41,12 +37,9 @@ export default class SegmentAnalytics extends AbstractAnalyticsImplementation {
     };
   }
 
-  onRouteChange(url: string, routeProps: any) {
+  onRouteChange(url: string, routeProps: RouteProps) {
     if (this.initialized && this.analytics && !routeProps.shallow) {
-      this.analytics.page(undefined, undefined, {
-        ...routeProps,
-        subdomain: this.subdomain,
-      });
+      this.analytics.page(undefined, undefined, routeProps);
     }
   }
 }

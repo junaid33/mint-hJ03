@@ -25,6 +25,7 @@ import MixpanelAnalytics from './implementations/mixpanel';
 import PirschAnalytics from './implementations/pirsch';
 import SegmentAnalytics from './implementations/segment';
 import InternalAnalytics from './internal';
+import { RouteProps } from './useAnalytics';
 
 export type AnalyticsMediatorConstructorInterface = {
   amplitude?: AmplitudeConfigInterface;
@@ -54,7 +55,7 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
 
     if (internalAnalyticsWriteKey) {
       const internalAnalytics = new InternalAnalytics();
-      internalAnalytics.init({ writeKey: internalAnalyticsWriteKey }, subdomain);
+      internalAnalytics.init({ apiKey: internalAnalyticsWriteKey }, subdomain);
       this.analyticsIntegrations.push(internalAnalytics);
     }
 
@@ -72,57 +73,57 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
       return;
     }
 
-    if (amplitudeEnabled) {
+    if (amplitudeEnabled && analytics.amplitude) {
       const amplitude = new AmplitudeAnalytics();
-      amplitude.init(analytics.amplitude!);
+      amplitude.init(analytics.amplitude);
       this.analyticsIntegrations.push(amplitude);
     }
 
-    if (fathomEnabled) {
+    if (fathomEnabled && analytics.fathom) {
       const fathom = new FathomAnalytics();
-      fathom.init(analytics.fathom!);
+      fathom.init(analytics.fathom);
       this.analyticsIntegrations.push(fathom);
     }
 
-    if (ga4Enabled) {
+    if (ga4Enabled && analytics.ga4) {
       const ga4 = new GA4Analytics();
-      ga4.init(analytics.ga4!);
+      ga4.init(analytics.ga4);
       this.analyticsIntegrations.push(ga4);
     }
 
-    if (hotjarEnabled) {
+    if (hotjarEnabled && analytics.hotjar) {
       const hotjar = new HotjarAnalytics();
-      hotjar.init(analytics.hotjar!);
+      hotjar.init(analytics.hotjar);
       this.analyticsIntegrations.push(hotjar);
     }
 
-    if (logrocketEnabled) {
+    if (logrocketEnabled && analytics.logrocket) {
       const logrocket = new LogrocketAnalytics();
-      logrocket.init(analytics.logrocket!);
+      logrocket.init(analytics.logrocket);
       this.analyticsIntegrations.push(logrocket);
     }
 
-    if (mixpanelEnabled) {
+    if (mixpanelEnabled && analytics.mixpanel) {
       const mixpanel = new MixpanelAnalytics();
-      mixpanel.init(analytics.mixpanel!);
+      mixpanel.init(analytics.mixpanel);
       this.analyticsIntegrations.push(mixpanel);
     }
 
-    if (pirschEnabled) {
+    if (pirschEnabled && analytics.pirsch) {
       const pirsch = new PirschAnalytics();
-      pirsch.init(analytics.pirsch!);
+      pirsch.init(analytics.pirsch);
       this.analyticsIntegrations.push(pirsch);
     }
 
-    if (posthogEnabled) {
+    if (posthogEnabled && analytics.posthog) {
       const posthog = new PostHogAnalytics();
-      posthog.init(analytics.posthog!);
+      posthog.init(analytics.posthog);
       this.analyticsIntegrations.push(posthog);
     }
 
-    if (segmentEnabled) {
+    if (segmentEnabled && analytics.segment) {
       const segment = new SegmentAnalytics();
-      segment.init(analytics.segment!);
+      segment.init(analytics.segment);
       this.analyticsIntegrations.push(segment);
     }
   }
@@ -136,7 +137,7 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
     };
   }
 
-  onRouteChange(url: string, routeProps: any) {
+  onRouteChange(url: string, routeProps: RouteProps) {
     this.analyticsIntegrations.forEach((integration) => integration.onRouteChange(url, routeProps));
   }
 }

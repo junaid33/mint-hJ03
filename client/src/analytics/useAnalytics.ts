@@ -6,6 +6,10 @@ import AnalyticsMediator from '@/analytics/AnalyticsMediator';
 import { AnalyticsMediatorConstructorInterface } from '@/analytics/AnalyticsMediator';
 import FakeAnalyticsMediator from '@/analytics/FakeAnalyticsMediator';
 
+export type RouteProps = {
+  shallow: boolean;
+};
+
 /**
  * useAnalytics is the only way to create an AnalyticsMediator. Trying to create an
  * AnalyticsMediator without this hook will break because code like onRouteChange will
@@ -39,7 +43,7 @@ export function useAnalytics(
   useEffect(() => {
     analyticsMediator.onRouteChange(Router.asPath, { initialLoad: true });
 
-    Router.events.on('routeChangeComplete', (url: string, routeProps: any) => {
+    Router.events.on('routeChangeComplete', (url: string, routeProps: RouteProps) => {
       analyticsMediator.onRouteChange(url, routeProps);
     });
   }, [analyticsMediator]);

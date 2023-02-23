@@ -1,8 +1,8 @@
-import { ConfigInterface } from '../AbstractAnalyticsImplementation';
-import SegmentAnalytics from '../implementations/segment';
+import { PostHogConfigInterface } from '../AbstractAnalyticsImplementation';
+import PostHogAnalytics from '../implementations/posthog';
 
-export default class InternalAnalytics extends SegmentAnalytics {
-  init(implementationConfig: ConfigInterface, subdomain: string) {
+export default class InternalAnalytics extends PostHogAnalytics {
+  init(implementationConfig: PostHogConfigInterface, subdomain: string) {
     super.init(implementationConfig, subdomain);
   }
 }

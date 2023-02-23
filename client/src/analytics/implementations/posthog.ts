@@ -8,8 +8,9 @@ import {
 
 export default class PostHogAnalytics extends AbstractAnalyticsImplementation {
   initialized = false;
+  subdomain?: string; // used for internal analytics
 
-  init(implementationConfig: ConfigInterface) {
+  init(implementationConfig: ConfigInterface, subdomain?: string) {
     if (!implementationConfig.apiKey || process.env.NODE_ENV !== 'production') {
       return;
     }
@@ -23,15 +24,21 @@ export default class PostHogAnalytics extends AbstractAnalyticsImplementation {
       },
     });
 
+    this.subdomain = subdomain;
+
     // Track page views
-    const handleRouteChange = () => posthog.capture('$pageview');
+    const handleRouteChange = () => posthog.capture('$pageview', { subdomain: this.subdomain });
     Router.events.on('routeChangeComplete', handleRouteChange);
   }
 
   createEventListener(eventName: string) {
     if (this.initialized) {
+      const subdomain = this?.subdomain;
       return async function capture(eventProperties: object) {
-        posthog.capture(eventName, eventProperties);
+        posthog.capture(eventName, {
+          ...eventProperties,
+          subdomain,
+        });
       };
     }
     return async function doNothing(_: object) {
