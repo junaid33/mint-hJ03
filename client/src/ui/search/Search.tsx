@@ -14,8 +14,10 @@ import {
 } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContext } from '@/context/VersionContext';
+import { Event } from '@/enums/events';
 import { useActionKey } from '@/hooks/useActionKey';
 import { zIndex } from '@/layouts/zIndex';
 import { pathToBreadcrumbs } from '@/utils/paths/pathToBreadcrumbs';
@@ -39,7 +41,7 @@ const SearchContext = createContext({
   onClose: () => {
     return;
   },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line unused-imports/no-unused-vars
   onInput: (e: SearchInput) => {
     return;
   },
@@ -257,6 +259,8 @@ export function SearchProvider({
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState<string>('');
   const [hits, setHits] = useState<Hit[]>([]);
+  const analyticsMediator = useContext(AnalyticsContext);
+  const trackSearchResultClick = analyticsMediator.createEventListener(Event.SearchResultClick);
 
   useHotkeys('cmd+k', (e) => {
     e.preventDefault();
@@ -306,7 +310,13 @@ export function SearchProvider({
       .toLowerCase()
       .replaceAll(' ', '-')
       .replaceAll(/[^a-zA-Z0-9-_#]/g, '');
-    router.push(`/${hit.slug}${sectionSlug}`);
+    const pathToGo = `/${hit.slug}`;
+    router.push(`${pathToGo}${sectionSlug}`);
+    trackSearchResultClick({
+      path: pathToGo,
+      section: sectionSlug ? sectionSlug : undefined,
+    });
+
     setHits([]);
   };
 

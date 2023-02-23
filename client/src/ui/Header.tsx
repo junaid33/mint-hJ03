@@ -8,7 +8,9 @@ import Router from 'next/router';
 import { useContext } from 'react';
 import { useEffect, useState } from 'react';
 
+import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { ConfigContext } from '@/context/ConfigContext';
+import { Event } from '@/enums/events';
 import { zIndex } from '@/layouts/zIndex';
 import { TopbarCta } from '@/types/config';
 import { Logo } from '@/ui/Logo';
@@ -98,6 +100,8 @@ export function NavPopover({
 }
 
 function GitHubCta({ button }: { button: TopbarCta }) {
+  const analyticsMediator = useContext(AnalyticsContext);
+  const trackCtaClick = analyticsMediator.createEventListener(Event.CTAClick);
   const [repoData, setRepoData] = useState<{ stargazers_count: number; forks_count: number }>();
 
   const github = gh(button.url);
@@ -119,7 +123,12 @@ function GitHubCta({ button }: { button: TopbarCta }) {
 
   return (
     <li className="cursor-pointer">
-      <a href={button.url} target="_blank" rel="noreferrer">
+      <a
+        href={button.url}
+        target="_blank"
+        rel="noreferrer"
+        onClick={() => trackCtaClick({ url: button.url, type: 'github' })}
+      >
         <div className="group flex items-center space-x-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -170,6 +179,9 @@ function GitHubCta({ button }: { button: TopbarCta }) {
 }
 
 function TopBarCtaButton({ button }: { button: TopbarCta }) {
+  const analyticsMediator = useContext(AnalyticsContext);
+  const trackCtaClick = analyticsMediator.createEventListener(Event.CTAClick);
+
   if (button.type === 'github') {
     return <GitHubCta button={button} />;
   }
@@ -181,6 +193,7 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
           href={button.url ?? '/'}
           target="_blank"
           className="group px-4 py-1.5 relative inline-flex items-center rounded-full shadow-sm text-sm font-medium"
+          onClick={() => trackCtaClick({ name: button.name, url: button.url, type: 'button' })}
         >
           <span className="absolute inset-0 bg-primary-dark rounded-full group-hover:opacity-[0.9]" />
           <span className={clsx(zIndex.Control, 'mr-2 text-white')}>{button.name}</span>
@@ -208,6 +221,12 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
 
 export function NavItems() {
   const { mintConfig } = useContext(ConfigContext);
+  const analyticsMediator = useContext(AnalyticsContext);
+  const trackNavigationClick = analyticsMediator.createEventListener(Event.HeaderNavItemClick);
+
+  const onClickNavigation = (name: string | undefined, url: string) => {
+    trackNavigationClick({ name, url });
+  };
 
   return (
     <>
@@ -220,6 +239,7 @@ export function NavItems() {
               <a
                 href={topbarLink.url}
                 className="font-medium hover:text-primary dark:hover:text-primary-light"
+                onClick={() => onClickNavigation(topbarLink.name, topbarLink.url)}
               >
                 {topbarLink.name}
               </a>
@@ -231,6 +251,7 @@ export function NavItems() {
               <Link
                 href={topbarLink.url ?? '/'}
                 className="font-medium hover:text-primary dark:hover:text-primary-light"
+                onClick={() => onClickNavigation(topbarLink.name, topbarLink.url)}
               >
                 {topbarLink.name}
               </Link>
@@ -313,7 +334,7 @@ export function Header({
               </div>
               <div className="relative flex-none bg-white lg:w-64 xl:w-80 dark:bg-slate-900 pointer-events-auto rounded-md">
                 <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 rounded-md py-1.5 pl-2 pr-3 zinc-box bg-white ring-1 ring-zinc-400/20 hover:ring-zinc-600/25 dark:ring-zinc-600/30 dark:hover:ring-zinc-500/30">
-                  {({ actionKey }: any) => (
+                  {({ actionKey }) => (
                     <>
                       <Icon
                         icon="magnifying-glass"

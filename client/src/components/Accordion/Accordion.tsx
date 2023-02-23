@@ -2,6 +2,7 @@ import { Accordion as GenericAccordion } from '@mintlify/components';
 import { ReactNode, useContext } from 'react';
 
 import AnalyticsContext from '@/analytics/AnalyticsContext';
+import { Event } from '@/enums/events';
 import { IconType } from '@/types/config';
 import { ComponentIcon } from '@/ui/Icon';
 
@@ -21,8 +22,8 @@ function Accordion({
   children: ReactNode;
 }) {
   const analyticsMediator = useContext(AnalyticsContext);
-  const trackOpen = analyticsMediator.createEventListener('accordion_open');
-  const trackClose = analyticsMediator.createEventListener('accordion_close');
+  const trackOpen = analyticsMediator.createEventListener(Event.AccordionOpen);
+  const trackClose = analyticsMediator.createEventListener(Event.AccordionClose);
 
   const onChange = (open: boolean) => {
     if (open) {
