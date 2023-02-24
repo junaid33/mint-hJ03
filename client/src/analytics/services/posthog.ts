@@ -1,15 +1,9 @@
-import Router from 'next/router';
 import posthog from 'posthog-js';
 
 import { AnalyticsService } from '@/analytics/AnalyticsService';
 
 export default class PostHogAnalytics extends AnalyticsService {
   initialized = false;
-
-  trackPageViews() {
-    const handleRouteChange = () => posthog.capture('$pageview');
-    Router.events.on('routeChangeComplete', handleRouteChange);
-  }
 
   init(implementationConfig: ConfigInterface) {
     if (!implementationConfig.apiKey || process.env.NODE_ENV !== 'production') {
@@ -24,8 +18,6 @@ export default class PostHogAnalytics extends AnalyticsService {
         if (process.env.NODE_ENV !== 'production') posthogInstance.opt_out_capturing();
       },
     });
-
-    this.trackPageViews();
   }
 
   captureEvent(eventName: string) {
@@ -46,6 +38,6 @@ export default class PostHogAnalytics extends AnalyticsService {
   }
 
   onRouteChange(_url: string, _routeProps: RouteProps): void {
-    return;
+    posthog.capture('$pageview');
   }
 }

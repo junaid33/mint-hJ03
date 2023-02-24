@@ -1,4 +1,3 @@
-import Router from 'next/router';
 import posthog from 'posthog-js';
 
 import PostHogAnalytics from '../services/posthog';
@@ -12,11 +11,6 @@ export default class InternalAnalytics extends PostHogAnalytics {
     this.subdomain = subdomain;
   }
 
-  trackPageViews() {
-    const handleRouteChange = () => posthog.capture('$pageview', { subdomain: this.subdomain });
-    Router.events.on('routeChangeComplete', handleRouteChange);
-  }
-
   captureEvent(eventName: string) {
     return async (eventProperties: object) => {
       posthog.capture(eventName, {
@@ -24,5 +18,9 @@ export default class InternalAnalytics extends PostHogAnalytics {
         subdomain: this.subdomain,
       });
     };
+  }
+
+  onRouteChange(_url: string, _routeProps: RouteProps): void {
+    posthog.capture('$pageview', { subdomain: this.subdomain });
   }
 }
