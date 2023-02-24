@@ -1,4 +1,3 @@
-import { AnalyticsMediatorConstructorInterface } from '@/analytics/AnalyticsMediator';
 import { Config } from '@/types/config';
 
 export function getAnalyticsConfig(config: Config) {

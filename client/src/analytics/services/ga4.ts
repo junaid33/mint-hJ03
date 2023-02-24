@@ -1,9 +1,6 @@
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class GA4Analytics extends AbstractAnalyticsImplementation {
+export default class GA4Analytics extends AnalyticsService {
   measurementId: string | undefined;
 
   init(implementationConfig: ConfigInterface) {

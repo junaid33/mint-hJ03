@@ -1,14 +1,13 @@
 import { CodeBlock as GenericCodeBlock } from '@mintlify/components';
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 
-import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { Event } from '@/enums/events';
+import { useAnalyticsContext } from '@/hooks/useAnalyticsContext';
 import { useColors } from '@/hooks/useColors';
 
 export function CodeBlock({ filename, children }: { filename?: string; children?: ReactNode }) {
-  const analyticsMediator = useContext(AnalyticsContext);
   const colors = useColors();
-  const trackCodeBlockCopy = analyticsMediator.createEventListener(Event.CodeBlockCopy);
+  const trackCodeBlockCopy = useAnalyticsContext(Event.CodeBlockCopy);
 
   return (
     <GenericCodeBlock

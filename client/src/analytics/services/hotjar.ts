@@ -1,9 +1,6 @@
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class HotjarAnalytics extends AbstractAnalyticsImplementation {
+export default class HotjarAnalytics extends AnalyticsService {
   initialized = false;
   // Store events to submit after the library is loaded.
   waitTracking: string[] = [];
@@ -45,5 +42,8 @@ export default class HotjarAnalytics extends AbstractAnalyticsImplementation {
       this.hotjar.event(eventName);
     };
     return captureFunc.bind(this);
+  }
+  onRouteChange(_url: string, _routeProps: RouteProps): void {
+    return;
   }
 }

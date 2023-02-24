@@ -4,9 +4,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useContext } from 'react';
 
-import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { ConfigContext } from '@/context/ConfigContext';
 import { Event } from '@/enums/events';
+import { useAnalyticsContext } from '@/hooks/useAnalyticsContext';
 import { useMDXContent } from '@/hooks/useMDXContent';
 import { useSetApiBaseIndexCallback } from '@/hooks/useSetApiBaseIndexCallback';
 import { useSetApiPlaygroundInputsCallback } from '@/hooks/useSetApiPlaygroundInputsCallback';
@@ -31,8 +31,7 @@ export function ApiPlayground() {
   const { basePath } = useRouter();
   const { mintConfig, openApiFiles } = useContext(ConfigContext);
   const [apiBaseIndex, setApiBaseIndex] = useState(0);
-  const analyticsMediator = useContext(AnalyticsContext);
-  const trackApiPlaygroundCall = analyticsMediator.createEventListener(Event.APIPlaygroundCall);
+  const trackApiPlaygroundCall = useAnalyticsContext(Event.APIPlaygroundCall);
 
   const [{ openApiPlaygroundProps, pageMetadata, api, paramGroups }] = useMDXContent();
 

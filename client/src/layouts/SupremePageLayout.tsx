@@ -6,10 +6,10 @@ import Script from 'next/script';
 import { useState, useEffect } from 'react';
 
 import AnalyticsContext from '@/analytics/AnalyticsContext';
-import GA4Script from '@/analytics/GA4Script';
-import GTMScript from '@/analytics/GTMScript';
-import KoalaScript from '@/analytics/KoalaScript';
-import PlausibleScript from '@/analytics/PlausibleScript';
+import GA4Script from '@/analytics/scripts/GA4Script';
+import GTMScript from '@/analytics/scripts/GTMScript';
+import KoalaScript from '@/analytics/scripts/KoalaScript';
+import PlausibleScript from '@/analytics/scripts/PlausibleScript';
 import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
@@ -69,7 +69,7 @@ export default function SupremePageLayout({
         <ConfigContext.Provider
           value={{ mintConfig, navWithMetadata, openApiFiles: openApiFiles ?? [], subdomain }}
         >
-          <AnalyticsContext.Provider value={analyticsMediator}>
+          <AnalyticsContext.Provider value={{ analyticsMediator }}>
             <ColorVariables />
             <Head>
               {favicons?.icons?.map((favicon) => (

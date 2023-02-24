@@ -1,6 +1,8 @@
 import { createContext } from 'react';
 
-import { AnalyticsMediatorInterface } from './AbstractAnalyticsImplementation';
-
-const AnalyticsContext = createContext({} as AnalyticsMediatorInterface);
+const AnalyticsContext = createContext({
+  analyticsMediator: undefined,
+} as {
+  analyticsMediator: AnalyticsMediatorInterface | undefined;
+});
 export default AnalyticsContext;

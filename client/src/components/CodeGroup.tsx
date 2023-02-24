@@ -3,10 +3,10 @@ import {
   CodeBlockProps,
   CodeGroupProps,
 } from '@mintlify/components';
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 
-import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { Event } from '@/enums/events';
+import { useAnalyticsContext } from '@/hooks/useAnalyticsContext';
 import { useColors } from '@/hooks/useColors';
 
 export function CodeGroup({
@@ -16,8 +16,7 @@ export function CodeGroup({
   children?: ReactElement<CodeBlockProps>[] | ReactElement<CodeBlockProps>;
   isSmallText?: boolean;
 }) {
-  const analyticsMediator = useContext(AnalyticsContext);
-  const trackCodeBlockCopy = analyticsMediator.createEventListener(Event.CodeBlockCopy);
+  const trackCodeBlockCopy = useAnalyticsContext(Event.CodeBlockCopy);
   const colors = useColors();
   return (
     <GenericCodeGroup

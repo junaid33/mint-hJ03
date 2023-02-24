@@ -1,9 +1,6 @@
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class FathomAnalytics extends AbstractAnalyticsImplementation {
+export default class FathomAnalytics extends AnalyticsService {
   initialized = false;
   trackPageview: any;
 
@@ -12,10 +9,12 @@ export default class FathomAnalytics extends AbstractAnalyticsImplementation {
       return;
     }
 
+    const { siteId } = implementationConfig;
+
     import('fathom-client')
       .then((_fathom) => {
         if (!this.initialized) {
-          _fathom.load(implementationConfig.siteId!);
+          _fathom.load(siteId);
 
           // The Fathom library uses asterisk imports (ie. * as Fathom)
           // so there is no default export for us to store a reference to.
@@ -28,6 +27,10 @@ export default class FathomAnalytics extends AbstractAnalyticsImplementation {
       .catch((e) => {
         console.error(e);
       });
+  }
+
+  createEventListener(_: string): (eventProperties: object) => Promise<void> {
+    return () => Promise.resolve();
   }
 
   onRouteChange(_: string, routeProps: any) {

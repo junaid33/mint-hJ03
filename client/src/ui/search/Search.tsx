@@ -14,11 +14,11 @@ import {
 } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContext } from '@/context/VersionContext';
 import { Event } from '@/enums/events';
 import { useActionKey } from '@/hooks/useActionKey';
+import { useAnalyticsContext } from '@/hooks/useAnalyticsContext';
 import { zIndex } from '@/layouts/zIndex';
 import { pathToBreadcrumbs } from '@/utils/paths/pathToBreadcrumbs';
 import { pathToVersionDict } from '@/utils/paths/pathToVersionDict';
@@ -259,8 +259,7 @@ export function SearchProvider({
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState<string>('');
   const [hits, setHits] = useState<Hit[]>([]);
-  const analyticsMediator = useContext(AnalyticsContext);
-  const trackSearchResultClick = analyticsMediator.createEventListener(Event.SearchResultClick);
+  const trackSearchResultClick = useAnalyticsContext(Event.SearchResultClick);
 
   useHotkeys('cmd+k', (e) => {
     e.preventDefault();

@@ -1,9 +1,6 @@
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class AmplitudeAnalytics extends AbstractAnalyticsImplementation {
+export default class AmplitudeAnalytics extends AnalyticsService {
   initialized = false;
   track: any;
 
@@ -12,10 +9,12 @@ export default class AmplitudeAnalytics extends AbstractAnalyticsImplementation 
       return;
     }
 
+    const { apiKey } = implementationConfig;
+
     import('@amplitude/analytics-browser')
       .then((_amplitude) => {
         if (!this.initialized) {
-          _amplitude.init(implementationConfig.apiKey!);
+          _amplitude.init(apiKey);
           this.track = _amplitude.track;
           this.initialized = true;
         }

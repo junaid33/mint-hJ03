@@ -1,5 +1,3 @@
-import { AnalyticsMediatorConstructorInterface } from '@/analytics/AnalyticsMediator';
-
 import { Gradient } from './gradient';
 
 export type NavigationEntry = string | Navigation;

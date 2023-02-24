@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import Script from 'next/script';
 
-import { GoogleTagManagerConfigInterface } from './AbstractAnalyticsImplementation';
-
 export default function GTMScript({ gtm }: { gtm?: GoogleTagManagerConfigInterface }) {
   if (!gtm?.tagId || process.env.NODE_ENV !== 'production') {
     return null;

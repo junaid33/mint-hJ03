@@ -1,14 +1,9 @@
 // Not dynamically importing because it's required
 import { AnalyticsBrowser } from '@segment/analytics-next';
 
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-import { RouteProps } from '../useAnalytics';
-
-export default class SegmentAnalytics extends AbstractAnalyticsImplementation {
+export default class SegmentAnalytics extends AnalyticsService {
   initialized = false;
   analytics?: AnalyticsBrowser;
 

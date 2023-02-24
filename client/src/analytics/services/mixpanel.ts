@@ -1,9 +1,6 @@
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class MixpanelAnalytics extends AbstractAnalyticsImplementation {
+export default class MixpanelAnalytics extends AnalyticsService {
   initialized = false;
   // Store events to submit after the library is loaded.
   waitTracking: { name: string; properties: object }[] = [];

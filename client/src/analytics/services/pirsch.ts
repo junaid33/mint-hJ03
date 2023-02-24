@@ -1,9 +1,6 @@
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class PirschAnalytics extends AbstractAnalyticsImplementation {
+export default class PirschAnalytics extends AnalyticsService {
   initialized = false;
   // Store events to submit after the library is loaded.
   waitTracking: any[][] = [];

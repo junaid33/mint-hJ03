@@ -1,62 +1,28 @@
-import {
-  AmplitudeConfigInterface,
-  AbstractAnalyticsImplementation,
-  AnalyticsMediatorInterface,
-  FathomConfigInterface,
-  GoogleAnalyticsConfigInterface,
-  GoogleTagManagerConfigInterface,
-  HotjarConfigInterface,
-  KoalaConfigInterface,
-  LogrocketConfigInterface,
-  MixpanelConfigInterface,
-  PostHogConfigInterface,
-  PirschConfigInterface,
-  PlausibleConfigInterface,
-  SegmentConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
-import PostHogAnalytics from '@/analytics/implementations/posthog';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
+import PostHogAnalytics from '@/analytics/services/posthog';
 
-import AmplitudeAnalytics from './implementations/amplitude';
-import FathomAnalytics from './implementations/fathom';
-import GA4Analytics from './implementations/ga4';
-import HotjarAnalytics from './implementations/hotjar';
-import LogrocketAnalytics from './implementations/logrocket';
-import MixpanelAnalytics from './implementations/mixpanel';
-import PirschAnalytics from './implementations/pirsch';
-import SegmentAnalytics from './implementations/segment';
 import InternalAnalytics from './internal';
-import { RouteProps } from './useAnalytics';
-
-export type AnalyticsMediatorConstructorInterface = {
-  amplitude?: AmplitudeConfigInterface;
-  fathom?: FathomConfigInterface;
-  ga4?: GoogleAnalyticsConfigInterface;
-  gtm?: GoogleTagManagerConfigInterface;
-  hotjar?: HotjarConfigInterface;
-  koala?: KoalaConfigInterface;
-  logrocket?: LogrocketConfigInterface;
-  mixpanel?: MixpanelConfigInterface;
-  pirsch?: PirschConfigInterface;
-  plausible?: PlausibleConfigInterface;
-  posthog?: PostHogConfigInterface;
-  segment?: SegmentConfigInterface;
-};
+import AmplitudeAnalytics from './services/amplitude';
+import FathomAnalytics from './services/fathom';
+import GA4Analytics from './services/ga4';
+import HotjarAnalytics from './services/hotjar';
+import LogrocketAnalytics from './services/logrocket';
+import MixpanelAnalytics from './services/mixpanel';
+import PirschAnalytics from './services/pirsch';
+import SegmentAnalytics from './services/segment';
 
 export default class AnalyticsMediator implements AnalyticsMediatorInterface {
-  subdomain: string;
-  analyticsIntegrations: AbstractAnalyticsImplementation[] = [];
+  analyticsIntegrations: AnalyticsService[] = [];
 
   constructor(
-    subdomain: string,
     analytics?: AnalyticsMediatorConstructorInterface,
-    internalAnalyticsWriteKey?: string
+    internalAnalytics?: { internalAnalyticsWriteKey: string; subdomain: string }
   ) {
-    this.subdomain = subdomain;
-
-    if (internalAnalyticsWriteKey) {
-      const internalAnalytics = new InternalAnalytics();
-      internalAnalytics.init({ apiKey: internalAnalyticsWriteKey }, subdomain);
-      this.analyticsIntegrations.push(internalAnalytics);
+    if (internalAnalytics) {
+      const { internalAnalyticsWriteKey, subdomain } = internalAnalytics;
+      const internal = new InternalAnalytics(subdomain);
+      internal.init({ apiKey: internalAnalyticsWriteKey });
+      this.analyticsIntegrations.push(internal);
     }
 
     const amplitudeEnabled = Boolean(analytics?.amplitude?.apiKey);

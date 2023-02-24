@@ -1,7 +1,5 @@
 import Script from 'next/script';
 
-import { GoogleAnalyticsConfigInterface } from './AbstractAnalyticsImplementation';
-
 export default function GA4Script({ ga4 }: { ga4?: GoogleAnalyticsConfigInterface }) {
   if (!ga4?.measurementId || process.env.NODE_ENV !== 'production') {
     return null;

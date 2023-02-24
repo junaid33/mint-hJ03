@@ -1,7 +1,5 @@
 import Script from 'next/script';
 
-import { PlausibleConfigInterface } from './AbstractAnalyticsImplementation';
-
 export default function PlausibleScript({ plausible }: { plausible?: PlausibleConfigInterface }) {
   if (!plausible?.domain || process.env.NODE_ENV !== 'production') {
     return null;

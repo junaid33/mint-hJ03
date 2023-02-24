@@ -1,14 +1,7 @@
 import Router from 'next/router';
 import { useState, useEffect } from 'react';
 
-import { AnalyticsMediatorInterface } from '@/analytics/AbstractAnalyticsImplementation';
 import AnalyticsMediator from '@/analytics/AnalyticsMediator';
-import { AnalyticsMediatorConstructorInterface } from '@/analytics/AnalyticsMediator';
-import FakeAnalyticsMediator from '@/analytics/FakeAnalyticsMediator';
-
-export type RouteProps = {
-  shallow: boolean;
-};
 
 /**
  * useAnalytics is the only way to create an AnalyticsMediator. Trying to create an
@@ -22,25 +15,29 @@ export function useAnalytics(
   internalAnalyticsWriteKey?: string
 ) {
   const [initializedAnalyticsMediator, setInitializedAnalyticsMediator] = useState(false);
-  const [analyticsMediator, setAnalyticsMediator] = useState<AnalyticsMediatorInterface>(
-    new FakeAnalyticsMediator()
-  );
+  const [analyticsMediator, setAnalyticsMediator] = useState<
+    AnalyticsMediatorInterface | undefined
+  >();
 
   // AnalyticsMediator can only run in the browser
   // We use useEffect because it only runs on render
   useEffect(() => {
-    if (!initializedAnalyticsMediator && subdomain) {
-      const newMediator = new AnalyticsMediator(
-        subdomain,
-        analyticsConfig,
-        internalAnalyticsWriteKey
-      );
+    if (!initializedAnalyticsMediator) {
+      let internalAnalytics: { internalAnalyticsWriteKey: string; subdomain: string } | undefined =
+        undefined;
+      if (internalAnalyticsWriteKey && subdomain) {
+        internalAnalytics = { internalAnalyticsWriteKey, subdomain };
+      }
+      const newMediator = new AnalyticsMediator(analyticsConfig, internalAnalytics);
       setAnalyticsMediator(newMediator);
       setInitializedAnalyticsMediator(true);
     }
-  }, [initializedAnalyticsMediator, subdomain, analyticsConfig, internalAnalyticsWriteKey]);
+  }, [initializedAnalyticsMediator, analyticsConfig, internalAnalyticsWriteKey, subdomain]);
 
   useEffect(() => {
+    if (!analyticsMediator) {
+      return;
+    }
     analyticsMediator.onRouteChange(Router.asPath, { initialLoad: true });
 
     Router.events.on('routeChangeComplete', (url: string, routeProps: RouteProps) => {

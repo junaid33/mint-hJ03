@@ -1,12 +1,9 @@
 // IMPROVEMENT OPPORTUNITY: Figure out how to dynamically import
 import LogRocket from 'logrocket';
 
-import {
-  AbstractAnalyticsImplementation,
-  ConfigInterface,
-} from '@/analytics/AbstractAnalyticsImplementation';
+import { AnalyticsService } from '@/analytics/AnalyticsService';
 
-export default class LogrocketAnalytics extends AbstractAnalyticsImplementation {
+export default class LogrocketAnalytics extends AnalyticsService {
   initialized = false;
   trackEvent: any;
 
@@ -36,5 +33,8 @@ export default class LogrocketAnalytics extends AbstractAnalyticsImplementation 
     return async function doNothing(_: object) {
       return;
     };
+  }
+  onRouteChange(_url: string, _routeProps: RouteProps): void {
+    return;
   }
 }

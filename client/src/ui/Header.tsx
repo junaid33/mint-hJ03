@@ -8,9 +8,9 @@ import Router from 'next/router';
 import { useContext } from 'react';
 import { useEffect, useState } from 'react';
 
-import AnalyticsContext from '@/analytics/AnalyticsContext';
 import { ConfigContext } from '@/context/ConfigContext';
 import { Event } from '@/enums/events';
+import { useAnalyticsContext } from '@/hooks/useAnalyticsContext';
 import { zIndex } from '@/layouts/zIndex';
 import { TopbarCta } from '@/types/config';
 import { Logo } from '@/ui/Logo';
@@ -100,8 +100,7 @@ export function NavPopover({
 }
 
 function GitHubCta({ button }: { button: TopbarCta }) {
-  const analyticsMediator = useContext(AnalyticsContext);
-  const trackCtaClick = analyticsMediator.createEventListener(Event.CTAClick);
+  const trackCtaClick = useAnalyticsContext(Event.CTAClick);
   const [repoData, setRepoData] = useState<{ stargazers_count: number; forks_count: number }>();
 
   const github = gh(button.url);
@@ -179,8 +178,7 @@ function GitHubCta({ button }: { button: TopbarCta }) {
 }
 
 function TopBarCtaButton({ button }: { button: TopbarCta }) {
-  const analyticsMediator = useContext(AnalyticsContext);
-  const trackCtaClick = analyticsMediator.createEventListener(Event.CTAClick);
+  const trackCtaClick = useAnalyticsContext(Event.CTAClick);
 
   if (button.type === 'github') {
     return <GitHubCta button={button} />;
@@ -221,8 +219,7 @@ function TopBarCtaButton({ button }: { button: TopbarCta }) {
 
 export function NavItems() {
   const { mintConfig } = useContext(ConfigContext);
-  const analyticsMediator = useContext(AnalyticsContext);
-  const trackNavigationClick = analyticsMediator.createEventListener(Event.HeaderNavItemClick);
+  const trackNavigationClick = useAnalyticsContext(Event.HeaderNavItemClick);
 
   const onClickNavigation = (name: string | undefined, url: string) => {
     trackNavigationClick({ name, url });

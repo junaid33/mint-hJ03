@@ -1,7 +1,7 @@
 import { Expandable as GenericExpandable } from '@mintlify/components';
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 
-import AnalyticsContext from '@/analytics/AnalyticsContext';
+import { useAnalyticsContext } from '@/hooks/useAnalyticsContext';
 
 export function Expandable({
   title,
@@ -14,9 +14,8 @@ export function Expandable({
   onChange?: (open: boolean) => void;
   children: ReactNode;
 }) {
-  const analyticsMediator = useContext(AnalyticsContext);
-  const openAnalyticsListener = analyticsMediator.createEventListener('expandable_open');
-  const closeAnalyticsListener = analyticsMediator.createEventListener('expandable_close');
+  const openAnalyticsListener = useAnalyticsContext('expandable_open');
+  const closeAnalyticsListener = useAnalyticsContext('expandable_close');
 
   const onChange = (open: boolean) => {
     if (onChangeProp) {
