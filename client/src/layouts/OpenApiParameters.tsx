@@ -63,7 +63,8 @@ function ExpandableFields({ schema }: any) {
   if (schema.items) {
     const name = schema.items.title;
     return (
-      <ResponseField name={name} type={schema.items.type}>
+      // TODO: Check if schema.items.type is needed
+      <ResponseField name={name} type={schema.type ?? schema.items.type}>
         <>
           <ReactMarkdown components={MarkdownComponents}>{schema.description}</ReactMarkdown>
           <Expandable
