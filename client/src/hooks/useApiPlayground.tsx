@@ -21,19 +21,21 @@ export const useApiPlayground = (ctx: MDXContentContextType) => {
   } = state;
   const getApiPlayground = useApiPlaygroundCallback();
   useEffect(() => {
-    dispatch({
-      type: MDXContentActionEnum.SET_API_PLAYGROUND,
-      payload: getApiPlayground({
-        isApi,
-        openApiPlaygroundProps,
-        apiPlaygroundInputs,
-        apiBaseIndex,
-        mintConfig,
-        pageMetadata,
-        requestExample,
-        paramGroupDict,
-      }),
-    });
+    if (pageMetadata.api || openApiPlaygroundProps.api) {
+      dispatch({
+        type: MDXContentActionEnum.SET_API_PLAYGROUND,
+        payload: getApiPlayground({
+          isApi,
+          openApiPlaygroundProps,
+          apiPlaygroundInputs,
+          apiBaseIndex,
+          mintConfig,
+          pageMetadata,
+          requestExample,
+          paramGroupDict,
+        }),
+      });
+    }
   }, [
     apiBaseIndex,
     apiPlaygroundInputs,

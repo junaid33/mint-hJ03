@@ -208,3 +208,11 @@ export const MDXContentContext = createContext<MDXContentContextType>([
 ```
 
 </CodeGroup>
+
+### Debugging
+
+A `console.log` or breakpoint at the start of `MDXContentReducer` can be helpful with debugging the state.
+
+```tsx
+console.log(MDXContentActionEnum[action.type],action.payload)
+```

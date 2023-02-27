@@ -33,33 +33,35 @@ export const useMDXContentController = ({
 
   // Callbacks
   const getOpenApiProps = useCallback(
-    () => getOpenApiPlaygroundProps(0, mintConfig, openApiFiles, pageMetadata.openapi),
+    (baseIndex: number) =>
+      getOpenApiPlaygroundProps(baseIndex, mintConfig, openApiFiles, pageMetadata.openapi),
     [mintConfig, openApiFiles, pageMetadata.openapi]
   );
   const getIsApi = useCallback(
     (props: OpenApiPlaygroundProps) =>
       (pageMetadata.api?.length ?? 0) > 0 || (props.api?.length ?? 0) > 0,
-    [pageMetadata.api?.length]
+    [pageMetadata.api]
   );
   const createUserExamples = useCallback(
     () => createUserDefinedExamples(apiComponents),
     [apiComponents]
   );
+
   const getIsBlogMode = useCallback(() => pageMetadata.mode === 'blog', [pageMetadata.mode]);
   const getContentWidth = useGetContentWidthCallback();
   const getParamGroups = useParamGroupsCallback();
   const getApiPlayground = useApiPlaygroundCallback();
 
   // Get initial values.
-  const openApiProps = getOpenApiProps();
-  const isApi = getIsApi(openApiProps);
+  const openApiPlaygroundProps = getOpenApiProps(0);
+  const isApi = getIsApi(openApiPlaygroundProps);
   const isBlogMode = getIsBlogMode();
   const examples = createUserExamples();
   const paramGroups = getParamGroups({
     mintConfig,
     apiComponents,
     pageMetadata,
-    openApiPlaygroundProps: openApiProps,
+    openApiPlaygroundProps,
   });
 
   // Set initial values.
@@ -74,7 +76,7 @@ export const useMDXContentController = ({
     isApi,
     isBlogMode,
     ...examples,
-    ...openApiProps,
+    ...openApiPlaygroundProps,
     ...getContentWidth({
       pageMetadata,
       isApi,
@@ -87,27 +89,31 @@ export const useMDXContentController = ({
       ...paramGroups,
       mintConfig,
       pageMetadata,
-      openApiPlaygroundProps: openApiProps,
+      ...examples,
+      openApiPlaygroundProps,
       apiPlaygroundInputs: [],
     }),
   });
+
   const [state, dispatch] = ctx;
 
   // Gets OpenApiPlaygroundProps and dispatches state update.
   useEffect(() => {
     dispatch({
       type: MDXContentActionEnum.SET_OPEN_API_PLAYGROUND_PROPS,
-      payload: getOpenApiProps(),
+      payload: getOpenApiProps(state.apiBaseIndex),
     });
-  }, [dispatch, getOpenApiProps]);
+  }, [dispatch, getOpenApiProps, state.apiBaseIndex]);
 
   // Gets isApi and dispatches state update.
   useEffect(() => {
-    dispatch({
-      type: MDXContentActionEnum.SET_IS_API,
-      payload: getIsApi(state.openApiPlaygroundProps),
-    });
-  }, [dispatch, getIsApi, state.openApiPlaygroundProps]);
+    if (state.pageMetadata.api || state.openApiPlaygroundProps.api) {
+      dispatch({
+        type: MDXContentActionEnum.SET_IS_API,
+        payload: getIsApi(state.openApiPlaygroundProps),
+      });
+    }
+  }, [dispatch, getIsApi, state.openApiPlaygroundProps, state.pageMetadata.api]);
 
   // Gets isBlogMode and dispatches state update.
   useEffect(() => {
