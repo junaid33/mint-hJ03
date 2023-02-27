@@ -5,7 +5,7 @@ export default class FathomAnalytics extends AnalyticsService {
   trackPageview: any;
 
   init(implementationConfig: ConfigInterface) {
-    if (!implementationConfig.siteId || process.env.NODE_ENV !== 'production') {
+    if (!implementationConfig.siteId) {
       return;
     }
 

@@ -2,7 +2,7 @@
 import Script from 'next/script';
 
 export default function GTMScript({ gtm }: { gtm?: GoogleTagManagerConfigInterface }) {
-  if (!gtm?.tagId || process.env.NODE_ENV !== 'production') {
+  if (!gtm?.tagId) {
     return null;
   }
 

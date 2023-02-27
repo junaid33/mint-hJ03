@@ -13,7 +13,7 @@ export default class PirschAnalytics extends AnalyticsService {
   } as any;
 
   init(implementationConfig: ConfigInterface) {
-    if (!implementationConfig?.id || process.env.NODE_ENV !== 'production') {
+    if (!implementationConfig?.id) {
       return;
     }
     const pirschId = implementationConfig.id;

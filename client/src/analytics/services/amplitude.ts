@@ -5,7 +5,7 @@ export default class AmplitudeAnalytics extends AnalyticsService {
   track: any;
 
   init(implementationConfig: ConfigInterface) {
-    if (!implementationConfig?.apiKey || process.env.NODE_ENV !== 'production') {
+    if (!implementationConfig?.apiKey) {
       return;
     }
 

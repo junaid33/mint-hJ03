@@ -22,6 +22,7 @@ export function useAnalytics(
   // AnalyticsMediator can only run in the browser
   // We use useEffect because it only runs on render
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
     if (!initializedAnalyticsMediator) {
       let internalAnalytics: { internalAnalyticsWriteKey: string; subdomain: string } | undefined =
         undefined;

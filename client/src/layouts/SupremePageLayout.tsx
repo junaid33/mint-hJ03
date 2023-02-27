@@ -6,10 +6,7 @@ import Script from 'next/script';
 import { useState, useEffect } from 'react';
 
 import AnalyticsContext from '@/analytics/AnalyticsContext';
-import GA4Script from '@/analytics/scripts/GA4Script';
-import GTMScript from '@/analytics/scripts/GTMScript';
-import KoalaScript from '@/analytics/scripts/KoalaScript';
-import PlausibleScript from '@/analytics/scripts/PlausibleScript';
+import AnalyticsScripts from '@/analytics/scripts/AnalyticsScripts';
 import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
@@ -112,10 +109,7 @@ export default function SupremePageLayout({
               `,
               }}
             />
-            <GA4Script ga4={analyticsConfig.ga4} />
-            <GTMScript gtm={analyticsConfig.gtm} />
-            <KoalaScript koala={analyticsConfig.koala} />
-            <PlausibleScript plausible={analyticsConfig.plausible} />
+            <AnalyticsScripts />
             <SearchProvider subdomain={subdomain}>
               <div className="relative antialiased text-slate-500 dark:text-slate-400">
                 <span className="fixed inset-0 bg-background-light dark:bg-background-dark" />

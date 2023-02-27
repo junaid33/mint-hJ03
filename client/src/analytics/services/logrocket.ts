@@ -8,7 +8,7 @@ export default class LogrocketAnalytics extends AnalyticsService {
   trackEvent: any;
 
   init(implementationConfig: ConfigInterface) {
-    if (!implementationConfig.appId || process.env.NODE_ENV !== 'production') {
+    if (!implementationConfig.appId) {
       return;
     }
 

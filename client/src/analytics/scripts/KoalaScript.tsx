@@ -1,7 +1,7 @@
 import Script from 'next/script';
 
 export default function KoalaScript({ koala }: { koala?: KoalaConfigInterface }) {
-  if (!koala?.projectId || process.env.NODE_ENV !== 'production') {
+  if (!koala?.projectId) {
     return null;
   }
 

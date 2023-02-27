@@ -6,7 +6,7 @@ export default class PostHogAnalytics extends AnalyticsService {
   initialized = false;
 
   init(implementationConfig: ConfigInterface) {
-    if (!implementationConfig.apiKey || process.env.NODE_ENV !== 'production') {
+    if (!implementationConfig.apiKey) {
       return;
     }
 

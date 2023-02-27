@@ -9,11 +9,7 @@ export default class HotjarAnalytics extends AnalyticsService {
   } as any;
 
   init(implementationConfig: ConfigInterface) {
-    if (
-      !implementationConfig?.hjid ||
-      !implementationConfig?.hjsv ||
-      process.env.NODE_ENV !== 'production'
-    ) {
+    if (!implementationConfig?.hjid || !implementationConfig?.hjsv) {
       return;
     }
     const hjid = parseInt(implementationConfig.hjid, 10);

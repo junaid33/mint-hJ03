@@ -9,7 +9,7 @@ export default class MixpanelAnalytics extends AnalyticsService {
   } as any;
 
   init(implementationConfig: ConfigInterface) {
-    if (implementationConfig.projectToken && process.env.NODE_ENV === 'production') {
+    if (implementationConfig.projectToken) {
       // Dynamic import reduces our First Load JS by 18 kB
       import('mixpanel-browser')
         .then((_mixpanel) => {
