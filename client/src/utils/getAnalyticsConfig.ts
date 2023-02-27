@@ -18,7 +18,9 @@ export function getAnalyticsConfig(config: Config) {
 // Note: It's really bad we have to do this because the data we were sending was not clean.
 // We added this as a sanity check to ensure analytics work as expected.
 // We should investigate improving our mongoose schemas to make this unnecessary.
-const constructAnalytics = (analytics: any): AnalyticsMediatorConstructorInterface => {
+const constructAnalytics = (
+  analytics?: AnalyticsMediatorConstructorInterface
+): AnalyticsMediatorConstructorInterface => {
   const properlyTypedAnalytics: AnalyticsMediatorConstructorInterface = {};
   if (analytics?.amplitude?.apiKey) {
     properlyTypedAnalytics.amplitude = { apiKey: analytics.amplitude.apiKey };
@@ -60,9 +62,6 @@ const constructAnalytics = (analytics: any): AnalyticsMediatorConstructorInterfa
       apiKey: analytics.posthog.apiKey,
       apiHost: analytics.posthog.apiHost,
     };
-  }
-  if (analytics?.segment?.writeKey) {
-    properlyTypedAnalytics.segment = { writeKey: analytics.segment.writeKey };
   }
   return properlyTypedAnalytics;
 };

@@ -49,10 +49,6 @@ type PlausibleConfigInterface = {
   domain?: string;
 };
 
-type SegmentConfigInterface = {
-  writeKey?: string;
-};
-
 // We can use & instead of | because all keys are optional
 type ConfigInterface = AmplitudeConfigInterface &
   FathomConfigInterface &
@@ -64,8 +60,7 @@ type ConfigInterface = AmplitudeConfigInterface &
   MixpanelConfigInterface &
   PirschConfigInterface &
   PostHogConfigInterface &
-  PlausibleConfigInterface &
-  SegmentConfigInterface;
+  PlausibleConfigInterface;
 
 type AnalyticsMediatorConstructorInterface = {
   amplitude?: AmplitudeConfigInterface;
@@ -79,7 +74,6 @@ type AnalyticsMediatorConstructorInterface = {
   pirsch?: PirschConfigInterface;
   plausible?: PlausibleConfigInterface;
   posthog?: PostHogConfigInterface;
-  segment?: SegmentConfigInterface;
 };
 
 interface AnalyticsMediatorInterface {

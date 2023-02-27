@@ -9,7 +9,6 @@ import HotjarAnalytics from './services/hotjar';
 import LogrocketAnalytics from './services/logrocket';
 import MixpanelAnalytics from './services/mixpanel';
 import PirschAnalytics from './services/pirsch';
-import SegmentAnalytics from './services/segment';
 
 export default class AnalyticsMediator implements AnalyticsMediatorInterface {
   analyticsIntegrations: AnalyticsService[] = [];
@@ -33,7 +32,6 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
     const mixpanelEnabled = Boolean(analytics?.mixpanel?.projectToken);
     const pirschEnabled = Boolean(analytics?.pirsch?.id);
     const posthogEnabled = Boolean(analytics?.posthog?.apiKey);
-    const segmentEnabled = Boolean(analytics?.segment?.writeKey);
 
     if (!analytics || Object.keys(analytics).length === 0) {
       return;
@@ -85,12 +83,6 @@ export default class AnalyticsMediator implements AnalyticsMediatorInterface {
       const posthog = new PostHogAnalytics();
       posthog.init(analytics.posthog);
       this.analyticsIntegrations.push(posthog);
-    }
-
-    if (segmentEnabled && analytics.segment) {
-      const segment = new SegmentAnalytics();
-      segment.init(analytics.segment);
-      this.analyticsIntegrations.push(segment);
     }
   }
 
