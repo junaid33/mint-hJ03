@@ -1,10 +1,10 @@
-import matter from "gray-matter";
-import isAbsoluteUrl from "is-absolute-url";
-import { remark } from "remark";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkGfm from "remark-gfm";
-import remarkMdx from "remark-mdx";
-import { visit } from "unist-util-visit";
+import matter from 'gray-matter';
+import isAbsoluteUrl from 'is-absolute-url';
+import { remark } from 'remark';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
+import { visit } from 'unist-util-visit';
 
 const createPage = async (
   pagePath: string,
@@ -21,13 +21,15 @@ const createPage = async (
   }
 
   // Replace .mdx so we can pass file paths into this function
-  const slug = pagePath.replace(/\.mdx?$/, "");
+  const slug = pagePath.replace(/\.mdx?$/, '');
   let defaultTitle = slugToTitle(slug);
   let description: string;
   // Append data from OpenAPI if it exists
   if (metadata?.openapi) {
-    const { title, description: openApiDescription } =
-      getOpenApiTitleAndDescription(openApiFiles, metadata?.openapi);
+    const { title, description: openApiDescription } = getOpenApiTitleAndDescription(
+      openApiFiles,
+      metadata?.openapi
+    );
 
     if (title) {
       defaultTitle = title;
@@ -51,10 +53,7 @@ const createPage = async (
   };
 };
 
-const preParseMdx = async (
-  fileContent: string,
-  contentDirectoryPath: string
-) => {
+const preParseMdx = async (fileContent: string, contentDirectoryPath: string) => {
   const removeContentDirectoryPath = (filePath: string) => {
     const pathArr = createPathArr(filePath);
     const contentDirectoryPathArr = createPathArr(contentDirectoryPath);
@@ -63,7 +62,7 @@ const preParseMdx = async (
         pathArr.pop();
       }
     });
-    return "/" + pathArr.join("/");
+    return '/' + pathArr.join('/');
   };
 
   const removeContentDirectoryPaths = () => {
@@ -72,10 +71,8 @@ const preParseMdx = async (
         if (node == null) {
           return;
         }
-        if (node.name === "img" || node.name === "source") {
-          const srcAttrIndex = node.attributes.findIndex(
-            (attr) => attr?.name === "src"
-          );
+        if (node.name === 'img' || node.name === 'source') {
+          const srcAttrIndex = node.attributes.findIndex((attr) => attr?.name === 'src');
           const nodeUrl = node.attributes[srcAttrIndex].value;
           if (
             // <img/> component
@@ -83,12 +80,11 @@ const preParseMdx = async (
             !isAbsoluteUrl(nodeUrl) &&
             !isDataString(nodeUrl)
           ) {
-            node.attributes[srcAttrIndex].value =
-              removeContentDirectoryPath(nodeUrl);
+            node.attributes[srcAttrIndex].value = removeContentDirectoryPath(nodeUrl);
           }
         } else if (
           // ![]() format
-          node.type === "image" &&
+          node.type === 'image' &&
           node.url &&
           !isAbsoluteUrl(node.url) &&
           !isDataString(node.url)
@@ -103,7 +99,7 @@ const preParseMdx = async (
   const file = await remark()
     .use(remarkMdx)
     .use(remarkGfm)
-    .use(remarkFrontmatter, ["yaml", "toml"])
+    .use(remarkFrontmatter, ['yaml', 'toml'])
     .use(removeContentDirectoryPaths)
     .process(fileContent);
   return String(file);
@@ -111,23 +107,17 @@ const preParseMdx = async (
 
 const removeLeadingSlash = (str: string) => {
   const path = createPathArr(str);
-  return path.join("/");
+  return path.join('/');
 };
 
 const createPathArr = (path: string) => {
-  return path.split("/").filter((dir) => dir !== "");
+  return path.split('/').filter((dir) => dir !== '');
 };
 
-const isDataString = (str: string) => str.startsWith("data:");
+const isDataString = (str: string) => str.startsWith('data:');
 
-const getOpenApiTitleAndDescription = (
-  openApiFiles: OpenApiFile[],
-  openApiMetaField: string
-) => {
-  const { operation } = getOpenApiOperationMethodAndEndpoint(
-    openApiFiles,
-    openApiMetaField
-  );
+const getOpenApiTitleAndDescription = (openApiFiles: OpenApiFile[], openApiMetaField: string) => {
+  const { operation } = getOpenApiOperationMethodAndEndpoint(openApiFiles, openApiMetaField);
 
   if (operation == null) {
     return {};
@@ -143,8 +133,7 @@ const getOpenApiOperationMethodAndEndpoint = (
   openApiFiles: OpenApiFile[],
   openApiMetaField: string
 ) => {
-  const { endpoint, method, filename } =
-    extractMethodAndEndpoint(openApiMetaField);
+  const { endpoint, method, filename } = extractMethodAndEndpoint(openApiMetaField);
 
   let path;
 
@@ -181,12 +170,8 @@ const extractMethodAndEndpoint = (openApiMetaField: string) => {
   const trimmed = openApiMetaField.trim();
   const foundMethod = trimmed.match(methodRegex);
 
-  const startIndexOfMethod = foundMethod
-    ? openApiMetaField.indexOf(foundMethod[0])
-    : 0;
-  const endIndexOfMethod = foundMethod
-    ? startIndexOfMethod + foundMethod[0].length - 1
-    : 0;
+  const startIndexOfMethod = foundMethod ? openApiMetaField.indexOf(foundMethod[0]) : 0;
+  const endIndexOfMethod = foundMethod ? startIndexOfMethod + foundMethod[0].length - 1 : 0;
 
   const filename = openApiMetaField.substring(0, startIndexOfMethod).trim();
 
@@ -198,16 +183,16 @@ const extractMethodAndEndpoint = (openApiMetaField: string) => {
 };
 
 function optionallyAddLeadingSlash(path: string) {
-  if (path.startsWith("/")) {
+  if (path.startsWith('/')) {
     return path;
   }
-  return "/" + path;
+  return '/' + path;
 }
 
 export const slugToTitle = (slug: string) => {
-  const slugArr = slug.split("/");
-  let defaultTitle = slugArr[slugArr.length - 1].split("-").join(" "); //replace all dashes
-  defaultTitle = defaultTitle.split("_").join(" "); //replace all underscores
+  const slugArr = slug.split('/');
+  let defaultTitle = slugArr[slugArr.length - 1].split('-').join(' '); //replace all dashes
+  defaultTitle = defaultTitle.split('_').join(' '); //replace all underscores
   defaultTitle = defaultTitle.charAt(0).toUpperCase() + defaultTitle.slice(1); //capitalize first letter
   return defaultTitle;
 };

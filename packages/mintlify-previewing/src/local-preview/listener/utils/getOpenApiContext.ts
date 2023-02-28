@@ -6,9 +6,7 @@ export const extractMethodAndEndpoint = (
   const foundMethod = trimmed.match(methodRegex);
 
   const startIndexOfMethod = foundMethod ? api.indexOf(foundMethod[0]) : 0;
-  const endIndexOfMethod = foundMethod
-    ? startIndexOfMethod + foundMethod[0].length - 1
-    : 0;
+  const endIndexOfMethod = foundMethod ? startIndexOfMethod + foundMethod[0].length - 1 : 0;
 
   const filename = api.substring(0, startIndexOfMethod).trim();
 
@@ -19,12 +17,8 @@ export const extractMethodAndEndpoint = (
   };
 };
 
-export const getOpenApiOperationMethodAndEndpoint = (
-  openApi: any,
-  openApiMetaField: string
-) => {
-  const { endpoint, method, filename } =
-    extractMethodAndEndpoint(openApiMetaField);
+export const getOpenApiOperationMethodAndEndpoint = (openApi: any, openApiMetaField: string) => {
+  const { endpoint, method, filename } = extractMethodAndEndpoint(openApiMetaField);
 
   let path: any;
 
@@ -61,10 +55,7 @@ export const getOpenApiTitleAndDescription = (openApi, openApiMetaField) => {
     return {};
   }
 
-  const { operation } = getOpenApiOperationMethodAndEndpoint(
-    openApi,
-    openApiMetaField
-  );
+  const { operation } = getOpenApiOperationMethodAndEndpoint(openApi, openApiMetaField);
 
   if (operation == null) {
     return {};

@@ -1,13 +1,10 @@
-import SwaggerParser from "@apidevtools/swagger-parser";
-import { promises as _promises } from "fs";
+import SwaggerParser from '@apidevtools/swagger-parser';
+import { promises as _promises } from 'fs';
 
 const { readdir, stat } = _promises;
 
 export const getFileExtension = (filename: string) => {
-  return (
-    filename.substring(filename.lastIndexOf(".") + 1, filename.length) ||
-    filename
-  );
+  return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
 };
 
 export type OpenApiCheckResult = {
@@ -15,9 +12,7 @@ export type OpenApiCheckResult = {
   isOpenApi: boolean;
 };
 
-export const openApiCheck = async (
-  path: string
-): Promise<OpenApiCheckResult> => {
+export const openApiCheck = async (path: string): Promise<OpenApiCheckResult> => {
   let spec;
   let isOpenApi = false;
   try {
@@ -44,7 +39,7 @@ const filterOutNullInPages = (pages: (MintNavigationEntry | null)[]) => {
     if (page == null) {
       return;
     }
-    if (page.hasOwnProperty("pages")) {
+    if (page.hasOwnProperty('pages')) {
       const group = page as MintNavigation;
       const newGroup = filterOutNullInGroup(group);
       newPages.push(newGroup);
@@ -56,15 +51,12 @@ const filterOutNullInPages = (pages: (MintNavigationEntry | null)[]) => {
   return newPages;
 };
 
-export const isFileSizeValid = async (
-  path: string,
-  maxFileSizeInMb: number
-): Promise<boolean> => {
+export const isFileSizeValid = async (path: string, maxFileSizeInMb: number): Promise<boolean> => {
   const maxFileSizeBytes = maxFileSizeInMb * 1000000;
   const stats = await stat(path);
   return stats.size <= maxFileSizeBytes;
 };
 
 export function isError(obj: unknown) {
-  return Object.prototype.toString.call(obj) === "[object Error]";
+  return Object.prototype.toString.call(obj) === '[object Error]';
 }

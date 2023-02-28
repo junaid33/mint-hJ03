@@ -34,6 +34,8 @@
     "prepare": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch",
+    "format": "prettier \"./src/**/*.ts\" --write",
+    "format:check": "prettier \"./src/**/*.ts\" --check",
     "lint": "eslint . --cache"
   },
   "dependencies": {
@@ -61,8 +63,10 @@
     "yargs": "^17.6.0"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "3.x",
     "@mintlify/eslint-config": "1.0.3",
     "@mintlify/eslint-config-typescript": "1.0.7",
+    "@mintlify/prettier-config": "1.0.1",
     "@mintlify/ts-config": "1.0.7",
     "@tsconfig/recommended": "1.x",
     "@types/fs-extra": "^9.0.13",

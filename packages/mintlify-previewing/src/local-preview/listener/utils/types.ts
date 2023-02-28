@@ -1,14 +1,9 @@
 export type PotentialFileCategory =
-  | "page"
-  | "snippet"
-  | "mintConfig"
-  | "potentialYamlOpenApiSpec"
-  | "potentialJsonOpenApiSpec"
-  | "staticFile";
+  | 'page'
+  | 'snippet'
+  | 'mintConfig'
+  | 'potentialYamlOpenApiSpec'
+  | 'potentialJsonOpenApiSpec'
+  | 'staticFile';
 
-export type FileCategory =
-  | "page"
-  | "snippet"
-  | "mintConfig"
-  | "openApi"
-  | "staticFile";
+export type FileCategory = 'page' | 'snippet' | 'mintConfig' | 'openApi' | 'staticFile';
