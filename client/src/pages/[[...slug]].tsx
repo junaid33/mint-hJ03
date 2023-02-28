@@ -1,4 +1,5 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
+import { MDXRemoteSerializeResult } from 'next-mdx-remote/dist/types';
 import { join } from 'path';
 import type { ParsedUrlQuery } from 'querystring';
 
@@ -76,18 +77,17 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
         snippets: Snippet[];
         favicons: FaviconsProps;
       };
-      let mdxSource: any = '';
+      let mdxSource: MDXRemoteSerializeResult;
       const { pageMetadata } = pageData;
       const snippetTreeMap = await createSnippetTreeMap(snippets ?? []);
       try {
-        const response = await getMdxSource(
+        mdxSource = await getMdxSource(
           content,
           {
             pageMetadata,
           },
           snippetTreeMap
         );
-        mdxSource = response;
       } catch (err) {
         mdxSource = await getMdxSource('🚧 A parsing error occured.', { pageMetadata }); // placeholder content for when there is a syntax error.
         console.log(`⚠️ Warning: MDX failed to parse page ${slugStr}: `, err);

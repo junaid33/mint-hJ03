@@ -130,7 +130,7 @@ export default function SupremePageLayout({
                   setNavIsOpen={setNavIsOpen}
                   pageMetadata={pageMetadata}
                 >
-                  <MDXRemote components={components} {...(mdxSource as any)} />
+                  <MDXRemote components={components} {...mdxSource} />
                 </DocumentationLayout>
               </div>
             </SearchProvider>

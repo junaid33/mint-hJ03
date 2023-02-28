@@ -22,6 +22,7 @@ import { Expandable } from '@/components/Expandable';
 import { Heading } from '@/components/Heading';
 import { Param, ParamField } from '@/components/Param';
 import { ResponseField } from '@/components/ResponseField';
+import { staticComponents } from '@/components/Static';
 import { RequestExample, ResponseExample } from '@/components/StickyCodeBlocks';
 import { MDXContentController } from '@/ui/MDXContentController/MDXContentController';
 
@@ -52,6 +53,7 @@ const components: MDXComponents = {
   Tooltip,
   SnippetGroup,
   Warning,
+  ...staticComponents,
 };
 
 export const allowedComponents = [
