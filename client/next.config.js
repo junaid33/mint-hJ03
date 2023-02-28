@@ -21,6 +21,7 @@ export default withBundleAnalyzer({
   },
   staticPageGenerationTimeout: 1000,
   experimental: {
+    appDir: true,
     largePageDataBytes: 128 * 10000, // 1280KB instead of the default 128Kb
   },
   basePath: process.env.BASE_PATH,
