@@ -15,5 +15,5 @@ The CLI uses GitHub releases to download specific versions of the client code us
 Here's how to publish new client changes to the CLI:
 
 1. Publish a new GitHub release. You can click the releases menu at the right of the repo page. Make the release title the same as the new release tag. Optionally, you can also use the description to keep track of what changed in that release.
-2. Set `TARGET_MINT_VERSION` in `src/constants.ts` to to the new release tag.
+2. Set `TARGET_MINT_VERSION` in `packages/mintlify-previewing/src/constants.ts` to to the new release tag.
 3. Publish a new CLI version to npm.

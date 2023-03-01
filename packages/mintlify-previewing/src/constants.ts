@@ -3,7 +3,7 @@ import path from 'path';
 import * as url from 'url';
 
 // Change this to bump to a newer version of mint's client
-export const TARGET_MINT_VERSION = 'v0.0.9';
+export const TARGET_MINT_VERSION = 'v0.0.11';
 
 // package installation location
 export const INSTALL_PATH = url.fileURLToPath(new URL('.', import.meta.url));
