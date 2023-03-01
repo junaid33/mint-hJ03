@@ -148,7 +148,7 @@ const dev = async (argv: ArgumentsCamelCase) => {
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
   child_process.spawnSync('yarn preconfigure', [relativePath], { shell: true });
   logger.succeed('Local Mintlify instance is ready. Launching your site...');
-  run((argv.port as string) || '3000');
+  run((argv?.port as string | undefined) || '3000');
 };
 
 const run = (port: string) => {

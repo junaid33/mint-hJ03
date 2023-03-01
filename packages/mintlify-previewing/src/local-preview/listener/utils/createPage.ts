@@ -14,8 +14,7 @@ const createPage = async (
 ) => {
   const { data: metadata } = matter(pageContent);
   try {
-    const parsedContent = await preParseMdx(pageContent, contentDirectoryPath);
-    pageContent = parsedContent;
+    pageContent = await preParseMdx(pageContent, contentDirectoryPath);
   } catch (error) {
     pageContent = `🚧 A parsing error occured. Please contact the owner of this website.`;
   }
@@ -23,7 +22,7 @@ const createPage = async (
   // Replace .mdx so we can pass file paths into this function
   const slug = pagePath.replace(/\.mdx?$/, '');
   let defaultTitle = slugToTitle(slug);
-  let description: string;
+  let description: string | undefined;
   // Append data from OpenAPI if it exists
   if (metadata?.openapi) {
     const { title, description: openApiDescription } = getOpenApiTitleAndDescription(

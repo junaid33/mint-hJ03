@@ -42,7 +42,7 @@ const listener = () => {
             break;
         }
       } catch (error) {
-        console.error(error.message);
+        console.error((error as Error).message);
       }
     })
     .on('change', async (filename: string) => {
@@ -66,7 +66,7 @@ const listener = () => {
             break;
         }
       } catch (error) {
-        console.error(error.message);
+        console.error((error as Error).message);
       }
     })
     .on('unlink', async (filename: string) => {
@@ -103,7 +103,7 @@ const listener = () => {
             break;
         }
       } catch (error) {
-        console.error(error.message);
+        console.error((error as Error).message);
       }
     });
 };
@@ -173,8 +173,9 @@ const onUpdateEvent = async (filename: string): Promise<FileCategory> => {
         if (status === 'success') {
           await fse.copy(filePath, targetPath);
         }
-      } catch (error) {
-        if (error.name === 'SyntaxError') {
+      } catch (e) {
+        const error = e as Error;
+        if (error.name === "SyntaxError") {
           console.error(
             `🚨 ${Chalk.red(
               'mint.json has invalid JSON. You are likely missing a comma or a bracket. You can paste your mint.json file into https://jsonlint.com/ to get a more specific error message.'
