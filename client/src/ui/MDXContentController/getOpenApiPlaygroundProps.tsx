@@ -79,6 +79,8 @@ export function getOpenApiPlaygroundProps(
   // Get the Body ApiComponents
   if (bodySchema?.properties) {
     Object.entries(bodySchema.properties)?.forEach(([property, propertyValue]: any, i: number) => {
+      if (Array.isArray(propertyValue?.allOf) && propertyValue.allOf.length > 0)
+        propertyValue = propertyValue.allOf[0];
       const required = bodySchema.required?.includes(property);
       const type = getParameterType(propertyValue);
       const bodyDefault = bodySchema.example
