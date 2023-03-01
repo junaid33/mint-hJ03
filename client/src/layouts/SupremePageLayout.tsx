@@ -84,6 +84,7 @@ export default function SupremePageLayout({
               <meta name="theme-color" content="#ffffff" />
               <meta name="msapplication-TileColor" content={mintConfig?.colors?.primary} />
               <meta name="theme-color" content="#ffffff" />
+              <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
               {Object.entries(metaTagsDict).map(([key, value]) => (
                 <meta key={key} name={key} content={value} />
               ))}
