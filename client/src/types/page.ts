@@ -11,6 +11,7 @@ export interface PageProps {
   favicons: FaviconsProps;
   subdomain?: string;
   internalAnalyticsWriteKey?: string;
+  hiddenPages?: string[];
 }
 
 export interface PageDataProps {

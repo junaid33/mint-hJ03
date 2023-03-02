@@ -8,6 +8,7 @@ export default function Page({
   favicons,
   subdomain,
   internalAnalyticsWriteKey,
+  hiddenPages,
 }: PageProps) {
   try {
     return (
@@ -17,6 +18,7 @@ export default function Page({
         favicons={favicons}
         subdomain={subdomain}
         internalAnalyticsWriteKey={internalAnalyticsWriteKey}
+        hiddenPages={hiddenPages}
       />
     );
   } catch (e) {

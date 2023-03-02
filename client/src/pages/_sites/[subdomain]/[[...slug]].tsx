@@ -2,6 +2,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import { MDXRemoteSerializeResult } from 'next-mdx-remote/dist/types';
 import type { ParsedUrlQuery } from 'querystring';
 
+import { getHiddenPages } from '@/data-fetching/getHiddenPages';
 import { getPage } from '@/lib/page';
 import { getPaths } from '@/lib/paths';
 import createSnippetTreeMap from '@/mdx/createSnippetTreeMap';
@@ -119,6 +120,10 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
       console.log(`⚠️ Warning: MDX failed to parse page ${path}: `, err);
     }
 
+    // TO DO: Move to the metadata function when we migrate to the app directory.
+    // We use the hidden pages to generate a noindex meta tag for pages that are hidden.
+    const hiddenPages = await getHiddenPages(subdomain);
+
     return {
       props: prepareToSerialize({
         mdxSource,
@@ -131,6 +136,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
         favicons,
         subdomain,
         internalAnalyticsWriteKey: process.env.INTERNAL_ANALYTICS_WRITE_KEY,
+        hiddenPages,
       }),
     };
   }

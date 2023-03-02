@@ -29,6 +29,7 @@ export default function SupremePageLayout({
   favicons,
   subdomain,
   internalAnalyticsWriteKey,
+  hiddenPages,
 }: PageProps) {
   const { mintConfig, navWithMetadata, pageMetadata, openApiFiles } = pageData;
 
@@ -94,7 +95,7 @@ export default function SupremePageLayout({
               ))}
               <title>{metaTagsDict['og:title']}</title>
             </Head>
-            <CanonicalTags />
+            <CanonicalTags hiddenPages={hiddenPages} />
             <Script
               id="dark-mode-toggle"
               strategy="beforeInteractive"

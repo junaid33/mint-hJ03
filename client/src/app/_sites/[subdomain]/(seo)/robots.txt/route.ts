@@ -14,7 +14,6 @@ async function generateRobotsTxt(subdomain: string) {
 
   const hostingLocation = await getHostingLocation(subdomain);
 
-  // TO DO: Populate the robots.txt with hidden pages
   const body = `User-agent: *
 Sitemap: ${hostingLocation}/sitemap.xml`;
   return new Response(body, {

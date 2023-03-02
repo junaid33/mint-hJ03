@@ -9,11 +9,11 @@ import { ConfigContext } from '@/context/ConfigContext';
 export function useCurrentPath() {
   const router = useRouter();
   const { subdomain } = useContext(ConfigContext);
-  const withOutBasePathRemoval = '/_sites/' + subdomain;
-  const withBasePathRemoval = router.basePath + withOutBasePathRemoval;
+  const withoutBasePathRemoval = '/_sites/' + subdomain;
+  const withBasePathRemoval = router.basePath + withoutBasePathRemoval;
 
-  if (router.asPath.startsWith(withOutBasePathRemoval)) {
-    return router.asPath.substring(withOutBasePathRemoval.length).split('#')[0];
+  if (router.asPath.startsWith(withoutBasePathRemoval)) {
+    return router.asPath.substring(withoutBasePathRemoval.length).split('#')[0];
   }
   if (router.asPath.startsWith(withBasePathRemoval)) {
     return router.asPath.substring(withBasePathRemoval.length).split('#')[0];
