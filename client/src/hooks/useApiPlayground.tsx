@@ -12,7 +12,6 @@ export const useApiPlayground = (ctx: MDXContentContextType) => {
   const {
     pageMetadata,
     openApiPlaygroundProps,
-    mintConfig,
     apiPlaygroundInputs,
     isApi,
     paramGroupDict,
@@ -29,7 +28,6 @@ export const useApiPlayground = (ctx: MDXContentContextType) => {
           openApiPlaygroundProps,
           apiPlaygroundInputs,
           apiBaseIndex,
-          mintConfig,
           pageMetadata,
           requestExample,
           paramGroupDict,
@@ -42,7 +40,6 @@ export const useApiPlayground = (ctx: MDXContentContextType) => {
     dispatch,
     getApiPlayground,
     isApi,
-    mintConfig,
     openApiPlaygroundProps,
     pageMetadata,
     paramGroupDict,

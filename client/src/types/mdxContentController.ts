@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import { Config } from '@/types/config';
 import { PageMetaTags } from '@/types/metadata';
 import { TableOfContentsSection } from '@/types/tableOfContentsSection';
 import { ApiComponent } from '@/ui/ApiPlayground';
@@ -29,11 +28,7 @@ export type MDXContentControllerState = {
   apiBaseIndex: number;
   apiComponents: ApiComponent[];
   openApiPlaygroundProps: OpenApiPlaygroundProps;
-  currentPath: string;
   pageMetadata: PageMetaTags;
-  prev: PageMetaTags | null | undefined;
-  next: PageMetaTags | null | undefined;
-  mintConfig?: Config;
   isApi: boolean;
   isBlogMode: boolean;
   requestExample?: ReactNode;

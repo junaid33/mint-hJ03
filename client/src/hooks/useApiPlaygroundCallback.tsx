@@ -1,10 +1,12 @@
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useContext } from 'react';
 
+import { ConfigContext } from '@/context/ConfigContext';
 import { GeneratedRequestExamples } from '@/layouts/ApiSupplemental';
 import { MDXContentState } from '@/types/mdxContentController';
 
-export const useApiPlaygroundCallback = () =>
-  useCallback(
+export const useApiPlaygroundCallback = () => {
+  const { mintConfig } = useContext(ConfigContext);
+  return useCallback(
     (
       state: Pick<
         MDXContentState,
@@ -15,7 +17,6 @@ export const useApiPlaygroundCallback = () =>
         | 'paramGroupDict'
         | 'apiPlaygroundInputs'
         | 'apiBaseIndex'
-        | 'mintConfig'
       >
     ) => {
       const {
@@ -26,7 +27,6 @@ export const useApiPlaygroundCallback = () =>
         paramGroupDict,
         requestExample,
         pageMetadata,
-        mintConfig,
       } = state;
       // TODO - make this undefined when nothing exists
       const api = openApiPlaygroundProps?.api ?? pageMetadata.api ?? '';
@@ -44,5 +44,6 @@ export const useApiPlaygroundCallback = () =>
       }
       return { showApiPlayground, api, generatedRequestExamples };
     },
-    []
+    [mintConfig?.api?.hidePlayground]
   );
+};

@@ -9,7 +9,7 @@ import { useParamGroupsCallback } from '@/hooks/useParamGroupsCallback';
  */
 export const useParamGroups = (ctx: MDXContentContextType) => {
   const [state, dispatch] = ctx;
-  const { pageMetadata, openApiPlaygroundProps, apiComponents, mintConfig } = state;
+  const { pageMetadata, openApiPlaygroundProps, apiComponents } = state;
   const getParamGroups = useParamGroupsCallback();
   useEffect(() => {
     dispatch({
@@ -18,9 +18,8 @@ export const useParamGroups = (ctx: MDXContentContextType) => {
         pageMetadata,
         openApiPlaygroundProps,
         apiComponents,
-        mintConfig,
       }),
     });
-  }, [apiComponents, dispatch, getParamGroups, mintConfig, openApiPlaygroundProps, pageMetadata]);
+  }, [apiComponents, dispatch, getParamGroups, openApiPlaygroundProps, pageMetadata]);
   return [state, dispatch] as MDXContentContextType;
 };

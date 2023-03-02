@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 
 import { ConfigContext } from '@/context/ConfigContext';
 import { useMDXContent } from '@/hooks/useMDXContent';
+import { usePrevNext } from '@/hooks/usePrevNext';
 import { getSidebarTitle } from '@/utils/getAllMetaTags';
 
 import Icon from '../Icon';
@@ -46,8 +47,8 @@ const Social = ({ type, url }: SocialProps) => {
 
 export function Footer() {
   const { mintConfig } = useContext(ConfigContext);
-  const [{ next: n, prev, pageMetadata }] = useMDXContent();
-
+  const [{ pageMetadata }] = useMDXContent();
+  const { prev, next: n } = usePrevNext();
   const previous = pageMetadata.hideFooterPagination ? null : prev;
   const next = pageMetadata.hideFooterPagination ? null : n;
   return (

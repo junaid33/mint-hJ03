@@ -1,17 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 
+import { ConfigContext } from '@/context/ConfigContext';
 import { MDXContentState } from '@/types/mdxContentController';
 import { getParamGroupsFromApiComponents } from '@/utils/api';
 
-export const useParamGroupsCallback = () =>
-  useCallback(
-    (
-      state: Pick<
-        MDXContentState,
-        'openApiPlaygroundProps' | 'apiComponents' | 'mintConfig' | 'pageMetadata'
-      >
-    ) => {
-      const { pageMetadata, openApiPlaygroundProps, apiComponents, mintConfig } = state;
+export const useParamGroupsCallback = () => {
+  const { mintConfig } = useContext(ConfigContext);
+  return useCallback(
+    (state: Pick<MDXContentState, 'openApiPlaygroundProps' | 'apiComponents' | 'pageMetadata'>) => {
+      const { pageMetadata, openApiPlaygroundProps, apiComponents } = state;
       const paramGroupDict = getParamGroupsFromApiComponents(
         openApiPlaygroundProps?.apiComponents ?? apiComponents,
         pageMetadata.authMethod || mintConfig?.api?.auth?.method,
@@ -25,5 +22,6 @@ export const useParamGroupsCallback = () =>
       });
       return { paramGroupDict, paramGroups };
     },
-    []
+    [mintConfig?.api?.auth?.method, mintConfig?.api?.auth?.name]
   );
+};
