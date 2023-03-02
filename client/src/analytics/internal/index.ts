@@ -21,6 +21,6 @@ export default class InternalAnalytics extends PostHogAnalytics {
   }
 
   onRouteChange(_url: string, _routeProps: RouteProps): void {
-    posthog.capture('$pageview', { subdomain: this.subdomain });
+    posthog.capture('$pageview', { subdomain: this.subdomain, title: document.title });
   }
 }
