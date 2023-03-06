@@ -4,7 +4,7 @@ import { getConfigPath, update } from './update.js';
 
 const contentDirectoryPath = process.argv[2] ?? '../docs'; // TODO - change default folder to something more generic for self-serve
 
-const preconfigure = async () => {
+const prebuild = async () => {
   const { contentFilenames, staticFilenames, openApiFiles, snippets } = await categorizeFiles(
     contentDirectoryPath
   );
@@ -18,7 +18,7 @@ const preconfigure = async () => {
       console.error('⚠️ Must be ran in a directory where a mint.json file exists.');
       return;
     }
-    await preconfigure();
+    await prebuild();
   } catch (error) {
     console.log(error);
     console.error('⚠️   Error while fetching config settings');

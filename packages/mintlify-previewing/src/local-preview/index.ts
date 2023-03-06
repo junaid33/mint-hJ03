@@ -146,7 +146,7 @@ const dev = async (argv: ArgumentsCamelCase) => {
   await checkForMintJson(logger);
   shell.cd(CLIENT_PATH);
   const relativePath = path.relative(CLIENT_PATH, CMD_EXEC_PATH);
-  child_process.spawnSync('yarn preconfigure', [relativePath], { shell: true });
+  child_process.spawnSync('yarn prebuild', [relativePath], { shell: true });
   logger.succeed('Local Mintlify instance is ready. Launching your site...');
   run((argv?.port as string | undefined) || '3000');
 };

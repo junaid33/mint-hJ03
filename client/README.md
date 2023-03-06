@@ -21,7 +21,7 @@ yarn
 
 ### Local Development
 
-- Run `yarn preconfigure` or `yarn preconfigure <path/to/docs>`
+- Run `yarn prebuild` or `yarn prebuild <path/to/docs>`
 - Run `yarn dev`
 - Navigate to `http://localhost:3000/`
 
