@@ -1,11 +1,12 @@
 import { getHostingLocation } from '@/data-fetching/getHostingLocation';
+import { IS_MULTI_TENANT } from '@/env';
 
 const successHeaders = {
   'Cache-control': 'public, s-maxage=31536000, stale-while-revalidate',
 };
 
 async function generateRobotsTxt(subdomain: string) {
-  if (!process.env.IS_MULTI_TENANT || process.env.IS_MULTI_TENANT === 'false') {
+  if (!IS_MULTI_TENANT) {
     return new Response('', {
       status: 404,
       headers: successHeaders,

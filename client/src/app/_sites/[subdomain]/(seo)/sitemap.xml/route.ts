@@ -1,5 +1,6 @@
 import { getHostingLocation } from '@/data-fetching/getHostingLocation';
 import { getNavigation } from '@/data-fetching/getNavigation';
+import { IS_MULTI_TENANT } from '@/env';
 
 import findAllPageHrefs from './findAllPageHrefs';
 
@@ -8,7 +9,7 @@ const successHeaders = {
 };
 
 async function generateSitemap(subdomain: string) {
-  if (!process.env.IS_MULTI_TENANT || process.env.IS_MULTI_TENANT === 'false') {
+  if (!IS_MULTI_TENANT) {
     return new Response('', {
       status: 404,
       headers: successHeaders,

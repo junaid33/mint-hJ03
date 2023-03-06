@@ -21,9 +21,9 @@ yarn
 
 ### Local Development
 
-- Log in to Infiscal for the .env variables. The project is `Mintlify Client`. Save those env vars to `client/.env`.
+- Run `yarn preconfigure` or `yarn preconfigure <path/to/docs>`
 - Run `yarn dev`
-- Navigate to `http://mintlify.localhost:3000/`
+- Navigate to `http://localhost:3000/`
 
 ### Debugging in VS Code
 

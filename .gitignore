@@ -12,6 +12,7 @@ mint-version.txt
 
 # Output
 lib/
+!client/src/lib
 bin/
 dist/
 

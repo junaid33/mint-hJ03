@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef, createElement, ElementType, Fragment, ReactNode } from 'react';
 
+import { IS_DEV } from '@/constants';
+
 import { useStaticContent } from './useStaticContent';
 
 export type StaticProps<T> = {
@@ -25,8 +27,8 @@ export type StaticContentProps<T extends ElementType> = StaticProps<T> &
 export const StaticContent = <T extends ElementType = typeof Fragment>({
   children,
   as,
-  hydrateRerender = process.env.NODE_ENV !== 'development',
-  printConsoleWarnings = process.env.NODE_ENV === 'development',
+  hydrateRerender = !IS_DEV,
+  printConsoleWarnings = IS_DEV,
   ...props
 }: StaticContentProps<T>) => {
   const { render, ref } = useStaticContent(printConsoleWarnings, hydrateRerender);

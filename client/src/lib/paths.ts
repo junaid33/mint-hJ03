@@ -1,18 +1,16 @@
 import axios from 'axios';
 
-const REQUEST_ADMIN_OPTIONS = {
-  headers: { Authorization: `Bearer ${process.env.ADMIN_TOKEN}` },
-};
+import { AUTH_HEADER, INTERNAL_ENDPOINT } from '@/constants';
+import { BASE_PATH } from '@/env';
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const checkGetPathsStatus = async (id: string): Promise<any> => {
-  const status = await axios.get(
-    `${process.env.API_ENDPOINT}/api/v2/internal/queue-status/fetch-all-paths/${id}`,
-    REQUEST_ADMIN_OPTIONS
-  );
+const checkGetPathsStatus = async (id: string) => {
+  const status = await axios.get(`${INTERNAL_ENDPOINT}/queue-status/fetch-all-paths/${id}`, {
+    headers: AUTH_HEADER,
+  });
   return status.data;
 };
 
@@ -43,9 +41,9 @@ export const getPaths = async () => {
   const {
     data: { id },
   }: { data: { id: string } } = await axios.post(
-    `${process.env.API_ENDPOINT}/api/v2/internal/all-deployments/paths`,
-    { basePath: process.env.BASE_PATH ?? '' },
-    REQUEST_ADMIN_OPTIONS
+    `${INTERNAL_ENDPOINT}/all-deployments/paths`,
+    { basePath: BASE_PATH },
+    { headers: AUTH_HEADER }
   );
   const paths = await monitorGetPathsStatus(id);
 

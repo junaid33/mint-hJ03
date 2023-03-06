@@ -2,6 +2,7 @@ import Router from 'next/router';
 import { useState, useEffect } from 'react';
 
 import AnalyticsMediator from '@/analytics/AnalyticsMediator';
+import { IS_PROD } from '@/constants';
 
 /**
  * useAnalytics is the only way to create an AnalyticsMediator. Trying to create an
@@ -22,7 +23,7 @@ export function useAnalytics(
   // AnalyticsMediator can only run in the browser
   // We use useEffect because it only runs on render
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') return;
+    if (!IS_PROD) return;
     if (!initializedAnalyticsMediator) {
       let internalAnalytics: { internalAnalyticsWriteKey: string; subdomain: string } | undefined =
         undefined;

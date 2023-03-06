@@ -11,6 +11,7 @@ import { useAnalytics } from '@/analytics/useAnalytics';
 import components from '@/components';
 import { ConfigContext } from '@/context/ConfigContext';
 import { VersionContextController } from '@/context/VersionContext';
+import { BASE_PATH } from '@/env';
 import useProgressBar from '@/hooks/useProgressBar';
 import Intercom from '@/integrations/Intercom';
 import { DocumentationLayout } from '@/layouts/DocumentationLayout';
@@ -85,11 +86,7 @@ export default function SupremePageLayout({
               <meta name="theme-color" content="#ffffff" />
               <meta name="msapplication-TileColor" content={mintConfig?.colors?.primary} />
               <meta name="theme-color" content="#ffffff" />
-              <link
-                rel="sitemap"
-                type="application/xml"
-                href={`${process.env.BASE_PATH}/sitemap.xml`}
-              />
+              <link rel="sitemap" type="application/xml" href={`${BASE_PATH}/sitemap.xml`} />
               {Object.entries(metaTagsDict).map(([key, value]) => (
                 <meta key={key} name={key} content={value} />
               ))}

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { IS_PROD } from './constants';
+import { HOST_NAME } from './env';
+
 export default function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const { pathname } = url;
@@ -12,12 +15,11 @@ export default function middleware(req: NextRequest) {
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
   // process.env.HOST_NAME must be set when deploying a multi-tenant setup
-  const hostname = req.headers.get('host') || process.env.HOST_NAME || '';
-  const isProd = process.env.NODE_ENV === 'production' && process.env.VERCEL === '1';
+  const hostname = req.headers.get('host') || HOST_NAME;
 
-  const currentHost = isProd
+  const currentHost = IS_PROD
     ? // Replace both mintlify.app and mintlify.dev because both domains are used for hosting by Mintlify
-      hostname.replace('.' + process.env.HOST_NAME, '')
+      hostname.replace('.' + HOST_NAME, '')
     : hostname.replace(/\.localhost:\d{4}/, '');
 
   // rewrite root application to main folder

@@ -4,6 +4,7 @@ import GA4Script from '@/analytics/scripts/GA4Script';
 import GTMScript from '@/analytics/scripts/GTMScript';
 import KoalaScript from '@/analytics/scripts/KoalaScript';
 import PlausibleScript from '@/analytics/scripts/PlausibleScript';
+import { IS_PROD } from '@/constants';
 import { ConfigContext } from '@/context/ConfigContext';
 import { getAnalyticsConfig } from '@/utils/getAnalyticsConfig';
 
@@ -13,7 +14,7 @@ const AnalyticsScripts = () => {
   if (mintConfig) {
     analyticsConfig = getAnalyticsConfig(mintConfig);
   }
-  if (process.env.NODE_ENV !== 'production') return null;
+  if (!IS_PROD) return null;
   return (
     <>
       <GA4Script ga4={analyticsConfig.ga4} />

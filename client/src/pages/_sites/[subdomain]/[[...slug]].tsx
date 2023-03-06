@@ -3,6 +3,7 @@ import { MDXRemoteSerializeResult } from 'next-mdx-remote/dist/types';
 import type { ParsedUrlQuery } from 'querystring';
 
 import { getHiddenPages } from '@/data-fetching/getHiddenPages';
+import { INTERNAL_ANALYTICS_WRITE_KEY, IS_MULTI_TENANT } from '@/env';
 import { getPage } from '@/lib/page';
 import { getPaths } from '@/lib/paths';
 import createSnippetTreeMap from '@/mdx/createSnippetTreeMap';
@@ -23,7 +24,7 @@ interface PathProps extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
-  if (!process.env.IS_MULTI_TENANT || process.env.IS_MULTI_TENANT === 'false') {
+  if (!IS_MULTI_TENANT) {
     return {
       paths: [],
       fallback: 'blocking',
@@ -46,7 +47,7 @@ export const getStaticPaths: GetStaticPaths<PathProps> = async () => {
 };
 
 export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ params }) => {
-  if (!process.env.IS_MULTI_TENANT || process.env.IS_MULTI_TENANT === 'false') {
+  if (!IS_MULTI_TENANT) {
     return {
       notFound: true,
     };
@@ -135,7 +136,7 @@ export const getStaticProps: GetStaticProps<PageProps, PathProps> = async ({ par
         },
         favicons,
         subdomain,
-        internalAnalyticsWriteKey: process.env.INTERNAL_ANALYTICS_WRITE_KEY,
+        internalAnalyticsWriteKey: INTERNAL_ANALYTICS_WRITE_KEY,
         hiddenPages,
       }),
     };

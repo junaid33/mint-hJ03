@@ -1,17 +1,17 @@
 import axios, { AxiosError } from 'axios';
 
+import { AUTH_HEADER, DEPLOYMENT_ENDPOINT } from '@/constants';
+import { BASE_PATH } from '@/env';
+
 export const getPage = async (subdomain: string, path: string) => {
   try {
-    const { data, status } = await axios.get(
-      `${process.env.API_ENDPOINT}/api/v2/internal/deployment/${subdomain}/static-props`,
-      {
-        params: {
-          path,
-          basePath: process.env.BASE_PATH,
-        },
-        headers: { Authorization: `Bearer ${process.env.ADMIN_TOKEN}` },
-      }
-    );
+    const { data, status } = await axios.get(`${DEPLOYMENT_ENDPOINT}/${subdomain}/static-props`, {
+      params: {
+        path,
+        basePath: BASE_PATH,
+      },
+      headers: AUTH_HEADER,
+    });
     return { data, status };
   } catch (error) {
     const axiosError = error as AxiosError;

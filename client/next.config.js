@@ -1,7 +1,9 @@
 import BundleAnalyzer from '@next/bundle-analyzer';
 
+const { ANALYZE, BASE_PATH } = process.env;
+
 const withBundleAnalyzer = BundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
+  enabled: ANALYZE === 'true',
 });
 
 export default withBundleAnalyzer({
@@ -24,13 +26,13 @@ export default withBundleAnalyzer({
     appDir: true,
     largePageDataBytes: 128 * 10000, // 1280KB instead of the default 128Kb
   },
-  basePath: process.env.BASE_PATH,
+  basePath: BASE_PATH,
   async redirects() {
-    return process.env.BASE_PATH
+    return BASE_PATH
       ? [
           {
             source: '/',
-            destination: process.env.BASE_PATH,
+            destination: BASE_PATH,
             basePath: false, // you can't write '/' as the source if you auto-prefix the base path to it
             permanent: true,
           },

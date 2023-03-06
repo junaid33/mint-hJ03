@@ -1,8 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { ADMIN_TOKEN } from '@/env';
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { secret, path } = req.body;
-  if (secret !== process.env.ADMIN_TOKEN) {
+  if (secret !== ADMIN_TOKEN) {
     return res.status(401).json({ revalidated: false, error: 'Invalid token' });
   }
 
