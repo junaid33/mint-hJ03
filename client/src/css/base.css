@@ -7,6 +7,7 @@
 html {
   height: 100%;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  overflow-y: overlay; /* Shows scrollbar over content instead of causing a layout shift */
 }
 
 body {
@@ -26,4 +27,9 @@ select {
   -moz-appearance: none;
   text-indent: 1px;
   text-overflow: '';
+}
+
+/* Always allocates space for the scrollbar even if it is not currently overflowing */
+.stable-scrollbar-gutter {
+  scrollbar-gutter: 'stable';
 }

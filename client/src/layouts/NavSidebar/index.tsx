@@ -63,7 +63,7 @@ export function SidebarLayout({
           <div
             className={clsx(
               zIndex.SideBar,
-              'hidden lg:block fixed ml-4 top-[3.8125rem] bottom-0 left-[max(0px,calc(50%-46rem))] right-auto w-[18.5rem] pb-10 pl-8 pr-2 overflow-y-auto'
+              'hidden lg:block fixed ml-4 top-[3.8125rem] bottom-0 left-[max(0px,calc(50%-46rem))] right-auto w-[18.5rem] pb-10 pl-8 pr-2 overflow-y-auto stable-scrollbar-gutter'
             )}
           >
             <Nav nav={navForDivisionInVersion} pageMetadata={pageMetadata} />
