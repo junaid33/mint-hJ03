@@ -8,6 +8,7 @@ import { OpenApiFile } from '@/types/openApi';
 
 import { extractBaseAndPath, extractMethodAndEndpoint, Param } from '../api';
 import { bodyParamsToObjectString } from './bodyParamToObjectString';
+import { encodeBasicAuth } from './encodeBasicAuth';
 import { fillPathVariables } from './fillPathVariables';
 
 export function generateRequestExamples(
@@ -15,7 +16,9 @@ export function generateRequestExamples(
   baseUrlConfig: string[] | string | undefined,
   apiBaseIndex: number,
   params: Record<string, Param[]>,
-  apiPlaygroundInputs: Record<string, Record<string, any>>,
+  apiPlaygroundInputs: Record<string, Record<string, string>>,
+  authMethod: string | undefined,
+  authName: string | undefined,
   openApiFiles?: OpenApiFile[]
 ): JSX.Element | null {
   if (endpointStr == null) {
@@ -51,7 +54,7 @@ export function generateRequestExamples(
       fillPathVariables(base + endpointPath, params.Path, apiPlaygroundInputs.Path) + queryPostfix;
 
     // Generate headers including user defined ones
-    const headers = assembleUserInputHeaders(params, apiPlaygroundInputs);
+    const headers = assembleUserInputHeaders(params, apiPlaygroundInputs, authMethod, authName);
 
     // Add default Content-Type header if the user didn't define it and we have body content
     if (!headers.find((header) => header[0] === 'Content-Type') && bodyParamsString) {
@@ -127,13 +130,25 @@ export function generateRequestExamples(
 
 function assembleUserInputHeaders(
   params: Record<string, Param[]>,
-  apiPlaygroundInputs: Record<string, Record<string, any>>
+  apiPlaygroundInputs: Record<string, Record<string, string>>,
+  authMethod: string | undefined,
+  authName: string | undefined
 ) {
   const headers = [];
 
-  // These two loops should be the same
   if (params.Authorization) {
+    let basicAuthInputs = [] as string[];
+    if (authMethod === 'basic') {
+      headers.push(['Authorization', encodeBasicAuth(authName, apiPlaygroundInputs.Authorization)]);
+      basicAuthInputs = (authName || 'username:password').split(':');
+    }
+
     for (const headerParam of params.Authorization) {
+      // Skip basic auth inputs if they are already added
+      if (basicAuthInputs.includes(headerParam.name)) {
+        continue;
+      }
+
       const isHeaderDefined = Boolean(
         apiPlaygroundInputs.Authorization && apiPlaygroundInputs.Authorization[headerParam.name]
       );

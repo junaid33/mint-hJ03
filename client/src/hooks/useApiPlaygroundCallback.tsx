@@ -31,6 +31,8 @@ export const useApiPlaygroundCallback = () => {
       // TODO - make this undefined when nothing exists
       const api = openApiPlaygroundProps?.api ?? pageMetadata.api ?? '';
       const showApiPlayground = isApi && !mintConfig?.api?.hidePlayground;
+      const authMethod = pageMetadata.auth ?? mintConfig?.api?.auth?.method;
+      const authName = mintConfig?.api?.auth?.name;
       let generatedRequestExamples: ReactNode = null;
       if (!requestExample && api !== '' && showApiPlayground) {
         generatedRequestExamples = (
@@ -39,11 +41,13 @@ export const useApiPlaygroundCallback = () => {
             apiPlaygroundInputs={apiPlaygroundInputs}
             apiBaseIndex={apiBaseIndex}
             endpointStr={api}
+            authMethod={authMethod}
+            authName={authName}
           />
         );
       }
       return { showApiPlayground, api, generatedRequestExamples };
     },
-    [mintConfig?.api?.hidePlayground]
+    [mintConfig?.api?.auth?.method, mintConfig?.api?.auth?.name, mintConfig?.api?.hidePlayground]
   );
 };

@@ -1,3 +1,6 @@
+// TO DO: Add OpenApi types instead of using 'any'
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import { useState, useEffect, useContext } from 'react';
@@ -86,15 +89,22 @@ const generatedNestedExample = (response: any) => {
   return '';
 };
 
+// TO DO: Simplify this code. The config context is available in useApiPlaygroundCallback
+// where this component is called from. We should remove the useContext dependency as take in the
+// values we need as props.
 export function GeneratedRequestExamples({
   paramGroupDict,
   apiPlaygroundInputs,
   apiBaseIndex,
+  authMethod,
+  authName,
   endpointStr,
 }: {
   paramGroupDict: Record<string, Param[]>;
-  apiPlaygroundInputs: Record<string, Record<string, any>>;
+  apiPlaygroundInputs: Record<string, Record<string, string>>;
   apiBaseIndex: number;
+  authMethod: string | undefined;
+  authName: string | undefined;
   endpointStr?: string;
 }) {
   const { mintConfig, openApiFiles } = useContext(ConfigContext);
@@ -105,6 +115,8 @@ export function GeneratedRequestExamples({
     apiBaseIndex,
     paramGroupDict,
     apiPlaygroundInputs,
+    authMethod,
+    authName,
     openApiFiles
   );
 }

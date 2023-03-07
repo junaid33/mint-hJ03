@@ -64,11 +64,11 @@ export function ApiPlayground() {
     mintConfig?.api?.auth?.method
   );
   const setAuthPrefix = mintConfig?.api?.auth?.inputPrefix && authParamName;
-  const [inputData, setInputData] = useState<Record<string, object>>(
+  const [inputData, setInputData] = useState<Record<string, Record<string, string>>>(
     setAuthPrefix
       ? {
           Authorization: {
-            [authParamName]: mintConfig.api?.auth?.inputPrefix,
+            [authParamName]: mintConfig.api?.auth?.inputPrefix ?? '',
           },
         }
       : {}
