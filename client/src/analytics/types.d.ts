@@ -25,7 +25,7 @@ type HotjarConfigInterface = {
 };
 
 type KoalaConfigInterface = {
-  projectId?: string;
+  publicApiKey?: string;
 };
 
 type LogrocketConfigInterface = {

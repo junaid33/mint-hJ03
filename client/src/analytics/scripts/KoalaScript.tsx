@@ -1,7 +1,7 @@
 import Script from 'next/script';
 
 export default function KoalaScript({ koala }: { koala?: KoalaConfigInterface }) {
-  if (!koala?.projectId) {
+  if (!koala?.publicApiKey) {
     return null;
   }
 
@@ -34,7 +34,7 @@ export default function KoalaScript({ koala }: { koala?: KoalaConfigInterface })
             (n.async = !0),
               n.setAttribute(
                 "src",
-                "https://cdn.getkoala.com/v1/${koala.projectId}/sdk.js"
+                "https://cdn.getkoala.com/v1/${koala.publicApiKey}/sdk.js"
               ),
               (document.body || document.head).appendChild(n);
           })();

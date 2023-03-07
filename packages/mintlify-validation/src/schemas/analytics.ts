@@ -75,19 +75,19 @@ const hotjarConfigInterfaceSchema = z.object(
 
 const koalaConfigInterfaceSchema = z.object(
   {
-    projectId: z
+    publicApiKey: z
       .string({
-        required_error: "Project ID is required for the snippet to run.",
-        invalid_type_error: "Koala Project ID must be a string.",
+        required_error: "Public Api Key is required for the Koala snippet to run.",
+        invalid_type_error: "Koala Public Api Key must be a string.",
       })
       .refine(
-        (projectId) => projectId.length >= 2,
-        "Koala Project ID must have at least two characters"
+        (publicApiKey: string) => publicApiKey.length >= 2,
+        "Koala Public Api Key must have at least two characters"
       ),
   },
   {
     invalid_type_error:
-      "Koala config must be an object with a projectId property.",
+      "Koala config must be an object with a publicApiKey property.",
   }
 );
 

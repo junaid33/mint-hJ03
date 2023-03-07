@@ -40,9 +40,9 @@ const constructAnalytics = (
       hjsv: analytics.hotjar.hjsv,
     };
   }
-  if (analytics?.koala?.projectId) {
+  if (analytics?.koala?.publicApiKey) {
     properlyTypedAnalytics.koala = {
-      projectId: analytics.koala.projectId,
+      publicApiKey: analytics.koala.publicApiKey,
     };
   }
   if (analytics?.logrocket?.appId) {
