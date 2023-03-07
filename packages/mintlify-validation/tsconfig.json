@@ -1,6 +1,7 @@
 {
   "extends": "@mintlify/ts-config",
   "compilerOptions": {
+    "outDir": "dist",
     "moduleResolution": "node",
     "declaration": true
   },

@@ -41,7 +41,7 @@
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
     "@mintlify/prebuild": "^1.0.0",
-    "@mintlify/validation": "^0.1.9",
+    "@mintlify/validation": "^0.1.11",
     "@octokit/rest": "^19.0.5",
     "axios": "^1.2.2",
     "chalk": "^5.1.0",
@@ -63,11 +63,11 @@
     "yargs": "^17.6.0"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "3.x",
     "@mintlify/eslint-config": "1.0.3",
     "@mintlify/eslint-config-typescript": "1.0.7",
     "@mintlify/prettier-config": "1.0.1",
     "@mintlify/ts-config": "1.0.7",
+    "@trivago/prettier-plugin-sort-imports": "3.x",
     "@tsconfig/recommended": "1.x",
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^9.0.1",

@@ -367,10 +367,10 @@
   resolved "https://registry.yarnpkg.com/@mintlify/ts-config/-/ts-config-1.0.7.tgz#872b14d30013cf3a68e6aed8362e916b0c3b9261"
   integrity sha512-VXfLy9+TeNXmOJY/4WgnpQfYBEH1nXwj5iYMqe8xEwCcrOX3xhVF/J+cBpIbGXzlp7ZnnVmCxx7fkeHJub1zzQ==
 
-"@mintlify/validation@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.9.tgz#c0bf616ba2437607db06b0d98af04b60eb008d42"
-  integrity sha512-ACRxy+BM0Y6KUZaJ8GfPbkD/JFjX256f6k0abUfWdk7Vv90OOq2MEhHNDOXD8HImojEgw5I+GSvSS19XQd0kQA==
+"@mintlify/validation@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@mintlify/validation/-/validation-0.1.11.tgz#9b162f46d21c19b35f5e7d1da866ce4d9bb2e96d"
+  integrity sha512-3Ajz46bpamMCCF7hLBUTHF0ddj3db03DJa+nDdzSd/lKqhqbZjOLbEmU0q/5OnA8Ar6G7LhXzeGTDFlTVXpedg==
   dependencies:
     zod "^3.20.6"
     zod-to-json-schema "^3.20.3"
