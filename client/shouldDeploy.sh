@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -z $(git diff --name-only HEAD~1 HEAD -- .) ]] ; then
+if [[ -z $(git diff --name-only main -- .) ]] ; then
   echo "🛑 - Build cancelled. No changes to the client folder."
   exit 0;
 fi
