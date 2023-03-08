@@ -1,6 +1,6 @@
 {
   "name": "mintlify",
-  "version": "3.0.9",
+  "version": "3.0.12",
   "description": "Alias for @mintlify/cli",
   "engines": {
     "node": ">=18.0.0"
@@ -30,6 +30,6 @@
     "mintlify": "index.js"
   },
   "dependencies": {
-    "@mintlify/cli": "^3.0.9"
+    "@mintlify/cli": "3.0.12"
   }
 }
